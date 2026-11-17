@@ -1,0 +1,968 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Neuron on X: Connecting the Networks Behind the News</title>
+<meta name="description" content="How The Neuron turns investigative research into a recognizable voice on X.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f6f8fc;--card:#ffffff;--ink:#0f172a;--mut:#5b6478;--line:#e3e8f2;
+  --a:#4f46e5;--b:#06b6d4;--c:#ec4899;--d:#f59e0b;--e:#10b981;
+  --p1:#4f46e5;--p2:#0891b2;--p3:#d97706;--p4:#db2777;--p5:#059669;
+  --r:18px;--sh:0 10px 30px -12px rgba(30,41,90,.18);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;font-family:Inter,system-ui,sans-serif;background:var(--bg);color:var(--ink);line-height:1.5;-webkit-font-smoothing:antialiased}
+h1,h2,h3,h4{font-family:'Space Grotesk',Inter,sans-serif;margin:0;letter-spacing:-.02em}
+a{color:var(--a)}
+button{font:inherit;cursor:pointer}
+.wrap{max-width:1120px;margin:0 auto;padding:0 20px}
+section{padding:84px 0;position:relative}
+.kicker{display:inline-block;font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--a);background:#eef0ff;border-radius:99px;padding:6px 12px;margin:0 0 14px}
+.h2{font-size:clamp(28px,4.4vw,44px);line-height:1.08;margin:0 0 10px}
+.lead{color:var(--mut);font-size:18px;max-width:640px;margin:0 0 34px}
+.grad{background:linear-gradient(90deg,var(--a),var(--b) 50%,var(--c));-webkit-background-clip:text;background-clip:text;color:transparent}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--sh)}
+.hint{font-size:13px;color:var(--mut);margin-top:12px}
+.hint b{color:var(--a)}
+.reveal{opacity:0;transform:translateY(24px);transition:opacity .7s ease,transform .7s ease}
+.reveal.in{opacity:1;transform:none}
+#prog{position:fixed;top:0;left:0;height:3px;width:0;background:linear-gradient(90deg,var(--a),var(--b),var(--c));z-index:60}
+nav.top{position:sticky;top:0;z-index:50;background:rgba(246,248,252,.85);backdrop-filter:blur(10px);border-block-end:1px solid var(--line)}
+nav.top .wrap{display:flex;align-items:center;gap:18px;height:58px}
+.logo{display:flex;align-items:center;gap:10px;font-family:'Space Grotesk';font-weight:700;font-size:18px;text-decoration:none;color:var(--ink);white-space:nowrap}
+.logo i{width:28px;height:28px;border-radius:50%;background:radial-gradient(circle at 35% 35%,#fff 0 12%,transparent 13%),conic-gradient(var(--a),var(--b),var(--c),var(--a));display:block}
+.navlinks{display:flex;gap:4px;overflow-x:auto;scrollbar-width:none;margin-left:auto}
+.navlinks::-webkit-scrollbar{display:none}
+.navlinks a{font-size:13px;font-weight:600;color:var(--mut);text-decoration:none;padding:7px 11px;border-radius:99px;white-space:nowrap}
+.navlinks a:hover,.navlinks a.on{background:#eef0ff;color:var(--a)}
+.hero{min-height:92vh;display:flex;align-items:center;overflow:hidden;padding:60px 0}
+#neural{position:absolute;inset:0;width:100%;height:100%;z-index:0}
+.hero .wrap{position:relative;z-index:1}
+.hero h1{font-size:clamp(40px,7.4vw,86px);line-height:.98;max-width:980px}
+.hero p.sub{font-size:clamp(17px,2vw,21px);color:var(--mut);max-width:620px;margin:22px 0 34px}
+.counters{display:grid;grid-template-columns:repeat(6,1fr);gap:12px;max-width:980px}
+.ctr{padding:18px 14px;text-align:left;border:1px solid var(--line);background:rgba(255,255,255,.86);border-radius:16px;transition:transform .25s, box-shadow .25s;cursor:pointer;text-decoration:none;color:inherit;display:block}
+.ctr:hover{transform:translateY(-4px);box-shadow:var(--sh)}
+.ctr b{display:block;font-family:'Space Grotesk';font-size:clamp(30px,4vw,44px);line-height:1}
+.ctr span{font-size:12.5px;color:var(--mut);font-weight:600}
+.ctr:nth-child(1) b{color:var(--p1)}.ctr:nth-child(2) b{color:var(--p2)}.ctr:nth-child(3) b{color:var(--p4)}.ctr:nth-child(4) b{color:var(--p3)}.ctr:nth-child(5) b{color:var(--p5)}.ctr:nth-child(6) b{color:#7c3aed}
+.cta-row{display:flex;gap:12px;flex-wrap:wrap;margin-top:30px}
+.btn{display:inline-flex;align-items:center;gap:8px;border:0;border-radius:99px;padding:13px 22px;font-weight:700;text-decoration:none;font-size:15px;transition:transform .2s}
+.btn:hover{transform:translateY(-2px)}
+.btn.pri{background:var(--ink);color:#fff}
+.btn.sec{background:#fff;color:var(--ink);border:1px solid var(--line)}
+.q{background:linear-gradient(135deg,#0f172a,#1e1b4b 60%,#312e81);color:#fff;overflow:hidden}
+.q .kicker{background:rgba(255,255,255,.12);color:#c7d2fe}
+.qline{font-family:'Space Grotesk';font-size:clamp(28px,5vw,58px);line-height:1.1;max-width:1000px;margin:0}
+.qline .w{display:inline-block;padding:0 .08em;border-radius:8px;cursor:pointer;transition:background .2s,color .2s}
+.qline .w.key{color:#a5b4fc;text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:6px}
+.qline .w.key:hover,.qline .w.key.on{background:#a5b4fc;color:#1e1b4b}
+.qexplain{min-height:56px;margin-top:26px;font-size:18px;color:#c7d2fe;max-width:700px}
+.principle{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:40px;max-width:900px}
+.principle div{border-radius:16px;padding:20px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12)}
+.principle h4{font-size:15px;margin-block-end:6px}
+.principle .no h4{color:#fda4af}.principle .yes h4{color:#86efac}
+.principle p{margin:0;color:#e0e7ff;font-size:15px}
+.obj{display:grid;grid-template-columns:repeat(5,1fr);gap:12px}
+.ob{padding:20px 16px;text-align:center;cursor:pointer;transition:transform .25s}
+.ob:hover,.ob.on{transform:translateY(-6px);border-color:var(--a)}
+.ob .ic{font-size:30px}
+.ob h4{font-size:16px;margin:8px 0 4px}
+.ob p{font-size:13px;color:var(--mut);margin:0;max-height:0;overflow:hidden;transition:max-height .35s}
+.ob.on p{max-height:120px}
+.pillars{display:grid;grid-template-columns:repeat(5,1fr);gap:12px}
+.pil{padding:20px 18px;cursor:pointer;position:relative;overflow:hidden;transition:all .35s;border-top:5px solid var(--pc)}
+.pil:hover{transform:translateY(-4px)}
+.pil .n{font-family:'Space Grotesk';font-size:40px;font-weight:700;color:var(--pc);line-height:1}
+.pil h3{font-size:17px;margin:8px 0 6px;line-height:1.2}
+.pil .more{font-size:12px;font-weight:700;color:var(--pc)}
+.pil-detail{margin-top:16px;padding:26px;display:none;border-left:6px solid var(--pc)}
+.pil-detail.show{display:block;animation:pop .35s ease}
+@keyframes pop{from{opacity:0;transform:scale(.97)}to{opacity:1;transform:none}}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+.chip{font-size:13.5px;font-weight:600;padding:8px 13px;border-radius:99px;background:#f1f4fa;border:1px solid var(--line);opacity:0;transform:translateY(8px);animation:chipIn .4s forwards}
+@keyframes chipIn{to{opacity:1;transform:none}}
+.pil-detail .inv-links{margin-top:16px;font-size:14px;color:var(--mut)}
+.connector{text-align:center;color:var(--mut);font-size:14px;margin-top:18px;font-weight:600}
+.voice{display:grid;grid-template-columns:1.1fr 1fr;gap:20px;align-items:stretch}
+.dial{padding:26px}
+.dial input{width:100%}
+.dial .ends{display:flex;justify-content:space-between;font-size:12.5px;color:var(--mut);font-weight:700;margin-top:6px}
+.dial .out{margin-top:18px;padding:18px;border-radius:14px;background:#f6f7fb;min-height:110px;transition:background .3s}
+.dial .out b{font-family:'Space Grotesk';font-size:20px;display:block;margin-block-end:4px}
+.traits{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.trait{padding:16px 12px;text-align:center;cursor:pointer;transition:all .25s}
+.trait:hover,.trait.on{background:var(--ink);color:#fff}
+.trait .t{font-family:'Space Grotesk';font-weight:700}
+.trait .d{font-size:12.5px;color:var(--mut);margin-top:4px}
+.trait.on .d,.trait:hover .d{color:#cbd5e1}
+.fly{display:grid;grid-template-columns:1.05fr 1fr;gap:28px;align-items:center}
+#flysvg{width:100%;max-width:500px;display:block;margin:auto}
+#flysvg .node{cursor:pointer}
+#flysvg .node circle{transition:all .35s}
+#flysvg .node text{font-family:'Space Grotesk';font-weight:700;font-size:13px;pointer-events:none}
+.flypanel{padding:28px;min-height:330px}
+.flypanel .step{font-size:13px;font-weight:700;color:var(--a)}
+.flypanel h3{font-size:30px;margin:4px 0 10px}
+.flypanel ul{padding-left:18px;margin:10px 0 0;color:var(--mut)}
+.flypanel li{margin:5px 0}
+.ctrls{display:flex;gap:8px;margin-top:20px;flex-wrap:wrap}
+.ctrls button{border:1px solid var(--line);background:#fff;border-radius:99px;padding:9px 16px;font-weight:700;font-size:14px}
+.ctrls button.go{background:var(--a);color:#fff;border-color:var(--a)}
+.calc{display:grid;grid-template-columns:1.2fr 1fr;gap:22px}
+.sliders{padding:26px}
+.sl{margin:0 0 18px}
+.sl .top{display:flex;justify-content:space-between;align-items:baseline;gap:8px}
+.sl label{font-weight:700;font-size:15px}
+.sl .w{font-size:12px;font-weight:700;color:var(--mut);background:#f1f4fa;border-radius:99px;padding:2px 8px}
+.sl .v{font-family:'Space Grotesk';font-weight:700;color:var(--a);min-width:28px;text-align:right}
+.sl small{display:block;color:var(--mut);font-size:12.5px;margin-top:2px}
+input[type=range]{-webkit-appearance:none;appearance:none;width:100%;height:8px;border-radius:99px;background:#e6e9f5;outline:none;margin-top:8px}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:22px;height:22px;border-radius:50%;background:var(--a);border:3px solid #fff;box-shadow:0 2px 8px rgba(79,70,229,.5);cursor:pointer}
+input[type=range]::-moz-range-thumb{width:20px;height:20px;border-radius:50%;background:var(--a);border:3px solid #fff;cursor:pointer}
+.gauge{padding:26px;text-align:center;display:flex;flex-direction:column;align-items:center;justify-content:center}
+#gsvg{width:100%;max-width:300px}
+.score{font-family:'Space Grotesk';font-size:64px;font-weight:700;line-height:1;margin-top:-70px}
+.verdict{margin-top:14px;padding:12px 16px;border-radius:14px;font-weight:700;font-size:16px;width:100%;transition:background .3s,color .3s}
+.bands{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;width:100%;margin-top:14px;font-size:11.5px;font-weight:700}
+.bands div{padding:8px 4px;border-radius:10px;opacity:.45;transition:opacity .3s,transform .3s}
+.bands div.on{opacity:1;transform:scale(1.06)}
+.presets{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 18px}
+.presets button{border:1px dashed #c7cde0;background:#fff;border-radius:99px;padding:7px 13px;font-size:13px;font-weight:600}
+.presets button:hover{border-color:var(--a);color:var(--a)}
+.rules3{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:18px}
+.rules3 div{padding:16px;font-size:14px}
+.rules3 b{display:block;font-family:'Space Grotesk';font-size:16px;margin-block-end:4px}
+.phases{display:grid;grid-template-columns:repeat(4,1fr);gap:0;position:relative;margin-top:10px}
+.phases:before{content:"";position:absolute;left:12%;right:12%;top:31px;height:4px;background:var(--line);border-radius:4px}
+#phaseFill{position:absolute;left:12%;top:31px;height:4px;background:linear-gradient(90deg,var(--a),var(--c));border-radius:4px;transition:width .6s;width:0}
+.ph{text-align:center;cursor:pointer;position:relative;z-index:1;padding:0 6px}
+.ph .dot{width:66px;height:66px;border-radius:50%;margin:0 auto;background:#fff;border:4px solid var(--line);display:flex;align-items:center;justify-content:center;font-size:26px;transition:all .35s}
+.ph.on .dot{border-color:var(--a);transform:scale(1.12);box-shadow:0 8px 24px -8px rgba(79,70,229,.6)}
+.ph.done .dot{border-color:var(--a)}
+.ph h4{margin-top:10px;font-size:15px}
+.ph small{color:var(--mut);font-size:12.5px}
+.phbody{margin-top:26px;padding:26px;min-height:200px}
+.items{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px;margin-top:14px}
+.item{padding:14px;border-radius:14px;background:#f6f7fb;border:1px solid var(--line);font-size:14px;font-weight:600;opacity:0;transform:translateY(10px);animation:chipIn .4s forwards}
+.item span{display:block;font-size:20px;margin-block-end:4px}
+.noquota{margin-top:16px;display:flex;gap:10px;flex-wrap:wrap}
+.noquota span{background:#fff1f2;color:#be123c;border-radius:99px;padding:7px 13px;font-size:13px;font-weight:700}
+.arch{display:grid;grid-template-columns:1fr 1.2fr;gap:22px}
+.modes{display:flex;flex-direction:column;gap:10px}
+.mode{padding:18px 20px;cursor:pointer;transition:all .25s;display:flex;gap:14px;align-items:flex-start}
+.mode .ic{font-size:26px}
+.mode h4{font-size:17px}
+.mode p{margin:2px 0 0;font-size:14px;color:var(--mut)}
+.mode.on{border-color:var(--a);box-shadow:0 0 0 3px #e0e3ff}
+.engine{padding:24px}
+.engine .trig{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0 16px}
+.engine .trig button{border:1px solid var(--line);background:#fff;border-radius:12px;padding:9px 12px;font-size:13.5px;font-weight:600;text-align:left}
+.engine .trig button.on{background:var(--ink);color:#fff;border-color:var(--ink)}
+.scan{height:6px;border-radius:99px;background:#eef0f7;overflow:hidden;margin:6px 0 14px}
+.scan i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--b),var(--a));transition:width .9s ease}
+.match{padding:14px 16px;border-radius:14px;background:#f0fdf4;border:1px solid #bbf7d0;margin-top:10px;font-size:14px;opacity:0;transform:translateX(-10px);transition:all .4s}
+.match.in{opacity:1;transform:none}
+.match a{font-weight:700;text-decoration:none}
+.recheck{margin-top:14px;font-size:13px;font-weight:700;color:#b45309;background:#fffbeb;border:1px solid #fde68a;border-radius:12px;padding:10px 12px}
+.fc{display:grid;grid-template-columns:1fr 1.15fr;gap:22px;align-items:start}
+.ladder{display:flex;flex-direction:column-reverse;gap:8px}
+.rung{display:flex;align-items:center;gap:14px;padding:14px 16px;cursor:pointer;transition:all .3s;opacity:.55}
+.rung .num{width:38px;height:38px;flex:none;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Space Grotesk';font-weight:700;background:#eef0f7;color:var(--mut);transition:all .3s}
+.rung h4{font-size:16px}
+.rung.done{opacity:1}
+.rung.done .num{background:var(--e);color:#fff}
+.rung.on{opacity:1;border-color:var(--a);transform:translateX(8px)}
+.rung.on .num{background:var(--a);color:#fff}
+.fcpanel{padding:26px}
+.fcpanel h3{font-size:26px;margin:4px 0 8px}
+.pairs{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px}
+.pair{perspective:600px;height:64px;cursor:pointer}
+.pair .in{position:relative;width:100%;height:100%;transition:transform .5s;transform-style:preserve-3d}
+.pair.flip .in{transform:rotateY(180deg)}
+.pair .f,.pair .k{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;display:flex;align-items:center;justify-content:center;text-align:center;border-radius:12px;font-weight:700;font-size:13.5px;padding:6px}
+.pair .f{background:#fef2f2;color:#b91c1c;border:1px solid #fecaca}
+.pair .k{background:#ecfdf5;color:#047857;border:1px solid #a7f3d0;transform:rotateY(180deg)}
+.levels{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:22px}
+.lvl{padding:20px;cursor:pointer;transition:all .3s;position:relative;overflow:hidden}
+.lvl .bar{height:8px;border-radius:99px;background:#eef0f7;margin:10px 0}
+.lvl .bar i{display:block;height:100%;border-radius:99px}
+.lvl h4{font-size:18px}
+.lvl p{margin:0;font-size:14px;color:var(--mut)}
+.lvl:hover{transform:translateY(-4px)}
+.speed{margin-top:18px;text-align:center;font-family:'Space Grotesk';font-size:22px;font-weight:700}
+.formats{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.flip{perspective:1000px;height:230px;cursor:pointer}
+.flip .in{position:relative;width:100%;height:100%;transition:transform .7s cubic-bezier(.3,1.4,.5,1);transform-style:preserve-3d}
+.flip.on .in{transform:rotateY(180deg)}
+.flip .f,.flip .k{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:var(--r);padding:24px;display:flex;flex-direction:column;justify-content:space-between}
+.flip .f{color:#fff}
+.flip .f h3{font-size:24px;line-height:1.1}
+.flip .f .ic{font-size:34px}
+.flip .f small{font-weight:700;opacity:.85;font-size:12.5px}
+.flip .k{background:#fff;border:1px solid var(--line);transform:rotateY(180deg)}
+.flip .k p{margin:0;font-size:15.5px}
+.flip .k .ex{font-size:13px;color:var(--mut);border-left:3px solid var(--line);padding-left:10px;font-style:italic}
+.archfeat{display:flex;gap:12px;margin-top:16px;flex-wrap:wrap}
+.archfeat div{flex:1;min-width:230px;padding:18px 20px}
+.filters{display:flex;gap:8px;flex-wrap:wrap;margin-block-end:20px}
+.filters button{border:1px solid var(--line);background:#fff;border-radius:99px;padding:9px 15px;font-weight:700;font-size:13.5px;transition:all .2s}
+.filters button.on{background:var(--ink);color:#fff;border-color:var(--ink)}
+.filters button i{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:6px;vertical-align:1px}
+.gallery{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:14px}
+.inv{padding:20px;text-decoration:none;color:inherit;display:flex;flex-direction:column;gap:10px;transition:transform .3s,opacity .3s,box-shadow .3s;border-top:4px solid var(--pc);min-height:170px}
+.inv:hover{transform:translateY(-5px) rotate(-.4deg);box-shadow:0 18px 40px -16px rgba(30,41,90,.35)}
+.inv.hide{display:none}
+.inv .meta{display:flex;justify-content:space-between;font-size:12px;font-weight:700;color:var(--mut)}
+.inv .pt{color:var(--pc)}
+.inv h4{font-size:17.5px;line-height:1.25}
+.inv .go{margin-top:auto;font-size:13px;font-weight:700;color:var(--a)}
+.archive-link{margin-top:18px;text-align:center}
+.netwrap{padding:14px;display:grid;grid-template-columns:1fr 290px;gap:14px;align-items:start}
+#net{width:100%;height:660px;display:block;touch-action:none}
+#net .lk{stroke:#cbd3e6;stroke-width:1;transition:stroke .2s,opacity .2s}
+#net .nd{cursor:pointer;transition:opacity .2s}
+#net .nd text{font-size:10px;font-weight:600;fill:#334155;pointer-events:none;paint-order:stroke;stroke:#fff;stroke-width:3px}
+#net.focus .lk{opacity:.12}
+#net.focus .nd{opacity:.18}
+#net.focus .lk.hl{opacity:1;stroke:var(--a);stroke-width:2}
+#net.focus .nd.hl{opacity:1}
+.netinfo{padding:18px;font-size:14px;max-height:660px;overflow:auto;box-shadow:none;background:#f8f9fd}
+.netinfo h4{font-size:17px;margin-block-end:6px}
+.netinfo ul{margin:6px 0 0;padding-left:18px;color:var(--mut)}
+.netlegend{display:flex;flex-wrap:wrap;gap:8px;margin-block-end:12px}
+.netlegend button{border:1px solid var(--line);background:#fff;border-radius:99px;padding:7px 12px;font-size:12.5px;font-weight:700}
+.netlegend button i{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:6px;vertical-align:0}
+.netlegend button.on{background:var(--ink);color:#fff}
+.disclaimer{font-size:12.5px;color:var(--mut);margin-top:10px}
+.mon{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-block-end:22px}
+.mon div{padding:16px;text-align:center}
+.mon .ic{font-size:26px}
+.mon h4{font-size:15px;margin-top:6px}
+.mon p{margin:2px 0 0;font-size:12.5px;color:var(--mut)}
+.themes{display:flex;flex-wrap:wrap;gap:8px}
+.theme{padding:9px 14px;border-radius:99px;background:#fff;border:1px solid var(--line);font-size:13.5px;font-weight:600;cursor:pointer;transition:all .25s;user-select:none}
+.theme:hover{transform:translateY(-2px)}
+.theme.on{color:#fff;border-color:transparent}
+.radar{display:flex;align-items:center;gap:14px;margin-top:18px;font-weight:700}
+.radar .pulse{width:14px;height:14px;border-radius:50%;background:var(--e);box-shadow:0 0 0 0 rgba(16,185,129,.6);animation:pulse 1.6s infinite}
+@keyframes pulse{to{box-shadow:0 0 0 16px rgba(16,185,129,0)}}
+.links{display:grid;grid-template-columns:1fr 1fr;gap:22px}
+.utm{padding:24px}
+.utm select{width:100%;padding:11px 12px;border-radius:12px;border:1px solid var(--line);font:inherit;font-size:14px;margin:6px 0 12px;background:#fff}
+.url{font-family:ui-monospace,Menlo,monospace;font-size:12.5px;background:#0f172a;color:#e2e8f0;border-radius:12px;padding:14px;word-break:break-all;line-height:1.6}
+.url .k{color:#a5b4fc}.url .v{color:#86efac}
+.lp{padding:24px}
+.lpmock{border:1px solid var(--line);border-radius:14px;overflow:hidden;margin-top:12px}
+.lpmock .img{height:90px;background:linear-gradient(135deg,var(--a),var(--b),var(--c))}
+.lpmock .b{padding:14px}
+.lpmock .row{display:flex;align-items:center;gap:10px;padding:7px 0;font-size:13.5px;font-weight:600;cursor:pointer;border-block-end:1px dashed var(--line);flex-wrap:wrap}
+.lpmock .row:last-child{border:0}
+.lpmock .row span{font-size:12px;color:var(--mut);font-weight:500;display:none}
+.lpmock .row.on span{display:inline}
+.when{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px;font-size:13.5px}
+.when div{padding:14px;border-radius:14px}
+.when .y{background:#ecfdf5}.when .n{background:#fef2f2}
+.when b{display:block;margin-block-end:4px}
+.when ul{margin:0;padding-left:16px}
+.aud{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.ag{padding:18px;cursor:pointer;transition:all .25s}
+.ag:hover,.ag.on{transform:translateY(-4px);border-color:var(--b)}
+.ag .ic{font-size:28px}
+.ag h4{font-size:16px;margin-top:6px}
+.ag p{margin:4px 0 0;font-size:13px;color:var(--mut)}
+.rel{display:grid;grid-template-columns:1.2fr 1fr;gap:22px;margin-top:22px}
+.relout{padding:26px;text-align:center;display:flex;flex-direction:column;justify-content:center}
+.relout .big{font-family:'Space Grotesk';font-size:56px;font-weight:700;line-height:1}
+.ring{width:180px;height:180px;margin:0 auto 10px;position:relative}
+.ring svg{transform:rotate(-90deg)}
+.ring .big{position:absolute;inset:0;display:flex;align-items:center;justify-content:center}
+.never{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:22px}
+.never div{padding:14px 16px;font-size:14px;font-weight:600;display:flex;gap:10px;align-items:center}
+.never div:before{content:"\2715";color:#e11d48;font-weight:800}
+.never div.yes:before{content:"\2713";color:var(--e)}
+.hero-metric{padding:30px;text-align:center;background:linear-gradient(135deg,#eef2ff,#ecfeff);border:1px solid #c7d2fe;margin-block-end:20px}
+.hero-metric .l{font-size:13px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--a)}
+.hero-metric h3{font-size:clamp(28px,4.4vw,46px);margin:6px 0}
+.hero-metric p{margin:0;color:var(--mut)}
+.cmp{display:flex;gap:12px;justify-content:center;margin-top:18px;flex-wrap:wrap}
+.cmp div{background:#fff;border:2px solid var(--line);border-radius:14px;padding:12px 16px;font-size:14px;text-align:left;min-width:240px;cursor:pointer}
+.cmp div b{display:block;font-family:'Space Grotesk';font-size:16px}
+.cmp .win{border-color:var(--e)}
+.meas{display:grid;grid-template-columns:repeat(5,1fr);gap:12px}
+.ms{padding:20px 16px;cursor:pointer;transition:all .3s}
+.ms .ic{font-size:28px}
+.ms h4{font-size:16px;margin:8px 0 4px;line-height:1.2}
+.ms ul{list-style:none;padding:0;margin:8px 0 0;font-size:13px;color:var(--mut);display:none}
+.ms li{padding:5px 0;border-top:1px dashed var(--line)}
+.ms.on ul{display:block;animation:pop .3s}
+.ms.on{border-color:var(--a)}
+.ms .t{font-size:12px;font-weight:700;color:var(--a)}
+.records{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:22px}
+.rec{padding:20px}
+.rec h4{font-size:16px}
+.rec p{margin:4px 0 0;font-size:13.5px;color:var(--mut)}
+.cad{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:22px}
+.cd{padding:18px;text-align:center}
+.cd .ring2{width:64px;height:64px;border-radius:50%;margin:0 auto 10px;border:5px solid var(--line);border-top-color:var(--a);animation:spin var(--sp) linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.cd h4{font-size:16px}
+.cd p{margin:4px 0 0;font-size:13px;color:var(--mut)}
+.baseline{margin-top:20px;padding:18px 22px;display:flex;align-items:center;gap:16px;background:#fffbeb;border-color:#fde68a}
+.baseline b{font-family:'Space Grotesk';font-size:18px}
+.close{background:linear-gradient(135deg,#0f172a,#1e1b4b 55%,#0e7490);color:#fff;text-align:center;overflow:hidden}
+.close h2{font-size:clamp(34px,6vw,66px);line-height:1.04;max-width:900px;margin:0 auto 18px}
+.close p{color:#c7d2fe;font-size:19px;max-width:620px;margin:0 auto 30px}
+.close .btn.pri{background:#fff;color:var(--ink)}
+.close .btn.sec{background:transparent;color:#fff;border-color:rgba(255,255,255,.35)}
+footer{padding:26px 0;text-align:center;font-size:13px;color:var(--mut)}
+@media (max-width:980px){
+  .counters{grid-template-columns:repeat(3,1fr)}
+  .pillars,.obj,.meas,.mon{grid-template-columns:repeat(2,1fr)}
+  .fly,.calc,.arch,.fc,.links,.rel,.voice{grid-template-columns:1fr}
+  .formats,.aud,.never,.records{grid-template-columns:repeat(2,1fr)}
+  .cad{grid-template-columns:repeat(2,1fr)}
+  .netwrap{grid-template-columns:1fr}.netinfo{max-height:none}
+  #net{height:520px}
+}
+@media (max-width:600px){
+  section{padding:64px 0}
+  .counters{grid-template-columns:repeat(2,1fr)}
+  .pillars,.obj,.formats,.aud,.never,.records,.levels,.rules3,.principle,.meas,.mon,.traits{grid-template-columns:1fr}
+  .phases{grid-template-columns:repeat(2,1fr);row-gap:22px}
+  .phases:before,#phaseFill{display:none}
+  .pairs,.when{grid-template-columns:1fr}
+  #net{height:460px}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.reveal{opacity:1;transform:none}}
+</style>
+</head>
+<body>
+<div id="prog"></div>
+<nav class="top"><div class="wrap">
+  <a class="logo" href="#top"><i></i>The Neuron on X</a>
+  <div class="navlinks" id="navlinks">
+    <a href="#question">Question</a><a href="#pillars">Pillars</a><a href="#system">System</a><a href="#score">Score</a><a href="#launch">Launch</a><a href="#archive">Archive</a><a href="#factcheck">Fact-check</a><a href="#formats">Formats</a><a href="#research">Research</a><a href="#network">Network</a><a href="#audience">Audience</a><a href="#measure">Measure</a>
+  </div>
+</div></nav>
+
+<header class="hero" id="top">
+  <canvas id="neural"></canvas>
+  <div class="wrap">
+    <div class="kicker">The Neuron on X</div>
+    <h1>We connect the people, organizations, money and networks <span class="grad">behind the stories everyone else is discussing.</span></h1>
+    <p class="sub">An investigative research desk, live on X. Every post draws on documented research.</p>
+    <div class="counters">
+      <a class="ctr" href="#research"><b data-count="14">0</b><span>investigations published</span></a>
+      <a class="ctr" href="#pillars"><b data-count="5">0</b><span>editorial pillars</span></a>
+      <a class="ctr" href="#formats"><b data-count="6">0</b><span>signature formats</span></a>
+      <a class="ctr" href="#monitor"><b data-count="20">0</b><span>themes monitored</span></a>
+      <a class="ctr" href="#network"><b data-count="54" id="orgCount">0</b><span>organizations mapped</span></a>
+      <a class="ctr" href="#network"><b data-count="21">0</b><span>people mapped</span></a>
+    </div>
+    <div class="cta-row">
+      <a class="btn pri" href="#system">See how it works &rarr;</a>
+      <a class="btn sec" href="#score">Try the scoring engine</a>
+    </div>
+  </div>
+</header>
+
+<section class="q" id="question">
+  <div class="wrap">
+    <div class="kicker">One question drives everything</div>
+    <p class="qline" id="qline">
+      <span class="w key" data-x="We trace influence to its source: the person, group or state at the start of the chain.">Who</span>
+      <span class="w">is</span> <span class="w key" data-x="Influence is a verb. We document what is actually happening, not what is assumed.">influencing</span>
+      <span class="w key" data-x="Influence lands somewhere: a campus, a party, a newsroom, an encyclopedia.">whom,</span>
+      <span class="w">through what</span> <span class="w key" data-x="Nonprofits, foundations, fronts and fiscal sponsors. The vehicles influence travels in.">organizations,</span>
+      <span class="w key" data-x="Shared leaders, board seats, partnerships and personnel overlaps.">relationships,</span>
+      <span class="w key" data-x="Money, grants and funding structures. We follow the money.">resources,</span>
+      <span class="w">and</span> <span class="w key" data-x="Campaigns, narratives, lawsuits and messaging. The how behind the what.">mechanisms?</span>
+    </p>
+    <div class="qexplain" id="qexplain">Tap any highlighted word.</div>
+    <div class="principle">
+      <div class="no"><h4>Not the goal</h4><p>Posting as often as possible.</p></div>
+      <div class="yes"><h4>The goal</h4><p>Be relevant, informative and interesting to the right people. Known for quality, not volume.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="objective">
+  <div class="wrap reveal">
+    <div class="kicker">More than an article feed</div>
+    <h2 class="h2">Five jobs, one account.</h2>
+    <p class="lead">An extension of the investigative desk, growing into a recognizable source of investigative commentary. Tap each job.</p>
+    <div class="obj" id="obj">
+      <div class="card ob"><div class="ic">💬</div><h4>Join</h4><p>Takes part in relevant conversations with something substantive to add.</p></div>
+      <div class="card ob"><div class="ic">🔦</div><h4>Introduce</h4><p>Brings key findings from the investigations to the people who need them.</p></div>
+      <div class="card ob"><div class="ic">🧩</div><h4>Connect</h4><p>Links today's news to research already published.</p></div>
+      <div class="card ob"><div class="ic">🤝</div><h4>Relate</h4><p>Builds relationships with people who genuinely care about these subjects.</p></div>
+      <div class="card ob"><div class="ic">🧭</div><h4>Discover</h4><p>Spots new developments and fresh research leads.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="pillars" style="background:#fff">
+  <div class="wrap reveal">
+    <div class="kicker">Editorial scope</div>
+    <h2 class="h2">Five pillars. <span class="grad">One thread.</span></h2>
+    <p class="lead">The networks, institutions, funding, relationships and influence operations shaping political movements, public discourse and Western institutions. Tap a pillar.</p>
+    <div class="pillars" id="pillarGrid"></div>
+    <div class="card pil-detail" id="pilDetail"></div>
+    <div class="connector">Interconnected areas of investigation, not five separate identities.</div>
+  </div>
+</section>
+
+<section id="voice">
+  <div class="wrap reveal">
+    <div class="kicker">Voice</div>
+    <h2 class="h2">Find the sweet spot.</h2>
+    <p class="lead">Drag the dial. Between a dry feed and an outrage account sits the voice of The Neuron.</p>
+    <div class="voice">
+      <div class="card dial">
+        <input type="range" id="dial" min="0" max="100" value="15" aria-label="Voice dial">
+        <div class="ends"><span>Dry announcement feed</span><span>Outrage account</span></div>
+        <div class="out" id="dialOut"></div>
+      </div>
+      <div class="traits" id="traits"></div>
+    </div>
+  </div>
+</section>
+
+<section id="system" style="background:#fff">
+  <div class="wrap reveal">
+    <div class="kicker">The system</div>
+    <h2 class="h2">Seven parts. <span class="grad">One loop.</span></h2>
+    <p class="lead">Each part feeds the next. Press play or tap any node.</p>
+    <div class="fly">
+      <svg id="flysvg" viewBox="0 0 500 500" aria-label="System loop"></svg>
+      <div class="card flypanel" id="flypanel"></div>
+    </div>
+  </div>
+</section>
+
+<section id="monitor">
+  <div class="wrap reveal">
+    <div class="kicker">Monitoring</div>
+    <h2 class="h2">20 themes. <span class="grad">Always listening.</span></h2>
+    <p class="lead">Keywords, curated lists and news alerts. It recognizes related ideas, not just exact names. Tap themes to light up the radar.</p>
+    <div class="mon">
+      <div class="card"><div class="ic">🗂️</div><h4>Topics</h4><p>All five pillars</p></div>
+      <div class="card"><div class="ic">🧑‍💼</div><h4>People</h4><p>Journalists, researchers, policymakers</p></div>
+      <div class="card"><div class="ic">🏛️</div><h4>Organizations</h4><p>Investigated or worth investigating</p></div>
+      <div class="card"><div class="ic">📰</div><h4>Developments</h4><p>News, reports, statements</p></div>
+      <div class="card"><div class="ic">🗣️</div><h4>Conversations</h4><p>Even with no mention of The Neuron</p></div>
+    </div>
+    <div class="themes" id="themes"></div>
+    <div class="radar"><div class="pulse"></div><span id="radarTxt">0 of 20 themes on the radar</span></div>
+  </div>
+</section>
+
+<section id="score" style="background:#fff">
+  <div class="wrap reveal">
+    <div class="kicker">Opportunity scoring</div>
+    <h2 class="h2">Should we reply? <span class="grad">Score it.</span></h2>
+    <p class="lead">Six criteria, scored 0 to 5, weighted into a 0 to 100 priority. Move the sliders or try an example.</p>
+    <div class="calc">
+      <div class="card sliders">
+        <div class="presets">
+          <button data-p="5,5,4,5,4,4">Breaking story we investigated</button>
+          <button data-p="3,2,3,3,3,2">Loosely related thread</button>
+          <button data-p="1,1,2,0,1,1">Off-topic viral post</button>
+        </div>
+        <div id="oppSliders"></div>
+      </div>
+      <div class="card gauge">
+        <svg id="gsvg" viewBox="0 0 300 170">
+          <path d="M30 150 A120 120 0 0 1 270 150" fill="none" stroke="#e6e9f5" stroke-width="22" stroke-linecap="round"/>
+          <path id="garc" d="M30 150 A120 120 0 0 1 270 150" fill="none" stroke="url(#gg)" stroke-width="22" stroke-linecap="round" stroke-dasharray="377" stroke-dashoffset="377" style="transition:stroke-dashoffset .5s"/>
+          <defs><linearGradient id="gg" x1="0" x2="1"><stop offset="0" stop-color="#f43f5e"/><stop offset=".45" stop-color="#f59e0b"/><stop offset=".7" stop-color="#06b6d4"/><stop offset="1" stop-color="#10b981"/></linearGradient></defs>
+        </svg>
+        <div class="score" id="scoreNum">0</div>
+        <div style="font-size:13px;color:var(--mut);font-weight:700">priority score out of 100</div>
+        <div class="verdict" id="verdict"></div>
+        <div class="bands" id="bands">
+          <div style="background:#fee2e2;color:#b91c1c">0 to 39<br>Skip</div>
+          <div style="background:#fef3c7;color:#b45309">40 to 59<br>Monitor</div>
+          <div style="background:#cffafe;color:#0e7490">60 to 79<br>Engage</div>
+          <div style="background:#d1fae5;color:#047857">80 to 100<br>High priority</div>
+        </div>
+      </div>
+    </div>
+    <div class="rules3">
+      <div class="card"><b>🛡️ Accuracy wins</b>Research quality always outranks a high score.</div>
+      <div class="card"><b>🔁 Memory</b>Repeated unanswered approaches lower the priority.</div>
+      <div class="card"><b>🎯 Fit over size</b>A small specialist account can beat a big generic one.</div>
+    </div>
+  </div>
+</section>
+
+<section id="launch">
+  <div class="wrap reveal">
+    <div class="kicker">Launch campaign</div>
+    <h2 class="h2">Every investigation <span class="grad">gets a launch.</span></h2>
+    <p class="lead">A coordinated burst on X, timed to each new publication. Tap a phase or press play.</p>
+    <div class="phases" id="phases"><div id="phaseFill"></div></div>
+    <div class="card phbody" id="phbody"></div>
+    <div class="ctrls"><button class="go" id="launchPlay">▶ Play the campaign</button></div>
+    <div class="noquota"><span>✕ No daily quota</span><span>✕ No manufactured content</span><span>✕ No "new article" posts with no reason to read</span></div>
+  </div>
+</section>
+
+<section id="archive" style="background:#fff">
+  <div class="wrap reveal">
+    <div class="kicker">Living archive</div>
+    <h2 class="h2">Old research, <span class="grad">new relevance.</span></h2>
+    <p class="lead">The context engine matches today's news to past investigations. Pick a sample trigger and watch it search.</p>
+    <div class="arch">
+      <div class="modes" id="modes">
+        <div class="card mode on"><div class="ic">⚡</div><div><h4>Trigger-based</h4><p>News breaks. The archive is checked for related findings.</p></div></div>
+        <div class="card mode"><div class="ic">🗓️</div><div><h4>Editorial</h4><p>The weekly review finds discoveries that deserve more attention.</p></div></div>
+        <div class="card mode"><div class="ic">🔁</div><div><h4>Recurring features</h4><p>From The Archives, The Missing Context, Previously Investigated, Follow the Network, What We Know.</p></div></div>
+      </div>
+      <div class="card engine">
+        <h4 style="font-size:18px">Context engine demo</h4>
+        <div class="trig" id="trig"></div>
+        <div class="scan"><i id="scanbar"></i></div>
+        <div id="matches"><div class="hint">Choose a sample trigger above.</div></div>
+        <div class="recheck">⏱ Before reuse, every old finding is rechecked for later developments and clearly dated.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="factcheck">
+  <div class="wrap reveal">
+    <div class="kicker">Fact-check</div>
+    <h2 class="h2">Six steps <span class="grad">before anything posts.</span></h2>
+    <p class="lead">Every material claim climbs the ladder. Step through it.</p>
+    <div class="fc">
+      <div class="ladder" id="ladder"></div>
+      <div class="card fcpanel" id="fcpanel"></div>
+    </div>
+    <div class="levels" id="levels"></div>
+    <div class="speed">Accuracy beats speed. Every verified claim goes into a searchable record.</div>
+  </div>
+</section>
+
+<section id="formats" style="background:#fff">
+  <div class="wrap reveal">
+    <div class="kicker">Signature formats</div>
+    <h2 class="h2">Six formats <span class="grad">people will recognize.</span></h2>
+    <p class="lead">Tap a card to flip it.</p>
+    <div class="formats" id="fmtGrid"></div>
+    <div class="archfeat">
+      <div class="card"><b>📚 From The Archives</b><br><span style="color:var(--mut);font-size:14px">Revisits past research when it matters again.</span></div>
+      <div class="card"><b>🕸️ Follow the Network</b><br><span style="color:var(--mut);font-size:14px">Walks through the web of links behind a story.</span></div>
+    </div>
+  </div>
+</section>
+
+<section id="research">
+  <div class="wrap reveal">
+    <div class="kicker">The research</div>
+    <h2 class="h2"><span class="grad">14 investigations</span> ready to deploy.</h2>
+    <p class="lead">Filter by pillar. Every card opens the full investigation.</p>
+    <div class="filters" id="filters"></div>
+    <div class="gallery" id="gallery"></div>
+    <div class="archive-link"><a class="btn sec" href="https://the-neuron.net/section/research/" target="_blank" rel="noopener">Browse the full research archive &rarr;</a></div>
+  </div>
+</section>
+
+<section id="network" style="background:#fff">
+  <div class="wrap reveal">
+    <div class="kicker">Knowledge base</div>
+    <h2 class="h2">How the knowledge base <span class="grad">links research.</span></h2>
+    <p class="lead"><b id="orgCount2">54</b> organizations, 14 investigations and 21 people mapped so far. Every article is broken into people, organizations, subjects, findings, funding links, sources and dates. Tap a node, drag to explore.</p>
+    <div class="netlegend" id="netlegend"></div>
+    <div class="card netwrap">
+      <svg id="net"></svg>
+      <div class="card netinfo" id="netinfo"><h4>Tap any node</h4><div style="color:var(--mut)">See which research and clusters it links to. Numbered dots are investigations, rings are clusters.</div></div>
+    </div>
+    <div class="disclaimer">This map shows how the knowledge base indexes and cross-references published research. A line means an organization appears in, or is grouped with, that research. It is not an allegation of any relationship. People are stored in the knowledge base and shown here only as a count.</div>
+  </div>
+</section>
+
+<section id="links">
+  <div class="wrap reveal">
+    <div class="kicker">Links with purpose</div>
+    <h2 class="h2">Every link <span class="grad">earns its place.</span></h2>
+    <p class="lead">Only when the research adds to the point. Every click is measurable.</p>
+    <div class="links">
+      <div class="card utm">
+        <h4 style="font-size:18px">Tracking link builder</h4>
+        <label for="utmInv" style="font-size:13px;font-weight:700;color:var(--mut);display:block;margin-top:10px">Investigation</label>
+        <select id="utmInv"></select>
+        <label for="utmType" style="font-size:13px;font-weight:700;color:var(--mut)">Post type</label>
+        <select id="utmType">
+          <option value="launch_post">Launch post</option>
+          <option value="evidence_post">Evidence post</option>
+          <option value="reply">Reply</option>
+          <option value="archive_feature">Archive feature</option>
+        </select>
+        <div class="url" id="utmOut"></div>
+        <div class="when">
+          <div class="y"><b>✓ Link when</b><ul><li>The reply draws on an investigation</li><li>The article adds evidence or context</li><li>Someone asks about the subject</li></ul></div>
+          <div class="n"><b>✕ Skip the link when</b><ul><li>Simply joining a conversation</li><li>The article is only loosely related</li><li>It would feel like an advert</li></ul></div>
+        </div>
+      </div>
+      <div class="card lp">
+        <h4 style="font-size:18px">Branded landing page, per investigation</h4>
+        <div class="lpmock">
+          <div class="img"></div>
+          <div class="b" id="lpRows">
+            <div class="row">📰 Headline <span>A compelling, clear headline.</span></div>
+            <div class="row">🖼️ Featured image <span>A strong thumbnail.</span></div>
+            <div class="row">✍️ Summary <span>Why the investigation matters, fast.</span></div>
+            <div class="row">🔑 2 or 3 key findings <span>The best discoveries up front.</span></div>
+            <div class="row">➡️ Full article link <span>One clear path to the full research.</span></div>
+            <div class="row">🔗 Related research <span>Links to connected investigations.</span></div>
+          </div>
+        </div>
+        <div class="hint">Tap each row. Branded, fast, transparent and mobile-friendly. If a page adds nothing, link straight to the article.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="audience" style="background:#fff">
+  <div class="wrap reveal">
+    <div class="kicker">Audience</div>
+    <h2 class="h2">The right people, <span class="grad">not the loudest.</span></h2>
+    <p class="lead">Six priority groups, ranked by genuine interest. Tap a group, then score a contact.</p>
+    <div class="aud" id="aud"></div>
+    <div class="rel">
+      <div class="card sliders"><h4 style="font-size:18px;margin-block-end:12px">Relevance score</h4><div id="relSliders"></div></div>
+      <div class="card relout">
+        <div class="ring"><svg width="180" height="180"><circle cx="90" cy="90" r="76" fill="none" stroke="#e6e9f5" stroke-width="16"/><circle id="relRing" cx="90" cy="90" r="76" fill="none" stroke="url(#rg)" stroke-width="16" stroke-linecap="round" stroke-dasharray="477.5" stroke-dashoffset="477.5" style="transition:stroke-dashoffset .5s"/><defs><linearGradient id="rg"><stop offset="0" stop-color="#06b6d4"/><stop offset="1" stop-color="#4f46e5"/></linearGradient></defs></svg><div class="big" id="relNum">0</div></div>
+        <div style="font-weight:700" id="relTxt"></div>
+      </div>
+    </div>
+    <div class="never">
+      <div class="yes">Relevance first, always</div>
+      <div>No tagging for prominence</div>
+      <div>No repeated sends of one article</div>
+      <div>No unsolicited promo DMs</div>
+      <div>No mass or automated replies</div>
+      <div>No forced connections</div>
+    </div>
+  </div>
+</section>
+
+<section id="measure">
+  <div class="wrap reveal">
+    <div class="kicker">Measurement</div>
+    <h2 class="h2">Measured by <span class="grad">what matters.</span></h2>
+    <div class="card hero-metric">
+      <div class="l">The hero metric</div>
+      <h3>Relevant engagement per post</h3>
+      <p>Which post wins? Tap one.</p>
+      <div class="cmp" id="cmp">
+        <div data-w="0"><b>Post A</b>A large pile of generic likes</div>
+        <div data-w="1"><b>Post B</b>A few replies from journalists and researchers</div>
+      </div>
+      <p id="cmpTxt" style="margin-top:12px;font-weight:700;min-height:24px"></p>
+    </div>
+    <div class="meas" id="meas"></div>
+    <div class="records">
+      <div class="card rec"><h4>📝 Post performance</h4><p>Date, type, topic, investigation, impressions, engagements, profile visits, clicks, relevant interactions.</p></div>
+      <div class="card rec"><h4>🔬 Investigation performance</h4><p>Launch campaign, follow-up posts, traffic, outside engagement, times resurfaced.</p></div>
+      <div class="card rec"><h4>👥 Audience performance</h4><p>Relevant people, their interests, interactions and how relationships grow.</p></div>
+    </div>
+    <div class="cad">
+      <div class="card cd" style="--sp:1.2s"><div class="ring2"></div><h4>Every campaign</h4><p>Review that campaign</p></div>
+      <div class="card cd" style="--sp:2.4s"><div class="ring2"></div><h4>Weekly</h4><p>Opportunities and interactions</p></div>
+      <div class="card cd" style="--sp:4.8s"><div class="ring2"></div><h4>Monthly</h4><p>Topics, formats and growth</p></div>
+      <div class="card cd" style="--sp:9.6s"><div class="ring2"></div><h4>Quarterly</h4><p>Reassess the strategy</p></div>
+    </div>
+    <div class="card baseline"><div style="font-size:30px">📏</div><div><b>Month one sets the baseline.</b><br><span style="color:var(--mut)">No performance figures yet. Targets are set from first-month results, not picked at random.</span></div></div>
+  </div>
+</section>
+
+<section class="close" id="follow">
+  <canvas id="neural2" style="position:absolute;inset:0;width:100%;height:100%;opacity:.5"></canvas>
+  <div class="wrap" style="position:relative">
+    <h2>Known for the quality of its connections, <span style="color:#67e8f9">not how often it posts.</span></h2>
+    <p>Information, connections and context for the conversations that matter.</p>
+    <div class="cta-row" style="justify-content:center">
+      <a class="btn pri" href="https://the-neuron.net" target="_blank" rel="noopener">Follow The Neuron &rarr;</a>
+      <a class="btn sec" href="https://the-neuron.net/section/research/" target="_blank" rel="noopener">Read the research</a>
+    </div>
+  </div>
+</section>
+<footer>The Neuron &middot; <a href="https://the-neuron.net" target="_blank" rel="noopener">the-neuron.net</a></footer>
+<script>
+(function(){
+const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
+const PC={1:'#4f46e5',2:'#0891b2',3:'#d97706',4:'#db2777',5:'#059669'};
+const PILLARS=[
+ {n:1,t:'Foreign Influence and Geopolitical Networks',s:'States and networks reaching across borders',items:['CCP and United Front networks','Foreign state interference','Qatar and its networks','Turkish influence','Foreign investment','Transnational networks']},
+ {n:2,t:'Organizational Networks and Funding',s:'The organizations and money behind movements',items:['Nonprofits and foundations','Money sources and funding structures','Fiscal sponsors and intermediaries','Leadership links','Overlapping personnel','Infrastructure behind movements']},
+ {n:3,t:'Influence Within Western Institutions',s:'Where influence lands',items:['Foreign funding of US and UK universities','University partnerships','Political parties','NGOs and think tanks','Media and culture','Information platforms']},
+ {n:4,t:'Political Movements and Extremist Networks',s:'Movements and their organizational backbone',items:['Muslim Brotherhood networks','Hamas and PFLP-related networks','Samidoun','Islamist movements','Radical movement infrastructure','Antisemitism and anti-Israel activism']},
+ {n:5,t:'Information, Narratives, and Influence',s:'How narratives are shaped and spread',items:['Wikipedia and information integrity','Coordinated messaging','Online influence campaigns','How narratives spread','Foreign influence in information ecosystems']}
+];
+const INV=[
+ {t:'NEO Philanthropy: The $180 Million Charity',d:'Jul 2026',p:2,u:'https://the-neuron.net/research/what-is-neo-philanthropy-and-does-it-support-hamas-affiliated-groups/',s:'neo_philanthropy'},
+ {t:'A Chinese Government-Linked Network Is Trying to Reach the Halls of the U.S. Government',d:'Jul 2026',p:1,u:'https://the-neuron.net/research/a-chinese-government-linked-network-is-trying-to-reach-the-halls-of-the-u-s-government/',s:'chinese_network_us_government'},
+ {t:'The Grand Jihad in America',d:'May 2026',p:4,u:'https://the-neuron.net/research/the-grand-jihad-in-america/',s:'grand_jihad_in_america'},
+ {t:'Samidoun: A Terror Group Posing as a Civilian Front',d:'May 2026',p:4,u:'https://the-neuron.net/research/samidoun-a-terror-group-posing-as-a-civilian-front/',s:'samidoun'},
+ {t:"The Freedom Flotilla Coalition's Connection to Hamas",d:'Mar 2026',p:4,u:'https://the-neuron.net/research/the-freedom-flotilla-coalitions-connection-to-hamas-and-us-designated-groups/',s:'freedom_flotilla_coalition'},
+ {t:'How Qatar Fuels Campus Extremism in the United States',d:'Mar 2026',p:3,u:'https://the-neuron.net/research/how-qatar-fuels-campus-extremismin-the-united-states/',s:'qatar_campus_extremism'},
+ {t:"How the Qatari Royals Conquered Northwestern's Campus in Doha",d:'Mar 2026',p:3,u:'https://the-neuron.net/research/how-the-qatari-royals-conquered-northwesterns-campus-in-doha/',s:'qatar_northwestern_doha'},
+ {t:"Wikipedia's Unsettling Embrace by the Far Left Tides Foundation",d:'Mar 2026',p:5,u:'https://the-neuron.net/research/wikipedias-unsettling-embrace-by-the-far-left-tides-foundation/',s:'wikipedia_tides_foundation'},
+ {t:'The Muslim Brotherhood: A Case for Designation as a U.S. Foreign Terrorist Organization',d:'Mar 2026',p:4,u:'https://the-neuron.net/research/the-muslim-brotherhood-a-case-for-designation-as-a-u-s-foreign-terrorist-organization/',s:'muslim_brotherhood_designation'},
+ {t:"The Hind Rajab Foundation's True Origins Revealed",d:'Mar 2026',p:2,u:'https://the-neuron.net/research/the-hind-rajab-foundation/',s:'hind_rajab_foundation'},
+ {t:"Foreign Networks Connected to Britain's Green Party Anti-West Agenda",d:'Oct 2026',p:3,u:'https://the-neuron.net/research/foreign-networks-connected-to-britains-green-party-anti-west-agenda/',s:'uk_green_party_networks'},
+ {t:"Turkey's Influence Campaigns in America Go Unchecked",d:'Aug 2026',p:1,u:'https://the-neuron.net/research/turkeys-influence-campaigns-in-america-go-unchecked/',s:'turkey_influence_campaigns'},
+ {t:'Chinese Investment and Influence in the United States',d:'Mar 2026',p:1,u:'https://the-neuron.net/research/chinese-investment-and-influence-in-the-united-states/',s:'chinese_investment_influence'},
+ {t:'The China-Affiliated Hub in the Heart of NYC',d:'Mar 2026',p:2,u:'https://the-neuron.net/research/the-china-affiliated-hub-in-the-heart-of-nyc/',s:'china_hub_nyc'}
+];
+const CLUSTERS=[
+ {k:'mb',n:'Muslim Brotherhood networks',c:'#db2777',orgs:['Muslim Brotherhood','CAIR','ISNA','NAIT','MAS','IAP','ICNA','Fiqh Council']},
+ {k:'hp',n:'Hamas, PFLP and associated',c:'#e11d48',orgs:['Hamas','PFLP','Samidoun','Masar Badil','Freedom Flotilla Coalition','PCPA','International Solidarity Movement','International Union of Muslim Scholars','Hind Rajab Foundation','March 30 Movement','Palestinian Center for Human Rights','Global Legal Action Network']},
+ {k:'cn',n:'Chinese influence',c:'#4f46e5',orgs:['PSL',"The People's Forum",'BreakThrough News','1804 Books','ANSWER Coalition','Progress Unity Fund','Justice and Education Fund','United Community Fund','Goldman Sachs Philanthropy Services','Huawei','Chinese Communist Party','United Front Work Department']},
+ {k:'qt',n:'Qatar and Turkey',c:'#d97706',orgs:['Qatar Foundation','Northwestern University','Northwestern University in Qatar','Al Jazeera','Diyanet Center of America','Turkish American National Steering Committee','Turkish Heritage Organization','Turkish Coalition of America','MÜSİAD','Turken Foundation']},
+ {k:'ot',n:'Other organizations',c:'#059669',orgs:['NEO Philanthropy','MPower Change','NEO Philanthropy Action Fund','Charity & Security Network','Palestinian American Medical Association','Baitulmaal','Tides Foundation','Wikimedia Foundation','Wikipedia','Green Party of England and Wales','Greens for Palestine','Riverway to the Sea']}
+];
+const ORG2INV={'NEO Philanthropy':[0],'NEO Philanthropy Action Fund':[0],'Chinese Communist Party':[1,12],'Muslim Brotherhood':[8],'Samidoun':[3],'Freedom Flotilla Coalition':[4],'Hamas':[4],'Hind Rajab Foundation':[9],'Qatar Foundation':[5,6],'Northwestern University':[6],'Northwestern University in Qatar':[6],'Wikipedia':[7],'Wikimedia Foundation':[7],'Tides Foundation':[7],'Green Party of England and Wales':[10],'Greens for Palestine':[10],'Turkish American National Steering Committee':[11],'Turkish Heritage Organization':[11],'Turkish Coalition of America':[11]};
+const INV2CL={2:'mb',13:'cn'};
+const ORG_TOTAL=CLUSTERS.reduce((a,c)=>a+c.orgs.length,0);
+$('#orgCount').dataset.count=ORG_TOTAL; $('#orgCount2').textContent=ORG_TOTAL;
+
+function neural(cv,dark){
+  const ctx=cv.getContext('2d');let W,H,pts=[];const dpr=window.devicePixelRatio||1;
+  function size(){const r=cv.getBoundingClientRect();W=cv.width=Math.max(1,r.width*dpr);H=cv.height=Math.max(1,r.height*dpr);
+    const n=Math.max(20,Math.min(90,Math.round(r.width*r.height/14000)));pts=[];for(let i=0;i<n;i++)pts.push({x:Math.random()*W,y:Math.random()*H,vx:(Math.random()-.5)*.35*dpr,vy:(Math.random()-.5)*.35*dpr,p:Math.random()*6.28});}
+  size();addEventListener('resize',size);
+  let mx=-1e4,my=-1e4;cv.parentElement.addEventListener('pointermove',e=>{const r=cv.getBoundingClientRect();mx=(e.clientX-r.left)*dpr;my=(e.clientY-r.top)*dpr});
+  const L=140*dpr;
+  (function f(){ctx.clearRect(0,0,W,H);
+    for(const p of pts){p.x+=p.vx;p.y+=p.vy;p.p+=.03;if(p.x<0||p.x>W)p.vx*=-1;if(p.y<0||p.y>H)p.vy*=-1;}
+    for(let i=0;i<pts.length;i++)for(let j=i+1;j<pts.length;j++){const a=pts[i],b=pts[j],d=Math.hypot(a.x-b.x,a.y-b.y);if(d<L){ctx.strokeStyle=dark?`rgba(165,180,252,${(1-d/L)*.5})`:`rgba(79,70,229,${(1-d/L)*.22})`;ctx.lineWidth=dpr;ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(b.x,b.y);ctx.stroke();}}
+    for(const p of pts){const near=Math.hypot(p.x-mx,p.y-my)<L;ctx.fillStyle=near?'#ec4899':(dark?'#a5f3fc':'rgba(6,182,212,.7)');ctx.beginPath();ctx.arc(p.x,p.y,(near?4:2.2+Math.sin(p.p))*dpr,0,7);ctx.fill();
+      if(near){ctx.strokeStyle='rgba(236,72,153,.4)';ctx.beginPath();ctx.moveTo(p.x,p.y);ctx.lineTo(mx,my);ctx.stroke();}}
+    requestAnimationFrame(f);})();
+}
+neural($('#neural'));neural($('#neural2'),true);
+
+function countUp(el){const t=+el.dataset.count,st=performance.now(),D=1400;(function f(n){const k=Math.max(0,Math.min(1,(n-st)/D));el.textContent=Math.round(t*(1-Math.pow(1-k,3)));if(k<1)requestAnimationFrame(f);})(st);}
+setTimeout(()=>$$('[data-count]').forEach(countUp),250);
+
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.05});
+$$('.reveal').forEach(e=>io.observe(e));
+const secs=$$('section[id]');
+addEventListener('scroll',()=>{const h=document.documentElement;$('#prog').style.width=(h.scrollTop/(h.scrollHeight-h.clientHeight)*100)+'%';
+  let cur='';secs.forEach(s=>{if(s.getBoundingClientRect().top<120)cur=s.id});$$('#navlinks a').forEach(a=>a.classList.toggle('on',a.getAttribute('href')==='#'+cur));},{passive:true});
+
+$$('#qline .key').forEach(w=>w.addEventListener('click',()=>{$$('#qline .key').forEach(x=>x.classList.remove('on'));w.classList.add('on');$('#qexplain').textContent=w.dataset.x;}));
+$$('#obj .ob').forEach(o=>o.addEventListener('click',()=>o.classList.toggle('on')));
+
+const pg=$('#pillarGrid');
+PILLARS.forEach((p,i)=>{const d=document.createElement('div');d.className='card pil';d.style.setProperty('--pc',PC[p.n]);
+  d.innerHTML=`<div class="n">0${p.n}</div><h3>${p.t}</h3><div class="more">Explore &rarr;</div>`;d.onclick=()=>showPil(i);pg.appendChild(d);});
+function showPil(i){const p=PILLARS[i],det=$('#pilDetail');det.style.setProperty('--pc',PC[p.n]);
+  const inv=INV.filter(v=>v.p===p.n);
+  det.innerHTML=`<div style="font-size:13px;font-weight:800;color:${PC[p.n]}">PILLAR ${p.n}</div><h3 style="font-size:26px;margin:4px 0">${p.t}</h3><div style="color:var(--mut)">${p.s}</div>
+  <div class="chips">${p.items.map((x,k)=>`<span class="chip" style="animation-delay:${k*60}ms">${x}</span>`).join('')}</div>
+  <div class="inv-links"><b>${inv.length}</b> investigation${inv.length>1?'s':''} filed here: ${inv.map(v=>`<a href="${v.u}" target="_blank" rel="noopener">${v.t}</a>`).join(' &middot; ')}</div>`;
+  det.classList.remove('show');void det.offsetWidth;det.classList.add('show');
+  $$('#pillarGrid .pil').forEach((x,k)=>x.style.opacity=k===i?1:.55);}
+
+const TRAITS=[['Confident','States documented findings clearly'],['Investigative','Knows the networks behind headlines'],['Analytical','Explains why it matters'],['Curious','Chases unanswered questions'],['Skeptical','Examines claims critically'],['Provocative, responsibly','Makes people think, never exaggerates']];
+$('#traits').innerHTML=TRAITS.map(t=>`<div class="card trait"><div class="t">${t[0]}</div><div class="d">${t[1]}</div></div>`).join('');
+$$('#traits .trait').forEach(t=>t.onclick=()=>t.classList.toggle('on'));
+function dial(){const v=+$('#dial').value,o=$('#dialOut');let h,b,bg;
+  if(v<30){h='Too dry';b='"New article out now." Announces, explains nothing, gives no reason to read.';bg='#f1f5f9';}
+  else if(v<=70){h='✓ The Neuron';b='Researchers who understand the networks behind the headlines, explaining what they found, with evidence.';bg='#ecfdf5';}
+  else{h='Too hot';b='Outrage, accusations and point-scoring. Loud, but not credible.';bg='#fef2f2';}
+  o.innerHTML=`<b>${h}</b>${b}`;o.style.background=bg;$$('#traits .trait').forEach(t=>t.classList.toggle('on',v>=30&&v<=70));}
+$('#dial').oninput=dial;dial();
+const FLY=[
+ {t:'Knowledge Base',i:'🧠',c:'#4f46e5',d:'Every article, broken into parts.',l:['People, organizations and subjects','Findings and funding links','Sources and dates','Recognizes related concepts, not just exact names']},
+ {t:'Monitoring',i:'📡',c:'#0891b2',d:'Listens for conversations that matter.',l:['Topics, people and organizations','Current developments','Relevant conversations','Keywords, curated lists and news alerts']},
+ {t:'Opportunity Scoring',i:'🎯',c:'#7c3aed',d:'Picks where we can add the most.',l:['Six weighted criteria','A 0 to 100 priority','Accuracy always outranks the score']},
+ {t:'Fact-Check',i:'🔍',c:'#d97706',d:'Verifies before anything posts.',l:['Six steps from claim to approval','Three verification levels','Human approval for serious allegations']},
+ {t:'Engage and Publish',i:'💬',c:'#db2777',d:'Adds evidence, context and connections.',l:['Replies with substance','Original posts and threads','Launch campaigns for new work']},
+ {t:'Measure',i:'📊',c:'#059669',d:'Tracks what actually lands.',l:['Relevant engagement per post','Post, investigation and audience records','Consistent tracking links']},
+ {t:'Weekly Review',i:'🗓️',c:'#e11d48',d:"Sets next week's priorities.",l:['Key conversations and opportunities','New people and relationships','Research worth resurfacing','New investigative leads']}
+];
+const fs=$('#flysvg');let fi=0,ftimer=null;
+(function(){let h=`<circle cx="250" cy="250" r="175" fill="none" stroke="#e6e9f5" stroke-width="3" stroke-dasharray="6 8"><animateTransform attributeName="transform" type="rotate" from="0 250 250" to="360 250 250" dur="40s" repeatCount="indefinite"/></circle>
+ <circle id="flyPulse" r="8" fill="#4f46e5"/>
+ <text x="250" y="244" text-anchor="middle" font-family="Space Grotesk" font-weight="700" font-size="22" fill="#0f172a">The Neuron</text><text x="250" y="268" text-anchor="middle" font-size="13" fill="#5b6478">research engine</text>`;
+ FLY.forEach((f,i)=>{const a=-Math.PI/2+i*2*Math.PI/FLY.length,x=250+175*Math.cos(a),y=250+175*Math.sin(a);f.x=x;f.y=y;
+  h+=`<g class="node" data-i="${i}" transform="translate(${x},${y})"><circle r="40" fill="#fff" stroke="${f.c}" stroke-width="3"/><text y="8" text-anchor="middle" style="font-size:24px">${f.i}</text></g>`;
+  const ly=y+(y>250?62:-54);h+=`<text x="${x}" y="${ly}" text-anchor="middle" font-family="Space Grotesk" font-weight="700" font-size="14" fill="#334155">${f.t}</text>`;});
+ fs.innerHTML=h;})();
+$$('#flysvg .node').forEach(n=>n.addEventListener('click',()=>{stopFly();setFly(+n.dataset.i)}));
+function setFly(i){fi=i;const f=FLY[i];
+ $$('#flysvg .node').forEach((n,k)=>{const c=n.querySelector('circle');c.setAttribute('r',k===i?48:40);c.setAttribute('fill',k===i?f.c:'#fff');});
+ const p=$('#flyPulse');p.setAttribute('cx',250+(f.x-250)*.62);p.setAttribute('cy',250+(f.y-250)*.62);p.setAttribute('fill',f.c);
+ $('#flypanel').innerHTML=`<div class="step">STEP ${i+1} OF ${FLY.length}</div><h3>${f.i} ${f.t}</h3><div style="font-size:18px">${f.d}</div><ul>${f.l.map(x=>`<li>${x}</li>`).join('')}</ul>
+ <div class="ctrls"><button id="fPrev">&larr; Back</button><button class="go" id="fPlay">${ftimer?'❚❚ Pause':'▶ Play loop'}</button><button id="fNext">Next &rarr;</button></div>`;
+ $('#fPrev').onclick=()=>{stopFly();setFly((fi+FLY.length-1)%FLY.length)};$('#fNext').onclick=()=>{stopFly();setFly((fi+1)%FLY.length)};
+ $('#fPlay').onclick=()=>{if(ftimer){stopFly();setFly(fi)}else{ftimer=setInterval(()=>setFly((fi+1)%FLY.length),2600);setFly((fi+1)%FLY.length)}};}
+function stopFly(){clearInterval(ftimer);ftimer=null;}
+setFly(0);
+
+const THEMES=['Foreign influence ops','CCP and United Front','Muslim Brotherhood infrastructure','Hamas financing networks','PFLP networks','Pro-Palestinian advocacy funding','Foreign funding of US universities','Qatar in education and media','Turkish influence ops','Foreign influence in UK parties','Anti-American movements','Nonprofit funding and fiscal sponsorship','Campaign financing and activist networks','Institutional and personnel overlaps','Antisemitism and anti-Israel activism','Wikipedia and information integrity','Legal campaigns against Israeli soldiers and officials','Foreign strategic investment','Campus activism and radicalization','Sanctions, designations and FARA'];
+const TC=['#4f46e5','#0891b2','#d97706','#db2777','#059669','#7c3aed','#e11d48'];
+$('#themes').innerHTML=THEMES.map((t,i)=>`<span class="theme" data-c="${TC[i%TC.length]}">${t}</span>`).join('');
+$$('#themes .theme').forEach(t=>t.onclick=()=>{t.classList.toggle('on');t.style.background=t.classList.contains('on')?t.dataset.c:'';const n=$$('#themes .theme.on').length;$('#radarTxt').textContent=n===20?'All 20 themes on the radar. Full coverage.':`${n} of 20 themes on the radar`;});
+
+const OPP=[['Research relevance',25,'Connects to our existing work?'],['Timeliness',20,'Happening now?'],['Audience value',20,'Reaches the right people?'],['Unique contribution',15,'Can we add evidence others lack?'],['Strategic value',10,'Builds a relationship or a lead?'],['Engagement potential',10,'Real chance of a conversation?']];
+function mkSliders(host,list,init,cb){host.innerHTML=list.map((c,i)=>`<div class="sl"><div class="top"><label for="${host.id}${i}">${c[0]} <span class="w">${c[1]}%</span></label><span class="v" id="${host.id}v${i}">${init[i]}</span></div><input type="range" min="0" max="5" step="1" value="${init[i]}" id="${host.id}${i}"><small>${c[2]}</small></div>`).join('');
+  list.forEach((c,i)=>$('#'+host.id+i).addEventListener('input',cb));cb();}
+function vals(host,n){return [...Array(n)].map((_,i)=>+$('#'+host+i).value);}
+function calcOpp(){const v=vals('oppSliders',6);v.forEach((x,i)=>$('#oppSlidersv'+i).textContent=x);
+  const s=Math.round(v.reduce((a,x,i)=>a+x/5*OPP[i][1],0));$('#scoreNum').textContent=s;$('#garc').style.strokeDashoffset=377*(1-s/100);
+  let b,t,bg,c;if(s>=80){b=3;t='High priority: reply, post or thread';bg='#d1fae5';c='#047857'}else if(s>=60){b=2;t='Engage when we can add something useful';bg='#cffafe';c='#0e7490'}else if(s>=40){b=1;t='Monitor, save or investigate further';bg='#fef3c7';c='#b45309'}else{b=0;t='Generally skip';bg='#fee2e2';c='#b91c1c'}
+  const vd=$('#verdict');vd.textContent=t;vd.style.background=bg;vd.style.color=c;$('#scoreNum').style.color=c;$$('#bands div').forEach((d,i)=>d.classList.toggle('on',i===b));}
+mkSliders($('#oppSliders'),OPP,[4,3,3,4,2,3],calcOpp);
+$$('.presets button').forEach(b=>b.onclick=()=>{b.dataset.p.split(',').forEach((x,i)=>$('#oppSliders'+i).value=x);calcOpp();});
+
+const PH=[
+ {t:'Before',i:'📦',s:'Build the package',items:[['🎯','Central finding'],['✨','Best discoveries'],['📑','Key evidence'],['📰','Headlines and openers'],['🖼️','Images and graphics'],['🔗','Link and landing page'],['🏛️','Relevant people and orgs'],['🔑','Keywords to watch']]},
+ {t:'Launch day',i:'🚀',s:'Lead with the discovery',items:[['💥','Main post leads with the most compelling discovery'],['❓','Says why it matters'],['➡️','One clear link to the article']]},
+ {t:'Following days',i:'📣',s:'A new angle each post',items:[['🧑‍💼','A key person or organization'],['💰','A funding link'],['📄','A standout document'],['🧩','A link to another investigation'],['🌍','Wider implications'],['🤝','Reach people with genuine interest']]},
+ {t:'Afterwards',i:'🗄️',s:'Into the living archive',items:[['🧠','Added to the knowledge base'],['📡','Watched for related news'],['🔁','Ready to resurface when it matters']]}
+];
+const phs=$('#phases');PH.forEach((p,i)=>{const d=document.createElement('div');d.className='ph';d.innerHTML=`<div class="dot">${p.i}</div><h4>${p.t}</h4><small>${p.s}</small>`;d.onclick=()=>{stopLaunch();setPh(i)};phs.appendChild(d);});
+let ltimer=null;
+function setPh(i){$$('#phases .ph').forEach((d,k)=>{d.classList.toggle('on',k===i);d.classList.toggle('done',k<i)});$('#phaseFill').style.width=(i/(PH.length-1)*76)+'%';
+ const p=PH[i];$('#phbody').innerHTML=`<div style="font-size:13px;font-weight:800;color:var(--a)">PHASE ${i+1} OF 4</div><h3 style="font-size:26px;margin:2px 0">${p.i} ${p.t}: ${p.s}</h3><div class="items">${p.items.map((x,k)=>`<div class="item" style="animation-delay:${k*70}ms"><span>${x[0]}</span>${x[1]}</div>`).join('')}</div>`;}
+function stopLaunch(){clearInterval(ltimer);ltimer=null;$('#launchPlay').textContent='▶ Play the campaign';}
+$('#launchPlay').onclick=()=>{if(ltimer){stopLaunch();return}let i=0;setPh(0);$('#launchPlay').textContent='❚❚ Pause';ltimer=setInterval(()=>{i++;if(i>=PH.length){stopLaunch();return}setPh(i)},2400);};
+setPh(0);
+
+$$('#modes .mode').forEach(m=>m.onclick=()=>{$$('#modes .mode').forEach(x=>x.classList.remove('on'));m.classList.add('on')});
+const TRIG=[
+ {t:'🎓 A university announces a new Gulf partnership',m:[5,6],f:'Previously Investigated'},
+ {t:'🌊 A new flotilla sets sail',m:[4],f:'The Missing Context'},
+ {t:'📖 A row over a Wikipedia article',m:[7],f:'The Connection Others Are Missing'},
+ {t:'🇹🇷 A Turkish lobbying story in Washington',m:[11],f:'What We Know'},
+ {t:'🏙️ A New York activist hub makes headlines',m:[13,1],f:'Follow the Network'},
+ {t:'🗳️ A UK election debate on party links',m:[10],f:'From The Archives'}
+];
+$('#trig').innerHTML=TRIG.map((t,i)=>`<button data-i="${i}">${t.t}</button>`).join('');
+$$('#trig button').forEach(b=>b.onclick=()=>{$$('#trig button').forEach(x=>x.classList.remove('on'));b.classList.add('on');const T=TRIG[+b.dataset.i];
+ const bar=$('#scanbar');bar.style.transition='none';bar.style.width='0';void bar.offsetWidth;bar.style.transition='width .9s ease';bar.style.width='100%';
+ $('#matches').innerHTML='<div class="hint">Searching 14 investigations...</div>';
+ setTimeout(()=>{$('#matches').innerHTML=`<div class="hint"><b>${T.m.length} match${T.m.length>1?'es':''}</b> found. Suggested format: <b>${T.f}</b></div>`+T.m.map(k=>`<div class="match"><a href="${INV[k].u}" target="_blank" rel="noopener">${INV[k].t}</a><div style="color:var(--mut);font-size:12.5px">Published ${INV[k].d} &middot; Pillar ${INV[k].p}</div></div>`).join('');
+  $$('#matches .match').forEach((m,k)=>setTimeout(()=>m.classList.add('in'),k*150+30));},950);});
+
+const FC=[
+ {t:'Identify the claim',d:'Exactly what does the post say?',l:['Separate facts, interpretations, questions and opinions']},
+ {t:'Retrieve the research',d:'Pull the original investigation.',l:['Supporting documents','Original sources','The passages that establish the finding']},
+ {t:'Verify the evidence',d:'Go to primary sources.',l:['Corporate and nonprofit filings','Financial and government records','Court records and official statements']},
+ {t:'Check later developments',d:'Is it still current?',l:['Corrections and responses','Disputes and new evidence','Changed relationships']},
+ {t:'Review the wording',d:'Say only what the evidence shows. Tap each pair.',pairs:true},
+ {t:'Record and approve',d:'Lock it in.',l:['Sources consulted','Verification date','Caveats','Final approved wording']}
+];
+const PAIRS=[['Coordination?','Or only association?'],['Established fact?','Or an allegation?'],['Documented evidence?','Or an inference?'],['Current?','Or historical?'],['Does the source establish it?','Or only suggest it?']];
+$('#ladder').innerHTML=FC.map((f,i)=>`<div class="card rung" data-i="${i}"><div class="num">${i+1}</div><div><h4>${f.t}</h4><div style="font-size:13px;color:var(--mut)">${f.d}</div></div></div>`).join('');
+let fci=0;
+function setFc(i){fci=i;$$('#ladder .rung').forEach((r,k)=>{r.classList.toggle('on',k===i);r.classList.toggle('done',k<i)});const f=FC[i];
+ $('#fcpanel').innerHTML=`<div style="font-size:13px;font-weight:800;color:var(--a)">STEP ${i+1} OF 6</div><h3>${f.t}</h3><div style="font-size:17px">${f.d}</div>`+
+ (f.pairs?`<div class="pairs">${PAIRS.map(p=>`<div class="pair"><div class="in"><div class="f">${p[0]}</div><div class="k">${p[1]}</div></div></div>`).join('')}</div>`:`<div class="chips">${f.l.map((x,k)=>`<span class="chip" style="animation-delay:${k*70}ms">${x}</span>`).join('')}</div>`)+
+ `<div class="ctrls"><button id="fcB">&larr; Back</button><button class="go" id="fcN">${i===5?'✓ Approved. Restart':'Next step &rarr;'}</button></div>`;
+ $$('#fcpanel .pair').forEach(p=>p.onclick=()=>p.classList.toggle('flip'));
+ $('#fcB').onclick=()=>setFc(Math.max(0,fci-1));$('#fcN').onclick=()=>setFc(fci===5?0:fci+1);}
+$$('#ladder .rung').forEach(r=>r.onclick=()=>setFc(+r.dataset.i));setFc(0);
+const LV=[['Level 1','General commentary','Checked against reliable sources',33,'#10b981'],['Level 2','Organizations, funding, relationships','Checked against the original research and evidence',66,'#f59e0b'],['Level 3','Serious allegations','Full source verification plus human editorial approval',100,'#e11d48']];
+$('#levels').innerHTML=LV.map(l=>`<div class="card lvl"><div style="font-size:12px;font-weight:800;color:${l[4]}">${l[0].toUpperCase()}</div><h4>${l[1]}</h4><div class="bar"><i style="width:0;background:${l[4]};transition:width 1s" data-w="${l[3]}"></i></div><p>${l[2]}</p></div>`).join('');
+const lvio=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){$$('#levels .bar i').forEach(i=>i.style.width=i.dataset.w+'%');lvio.disconnect()}}));lvio.observe($('#levels'));
+
+const FMT=[
+ ['The Connection Others Are Missing','🧩','#4f46e5,#7c3aed','Shows how two developments, organizations or people connect, through documented research.','Two stories, one link nobody else spotted.'],
+ ['Follow the Money','💸','#0891b2,#06b6d4','Explains funding structures, financial relationships and institutional arrangements.','Where the money starts, and where it lands.'],
+ ['The Missing Context','🧭','#d97706,#f59e0b','Adds the history or past investigation a current debate is missing.','What the conversation leaves out.'],
+ ['Previously Investigated','📂','#db2777,#ec4899','Brings an older Neuron investigation into a live conversation.','We looked into this already. Here is what we found.'],
+ ['The Research Behind the Headline','📑','#059669,#10b981','Highlights the documents, records, timelines and evidence behind an investigation.','The receipts.'],
+ ['What We Know','✅','#e11d48,#f43f5e','A short, evidence-based explainer on a subject we have investigated.','The facts, in one place.']
+];
+$('#fmtGrid').innerHTML=FMT.map((f,i)=>`<div class="flip"><div class="in"><div class="f" style="background:linear-gradient(135deg,${f[2]})"><div class="ic">${f[1]}</div><div><small>FORMAT 0${i+1} &middot; TAP TO FLIP</small><h3>${f[0]}</h3></div></div><div class="k"><p>${f[3]}</p><div class="ex">"${f[4]}"</div></div></div></div>`).join('');
+$$('#fmtGrid .flip').forEach(f=>f.onclick=()=>f.classList.toggle('on'));
+
+const SHORT={1:'Foreign Influence',2:'Networks and Funding',3:'Western Institutions',4:'Movements',5:'Information'};
+$('#filters').innerHTML=`<button class="on" data-p="0">All 14</button>`+PILLARS.map(p=>`<button data-p="${p.n}"><i style="background:${PC[p.n]}"></i>${SHORT[p.n]} (${INV.filter(v=>v.p===p.n).length})</button>`).join('');
+$('#gallery').innerHTML=INV.map(v=>`<a class="card inv" data-p="${v.p}" href="${v.u}" target="_blank" rel="noopener" style="--pc:${PC[v.p]}"><div class="meta"><span class="pt">Pillar ${v.p} &middot; ${SHORT[v.p]}</span><span>${v.d}</span></div><h4>${v.t}</h4><span class="go">Read the investigation &rarr;</span></a>`).join('');
+$$('#filters button').forEach(b=>b.onclick=()=>{$$('#filters button').forEach(x=>x.classList.remove('on'));b.classList.add('on');const p=+b.dataset.p;$$('#gallery .inv').forEach(c=>c.classList.toggle('hide',!!p&&+c.dataset.p!==p));});
+const svg=$('#net'),NS='http://www.w3.org/2000/svg';
+let seed=7;const rnd=()=>{seed=(seed*16807)%2147483647;return seed/2147483647;};
+const nodes=[],links=[];
+CLUSTERS.forEach((c,ci)=>nodes.push({id:'c'+c.k,type:'c',label:c.n,col:c.c,ci}));
+INV.forEach((v,i)=>nodes.push({id:'i'+i,type:'i',label:v.t,col:PC[v.p],inv:i}));
+CLUSTERS.forEach((c,ci)=>c.orgs.forEach(o=>{nodes.push({id:'o'+o,type:'o',label:o,col:c.c,ci});links.push(['o'+o,'c'+c.k]);(ORG2INV[o]||[]).forEach(k=>links.push(['o'+o,'i'+k]));}));
+Object.entries(INV2CL).forEach(([i,k])=>links.push(['i'+i,'c'+k]));
+const byId=Object.fromEntries(nodes.map(n=>[n.id,n]));
+const L=links.map(([a,b])=>({s:byId[a],t:byId[b]}));
+let NW=900,NH=620;
+function layout(){const r=svg.getBoundingClientRect();NW=Math.round(r.width)||900;NH=Math.round(r.height)||620;seed=7;
+ const cx=NW/2,cy=NH/2,R=Math.min(NW,NH)*.34;
+ nodes.forEach(n=>{if(n.type==='c'){const a=-Math.PI/2+n.ci*2*Math.PI/5;n.x=cx-30+R*Math.cos(a)*(NW>NH?1.1:1);n.y=cy+R*Math.sin(a);}n.vx=0;n.vy=0;});
+ nodes.forEach(n=>{if(n.type==='o'){const c=nodes[n.ci];n.x=c.x+(rnd()-.5)*80;n.y=c.y+(rnd()-.5)*80;}else if(n.type==='i'){n.x=cx+(rnd()-.5)*R;n.y=cy+(rnd()-.5)*R;}});
+ for(let it=0;it<450;it++)tick(1-it/450);}
+function tick(al){const k=al*.9;
+ for(let i=0;i<nodes.length;i++)for(let j=i+1;j<nodes.length;j++){const a=nodes[i],b=nodes[j];let dx=a.x-b.x,dy=a.y-b.y,d2=dx*dx+dy*dy+.01;if(d2>140000)continue;const f=(a.type==='o'&&b.type==='o'?1400:2200)/d2;const d=Math.sqrt(d2);dx/=d;dy/=d;a.vx+=dx*f*k;a.vy+=dy*f*k;b.vx-=dx*f*k;b.vy-=dy*f*k;}
+ L.forEach(l=>{const dx=l.t.x-l.s.x,dy=l.t.y-l.s.y,d=Math.hypot(dx,dy)||1,want=l.t.type==='c'?(NW<500?55:85):110,f=(d-want)*.025*k;l.s.vx+=dx/d*f;l.s.vy+=dy/d*f;l.t.vx-=dx/d*f;l.t.vy-=dy/d*f;});
+ nodes.forEach(n=>{if(n.type==='c'||n.fixed){n.vx=n.vy=0;return}n.vx+=(NW/2-n.x)*.001*k;n.vy+=(NH/2-n.y)*.001*k;n.x+=Math.max(-20,Math.min(20,n.vx));n.y+=Math.max(-20,Math.min(20,n.vy));n.vx*=.6;n.vy*=.6;n.x=Math.max(14,Math.min(NW-(n.type==='o'?(NW<500?70:120):20),n.x));n.y=Math.max(14,Math.min(NH-14,n.y));});}
+function draw(){svg.innerHTML='';svg.setAttribute('viewBox',`0 0 ${NW} ${NH}`);
+ L.forEach(l=>{const e=document.createElementNS(NS,'line');e.setAttribute('class','lk');l.el=e;svg.appendChild(e);});
+ nodes.forEach(n=>{const g=document.createElementNS(NS,'g');g.setAttribute('class','nd');n.el=g;
+  const r=n.type==='c'?20:n.type==='i'?11:5.5;
+  g.innerHTML=n.type==='c'?`<circle r="${r}" fill="#fff" stroke="${n.col}" stroke-width="5"/><circle r="6" fill="${n.col}"/>`:n.type==='i'?`<circle r="${r}" fill="${n.col}" stroke="#fff" stroke-width="3"/><text y="3.5" text-anchor="middle" style="fill:#fff;stroke:none;font-size:9px;font-weight:800">${n.inv+1}</text>`:`<circle r="${r}" fill="${n.col}" opacity=".85"/>`;
+  if(n.type!=='i'){const t=document.createElementNS(NS,'text');t.setAttribute('x',r+4);t.setAttribute('y',4);if(n.type==='c'){t.style.fontSize='12.5px';t.style.fontWeight='800';}t.textContent=n.type==='o'&&n.label.length>22?n.label.slice(0,21)+'…':n.label;g.appendChild(t);}
+  svg.appendChild(g);
+  g.addEventListener('click',e=>{e.stopPropagation();if(!moved)focus(n)});
+  g.addEventListener('pointerdown',e=>{if(n.type==='c')return;drag=n;moved=false;n.fixed=true;});});
+ pos();}
+function pos(){L.forEach(l=>{l.el.setAttribute('x1',l.s.x.toFixed(1));l.el.setAttribute('y1',l.s.y.toFixed(1));l.el.setAttribute('x2',l.t.x.toFixed(1));l.el.setAttribute('y2',l.t.y.toFixed(1));});nodes.forEach(n=>n.el.setAttribute('transform',`translate(${n.x.toFixed(1)},${n.y.toFixed(1)})`));}
+let drag=null,moved=false;
+svg.addEventListener('pointermove',e=>{if(!drag)return;moved=true;const r=svg.getBoundingClientRect();drag.x=(e.clientX-r.left)*NW/r.width;drag.y=(e.clientY-r.top)*NH/r.height;for(let i=0;i<2;i++)tick(.12);pos();});
+addEventListener('pointerup',()=>{if(drag){drag.fixed=false;drag=null;setTimeout(()=>moved=false,0)}});
+svg.addEventListener('click',()=>{svg.classList.remove('focus');$$('#net .hl').forEach(x=>x.classList.remove('hl'));});
+function nb(n){return L.filter(l=>l.s===n||l.t===n);}
+function hl(l){l.el.classList.add('hl');l.s.el.classList.add('hl');l.t.el.classList.add('hl');}
+function focus(n){svg.classList.add('focus');$$('#net .hl').forEach(x=>x.classList.remove('hl'));n.el.classList.add('hl');
+ const ls=nb(n);ls.forEach(hl);
+ if(n.type==='c')nodes.filter(x=>x.ci===n.ci&&x.type==='o').forEach(o=>nb(o).forEach(hl));
+ const other=ls.map(l=>l.s===n?l.t:l.s),inv=other.filter(x=>x.type==='i'),cl=other.filter(x=>x.type==='c'),orgs=other.filter(x=>x.type==='o');
+ let h=`<div style="font-size:12px;font-weight:800;color:${n.col}">${n.type==='c'?'CLUSTER':n.type==='i'?'INVESTIGATION '+(n.inv+1):'ORGANIZATION'}</div><h4>${n.label}</h4>`;
+ if(n.type==='i'){const v=INV[n.inv];h+=`<div style="color:var(--mut)">${v.d} &middot; Pillar ${v.p}</div>`;if(orgs.length)h+=`<b>Organizations indexed</b><ul>${orgs.map(o=>`<li>${o.label}</li>`).join('')}</ul>`;if(cl.length)h+=`<b>Cluster</b><ul>${cl.map(o=>`<li>${o.label}</li>`).join('')}</ul>`;h+=`<div style="margin-top:8px"><a href="${v.u}" target="_blank" rel="noopener" style="font-weight:700">Read it &rarr;</a></div>`;}
+ else if(n.type==='c'){const o=nodes.filter(x=>x.ci===n.ci&&x.type==='o');h+=`<div><b>${o.length}</b> organizations in this cluster</div><ul>${o.map(x=>`<li>${x.label}</li>`).join('')}</ul>`;}
+ else{h+=`<div>Cluster: <b>${cl.map(c=>c.label).join(', ')}</b></div>`;h+=inv.length?`<b>Indexed in research</b><ul>${inv.map(i=>`<li><a href="${INV[i.inv].u}" target="_blank" rel="noopener">${i.label}</a></li>`).join('')}</ul>`:`<div style="color:var(--mut);margin-top:6px">Stored in the knowledge base and linked through its cluster.</div>`;}
+ $('#netinfo').innerHTML=h;}
+$('#netlegend').innerHTML=CLUSTERS.map((c,i)=>`<button data-i="${i}"><i style="background:${c.c}"></i>${c.n} (${c.orgs.length})</button>`).join('')+`<button data-i="-1">Show all</button>`;
+$$('#netlegend button').forEach(b=>b.onclick=()=>{$$('#netlegend button').forEach(x=>x.classList.remove('on'));const i=+b.dataset.i;if(i<0){svg.classList.remove('focus');$$('#net .hl').forEach(x=>x.classList.remove('hl'));return}b.classList.add('on');focus(nodes[i]);});
+layout();draw();
+let rz;addEventListener('resize',()=>{clearTimeout(rz);rz=setTimeout(()=>{const r=svg.getBoundingClientRect();if(Math.abs(r.width-NW)>40){layout();draw();}},300)});
+
+$('#utmInv').innerHTML=INV.map((v,i)=>`<option value="${i}">${v.t}</option>`).join('');
+function utm(){const v=INV[+$('#utmInv').value],t=$('#utmType').value;$('#utmOut').innerHTML=`${v.u}?<span class="k">utm_source</span>=<span class="v">x</span>&amp;<span class="k">utm_medium</span>=<span class="v">social</span>&amp;<span class="k">utm_campaign</span>=<span class="v">${v.s}</span>&amp;<span class="k">utm_content</span>=<span class="v">${t}</span>`;}
+$('#utmInv').onchange=utm;$('#utmType').onchange=utm;utm();
+$$('#lpRows .row').forEach(r=>r.onclick=()=>r.classList.toggle('on'));
+
+const AUD=[['📰','Investigative journalists','Cover the networks we investigate'],['🎓','Researchers and academics','Deep subject expertise'],['🎙️','Political commentators','Carry findings to wider audiences'],['🏛️','Policymakers and staff','The research is part of their job'],['🧪','Think tanks and advocacy orgs','Work in adjacent areas'],['⭐','Engaged specialist accounts','Consistently discuss these subjects']];
+$('#aud').innerHTML=AUD.map(a=>`<div class="card ag"><div class="ic">${a[0]}</div><h4>${a[1]}</h4><p>${a[2]}</p></div>`).join('');
+$$('#aud .ag').forEach(a=>a.onclick=()=>a.classList.toggle('on'));
+const REL=[['Demonstrated interest',30,'Talks about Neuron subjects'],['Professional relevance',20,'Their job connects to the research'],['Frequency of discussion',20,'How often they raise these topics'],['Engages with investigations',15,'Reads and shares investigative work'],['Potential to amplify or use',15,'Can use or spread findings']];
+function calcRel(){const v=vals('relSliders',5);v.forEach((x,i)=>$('#relSlidersv'+i).textContent=x);const s=Math.round(v.reduce((a,x,i)=>a+x/5*REL[i][1],0));$('#relNum').textContent=s;$('#relRing').style.strokeDashoffset=477.5*(1-s/100);
+ $('#relTxt').textContent=s>=75?'Priority contact. Genuinely interested.':s>=50?'Relevant. Worth knowing.':s>=25?'Light fit. Watch for interest.':'Not a fit right now.';}
+mkSliders($('#relSliders'),REL,[4,3,3,3,2],calcRel);
+
+$$('#cmp div').forEach(d=>d.onclick=()=>{$$('#cmp div').forEach(x=>x.classList.remove('win'));$('#cmp [data-w="1"]').classList.add('win');$('#cmpTxt').textContent=d.dataset.w==='1'?'✓ Right. Relevant interactions beat raw volume.':'Not quite. Post B wins: relevant interactions beat raw volume.';});
+const MS=[['📈','Audience Growth',['Follower growth','Profile visits','Relevant new followers']],['💬','Engagement Quality',['Replies from journalists and researchers','Quote posts from relevant accounts','Repeat engagement']],['🔗','Article Distribution',['Sessions from X','Link clicks','Top investigations and formats']],['🔭','Research Visibility',['Investigations promoted','Older work resurfaced','Under-promoted work','External citations']],['🤝','Relationship Development',['New relevant contacts','Two-way interactions','New research leads']]];
+$('#meas').innerHTML=MS.map(m=>`<div class="card ms"><div class="ic">${m[0]}</div><h4>${m[1]}</h4><div class="t">${m[2].length} signals &middot; tap</div><ul>${m[2].map(x=>`<li>${x}</li>`).join('')}</ul></div>`).join('');
+$$('#meas .ms').forEach(m=>m.onclick=()=>m.classList.toggle('on'));
+})();
+</script>
+</body>
+</html>
