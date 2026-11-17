@@ -186,7 +186,7 @@ input[type=range]::-moz-range-thumb{width:20px;height:20px;border-radius:50%;bac
 .pairs{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px}
 .pair{perspective:600px;height:64px;cursor:pointer}
 .pair .in{position:relative;width:100%;height:100%;transition:transform .5s;transform-style:preserve-3d}
-.pair.flip .in{transform:rotateY(180deg)}
+.pair.turned .in{transform:rotateY(180deg)}
 .pair .f,.pair .k{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;display:flex;align-items:center;justify-content:center;text-align:center;border-radius:12px;font-weight:700;font-size:13.5px;padding:6px}
 .pair .f{background:#fef2f2;color:#b91c1c;border:1px solid #fecaca}
 .pair .k{background:#ecfdf5;color:#047857;border:1px solid #a7f3d0;transform:rotateY(180deg)}
@@ -323,6 +323,30 @@ input[type=range]::-moz-range-thumb{width:20px;height:20px;border-radius:50%;bac
 .close .btn.pri{background:#fff;color:var(--ink)}
 .close .btn.sec{background:transparent;color:#fff;border-color:rgba(255,255,255,.35)}
 footer{padding:26px 0;text-align:center;font-size:13px;color:var(--mut)}
+
+.morerow{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-top:22px}
+.morebtn{border:1px dashed #b8c0dc;background:#fff;border-radius:99px;padding:10px 16px;font-weight:700;font-size:14px;color:var(--ink);transition:all .2s}
+.morebtn:hover{border-color:var(--a);color:var(--a);transform:translateY(-2px)}
+.viewtoggle{display:inline-flex;background:#e9ecf6;border-radius:99px;padding:4px;margin-block-end:20px}
+.viewtoggle button{border:0;background:transparent;border-radius:99px;padding:10px 18px;font-weight:700;font-size:14px;color:var(--mut)}
+.viewtoggle button.on{background:#fff;color:var(--ink);box-shadow:0 2px 8px rgba(30,41,90,.12)}
+.tiles{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px}
+.tile{text-align:left;padding:20px 18px;display:flex;flex-direction:column;gap:4px;transition:transform .25s,box-shadow .25s,border-color .25s;color:var(--ink)}
+.tile:hover{transform:translateY(-5px) rotate(-.5deg);border-color:var(--a);box-shadow:0 18px 40px -16px rgba(79,70,229,.4)}
+.tile .ic{font-size:30px}
+.tile b{font-family:'Space Grotesk';font-size:17px}
+.tile small{color:var(--mut);font-size:13px}
+.tile em{font-style:normal;font-weight:700;font-size:13px;color:var(--a);margin-top:6px}
+.drawer{position:fixed;inset:0;z-index:100;background:rgba(15,23,42,.5);backdrop-filter:blur(4px);display:none;overflow-y:auto;padding:3vh 12px}
+.drawer.open{display:block;animation:fadeIn .25s ease}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+.drawer .sheet{position:relative;max-width:1160px;margin:0 auto;background:var(--bg);border-radius:24px;box-shadow:0 30px 80px -20px rgba(0,0,0,.5);animation:sheetUp .35s cubic-bezier(.2,1.2,.4,1)}
+@keyframes sheetUp{from{transform:translateY(40px);opacity:.4}to{transform:none;opacity:1}}
+.drawer section{padding:56px 0 48px}
+.dclose{position:sticky;top:12px;float:right;margin:12px 12px 0 0;z-index:5;border:0;background:var(--ink);color:#fff;border-radius:99px;padding:9px 16px;font-weight:700;font-size:14px}
+body.locked{overflow:hidden}
+.flypanel .detail{margin-top:14px}
+@media (max-width:600px){.drawer{padding:0}.drawer .sheet{border-radius:0;min-height:100%}}
 @media (max-width:980px){
   .counters{grid-template-columns:repeat(3,1fr)}
   .pillars,.obj,.meas,.mon{grid-template-columns:repeat(2,1fr)}
@@ -349,7 +373,7 @@ footer{padding:26px 0;text-align:center;font-size:13px;color:var(--mut)}
 <nav class="top"><div class="wrap">
   <a class="logo" href="#top"><i></i>The Neuron on X</a>
   <div class="navlinks" id="navlinks">
-    <a href="#question">Question</a><a href="#pillars">Pillars</a><a href="#system">System</a><a href="#score">Score</a><a href="#launch">Launch</a><a href="#archive">Archive</a><a href="#factcheck">Fact-check</a><a href="#formats">Formats</a><a href="#research">Research</a><a href="#network">Network</a><a href="#audience">Audience</a><a href="#measure">Measure</a>
+    <a href="#question">Question</a><a href="#pillars">Pillars</a><a href="#system">How it works</a><a href="#research">Research</a><a href="#explore">Explore</a><a href="#follow">Follow</a>
   </div>
 </div></nav>
 
@@ -362,18 +386,18 @@ footer{padding:26px 0;text-align:center;font-size:13px;color:var(--mut)}
     <div class="counters">
       <a class="ctr" href="#research"><b data-count="14">0</b><span>investigations published</span></a>
       <a class="ctr" href="#pillars"><b data-count="5">0</b><span>editorial pillars</span></a>
-      <a class="ctr" href="#formats"><b data-count="6">0</b><span>signature formats</span></a>
-      <a class="ctr" href="#monitor"><b data-count="20">0</b><span>themes monitored</span></a>
-      <a class="ctr" href="#network"><b data-count="54" id="orgCount">0</b><span>organizations mapped</span></a>
-      <a class="ctr" href="#network"><b data-count="21">0</b><span>people mapped</span></a>
+      <a class="ctr" href="#formats" data-open="formats"><b data-count="6">0</b><span>signature formats</span></a>
+      <a class="ctr" href="#monitor" data-open="monitor"><b data-count="20">0</b><span>themes monitored</span></a>
+      <a class="ctr" href="#research" data-view="network"><b data-count="54" id="orgCount">0</b><span>organizations mapped</span></a>
+      <a class="ctr" href="#research" data-view="network"><b data-count="21">0</b><span>people mapped</span></a>
     </div>
     <div class="cta-row">
       <a class="btn pri" href="#system">See how it works &rarr;</a>
-      <a class="btn sec" href="#score">Try the scoring engine</a>
+      <a class="btn sec" href="#score" data-open="score">Try the scoring engine</a>
     </div>
   </div>
 </header>
-
+<main>
 <section class="q" id="question">
   <div class="wrap">
     <div class="kicker">One question drives everything</div>
@@ -393,8 +417,73 @@ footer{padding:26px 0;text-align:center;font-size:13px;color:var(--mut)}
     </div>
   </div>
 </section>
-
-<section id="objective">
+<section id="pillars" style="background:#fff">
+  <div class="wrap reveal">
+    <div class="kicker">Editorial scope</div>
+    <h2 class="h2">Five pillars. <span class="grad">One thread.</span></h2>
+    <p class="lead">The networks, institutions, funding, relationships and influence operations shaping political movements, public discourse and Western institutions. Tap a pillar.</p>
+    <div class="pillars" id="pillarGrid"></div>
+    <div class="card pil-detail" id="pilDetail"></div>
+    <div class="connector">Interconnected areas of investigation, not five separate identities.</div>
+    <div class="morerow"><button class="morebtn" data-open="objective">💬 What the account does: five jobs &rarr;</button><button class="morebtn" data-open="voice">🎚️ The voice dial &rarr;</button><button class="morebtn" data-open="monitor">📡 20 monitored themes &rarr;</button></div>
+  </div>
+</section>
+<section id="system" style="background:#fff">
+  <div class="wrap reveal">
+    <div class="kicker">The system</div>
+    <h2 class="h2">How it works: <span class="grad">seven parts, one loop.</span></h2>
+    <p class="lead">Each part feeds the next. Tap a step, then open its full detail.</p>
+    <div class="fly">
+      <svg id="flysvg" viewBox="0 0 500 500" aria-label="System loop"></svg>
+      <div class="card flypanel" id="flypanel"></div>
+    </div>
+  </div>
+</section>
+<section id="research">
+  <div class="wrap reveal">
+    <div class="kicker">The research</div>
+    <h2 class="h2"><span class="grad">14 investigations.</span> One connected knowledge base.</h2>
+    <p class="lead">Browse the investigations, or flip to the map of how the knowledge base links them: <b id="orgCount2">54</b> organizations, 14 investigations and 21 people mapped so far.</p>
+    <div class="viewtoggle" role="tablist"><button class="on" data-view="gallery">🗂️ Investigations</button><button data-view="network">🕸️ Network map</button></div>
+    <div id="viewGallery">
+    <div class="filters" id="filters"></div>
+    <div class="gallery" id="gallery"></div>
+    <div class="archive-link"><a class="btn sec" href="https://the-neuron.net/section/research/" target="_blank" rel="noopener">Browse the full research archive &rarr;</a></div>
+    </div>
+    <div id="viewNetwork" hidden>
+    <h3 style="font-size:22px;margin:0 0 6px">How the knowledge base links research</h3>
+    <p class="hint" style="margin:0 0 12px">Every article is broken into people, organizations, subjects, findings, funding links, sources and dates. Tap a node, drag to explore.</p>
+    <div class="netlegend" id="netlegend"></div>
+    <div class="card netwrap">
+      <svg id="net"></svg>
+      <div class="card netinfo" id="netinfo"><h4>Tap any node</h4><div style="color:var(--mut)">See which research and clusters it links to. Numbered dots are investigations, rings are clusters.</div></div>
+    </div>
+    <div class="disclaimer">This map shows how the knowledge base indexes and cross-references published research. A line means an organization appears in, or is grouped with, that research. It is not an allegation of any relationship. People are stored in the knowledge base and shown here only as a count.</div>
+    </div>
+  </div>
+</section>
+<section id="explore">
+  <div class="wrap reveal">
+    <div class="kicker">Explore more</div>
+    <h2 class="h2">Go deeper. <span class="grad">Tap any tile.</span></h2>
+    <p class="lead">Every part of the plan, one tap away.</p>
+    <div class="tiles"><button class="card tile" data-open="objective"><span class="ic">💬</span><b>Five jobs</b><small>What the account does beyond posting links</small><em>Open &rarr;</em></button><button class="card tile" data-open="voice"><span class="ic">🎚️</span><b>The voice dial</b><small>Find the sweet spot between dry and outrage</small><em>Open &rarr;</em></button><button class="card tile" data-open="monitor"><span class="ic">📡</span><b>Monitoring</b><small>20 themes and five things it listens for</small><em>Open &rarr;</em></button><button class="card tile" data-open="score"><span class="ic">🎯</span><b>Score an opportunity</b><small>Live 0 to 100 priority calculator</small><em>Open &rarr;</em></button><button class="card tile" data-open="launch"><span class="ic">🚀</span><b>Launch campaign</b><small>Step through a launch, phase by phase</small><em>Open &rarr;</em></button><button class="card tile" data-open="archive"><span class="ic">🗄️</span><b>Living archive</b><small>Watch the context engine find past research</small><em>Open &rarr;</em></button><button class="card tile" data-open="factcheck"><span class="ic">🔍</span><b>Fact-check ladder</b><small>Six steps and three verification levels</small><em>Open &rarr;</em></button><button class="card tile" data-open="formats"><span class="ic">🃏</span><b>Six signature formats</b><small>Flip cards for each recurring format</small><em>Open &rarr;</em></button><button class="card tile" data-open="links"><span class="ic">🔗</span><b>Links with purpose</b><small>Tracking-link builder and landing page</small><em>Open &rarr;</em></button><button class="card tile" data-open="audience"><span class="ic">👥</span><b>Audience</b><small>Six groups and a relevance calculator</small><em>Open &rarr;</em></button><button class="card tile" data-open="measure"><span class="ic">📊</span><b>Measurement</b><small>The hero metric, five categories, cadence</small><em>Open &rarr;</em></button></div>
+  </div>
+</section>
+<section class="close" id="follow">
+  <canvas id="neural2" style="position:absolute;inset:0;width:100%;height:100%;opacity:.5"></canvas>
+  <div class="wrap" style="position:relative">
+    <h2>Known for the quality of its connections, <span style="color:#67e8f9">not how often it posts.</span></h2>
+    <p>Information, connections and context for the conversations that matter.</p>
+    <div class="cta-row" style="justify-content:center">
+      <a class="btn pri" href="https://the-neuron.net" target="_blank" rel="noopener">Follow The Neuron &rarr;</a>
+      <a class="btn sec" href="https://the-neuron.net/section/research/" target="_blank" rel="noopener">Read the research</a>
+    </div>
+  </div>
+</section>
+</main>
+<div id="drawers">
+<div class="drawer" id="d-objective" role="dialog" aria-modal="true" aria-label="Five jobs"><div class="sheet"><button class="dclose" aria-label="Close">✕ Close</button><section id="objective">
   <div class="wrap reveal">
     <div class="kicker">More than an article feed</div>
     <h2 class="h2">Five jobs, one account.</h2>
@@ -407,20 +496,8 @@ footer{padding:26px 0;text-align:center;font-size:13px;color:var(--mut)}
       <div class="card ob"><div class="ic">🧭</div><h4>Discover</h4><p>Spots new developments and fresh research leads.</p></div>
     </div>
   </div>
-</section>
-
-<section id="pillars" style="background:#fff">
-  <div class="wrap reveal">
-    <div class="kicker">Editorial scope</div>
-    <h2 class="h2">Five pillars. <span class="grad">One thread.</span></h2>
-    <p class="lead">The networks, institutions, funding, relationships and influence operations shaping political movements, public discourse and Western institutions. Tap a pillar.</p>
-    <div class="pillars" id="pillarGrid"></div>
-    <div class="card pil-detail" id="pilDetail"></div>
-    <div class="connector">Interconnected areas of investigation, not five separate identities.</div>
-  </div>
-</section>
-
-<section id="voice">
+</section></div></div>
+<div class="drawer" id="d-voice" role="dialog" aria-modal="true" aria-label="The voice dial"><div class="sheet"><button class="dclose" aria-label="Close">✕ Close</button><section id="voice">
   <div class="wrap reveal">
     <div class="kicker">Voice</div>
     <h2 class="h2">Find the sweet spot.</h2>
@@ -434,21 +511,8 @@ footer{padding:26px 0;text-align:center;font-size:13px;color:var(--mut)}
       <div class="traits" id="traits"></div>
     </div>
   </div>
-</section>
-
-<section id="system" style="background:#fff">
-  <div class="wrap reveal">
-    <div class="kicker">The system</div>
-    <h2 class="h2">Seven parts. <span class="grad">One loop.</span></h2>
-    <p class="lead">Each part feeds the next. Press play or tap any node.</p>
-    <div class="fly">
-      <svg id="flysvg" viewBox="0 0 500 500" aria-label="System loop"></svg>
-      <div class="card flypanel" id="flypanel"></div>
-    </div>
-  </div>
-</section>
-
-<section id="monitor">
+</section></div></div>
+<div class="drawer" id="d-monitor" role="dialog" aria-modal="true" aria-label="Monitoring"><div class="sheet"><button class="dclose" aria-label="Close">✕ Close</button><section id="monitor">
   <div class="wrap reveal">
     <div class="kicker">Monitoring</div>
     <h2 class="h2">20 themes. <span class="grad">Always listening.</span></h2>
@@ -463,9 +527,8 @@ footer{padding:26px 0;text-align:center;font-size:13px;color:var(--mut)}
     <div class="themes" id="themes"></div>
     <div class="radar"><div class="pulse"></div><span id="radarTxt">0 of 20 themes on the radar</span></div>
   </div>
-</section>
-
-<section id="score" style="background:#fff">
+</section></div></div>
+<div class="drawer" id="d-score" role="dialog" aria-modal="true" aria-label="Score an opportunity"><div class="sheet"><button class="dclose" aria-label="Close">✕ Close</button><section id="score">
   <div class="wrap reveal">
     <div class="kicker">Opportunity scoring</div>
     <h2 class="h2">Should we reply? <span class="grad">Score it.</span></h2>
@@ -502,9 +565,8 @@ footer{padding:26px 0;text-align:center;font-size:13px;color:var(--mut)}
       <div class="card"><b>🎯 Fit over size</b>A small specialist account can beat a big generic one.</div>
     </div>
   </div>
-</section>
-
-<section id="launch">
+</section></div></div>
+<div class="drawer" id="d-launch" role="dialog" aria-modal="true" aria-label="Launch campaign"><div class="sheet"><button class="dclose" aria-label="Close">✕ Close</button><section id="launch">
   <div class="wrap reveal">
     <div class="kicker">Launch campaign</div>
     <h2 class="h2">Every investigation <span class="grad">gets a launch.</span></h2>
@@ -514,9 +576,8 @@ footer{padding:26px 0;text-align:center;font-size:13px;color:var(--mut)}
     <div class="ctrls"><button class="go" id="launchPlay">▶ Play the campaign</button></div>
     <div class="noquota"><span>✕ No daily quota</span><span>✕ No manufactured content</span><span>✕ No "new article" posts with no reason to read</span></div>
   </div>
-</section>
-
-<section id="archive" style="background:#fff">
+</section></div></div>
+<div class="drawer" id="d-archive" role="dialog" aria-modal="true" aria-label="Living archive"><div class="sheet"><button class="dclose" aria-label="Close">✕ Close</button><section id="archive">
   <div class="wrap reveal">
     <div class="kicker">Living archive</div>
     <h2 class="h2">Old research, <span class="grad">new relevance.</span></h2>
@@ -536,9 +597,8 @@ footer{padding:26px 0;text-align:center;font-size:13px;color:var(--mut)}
       </div>
     </div>
   </div>
-</section>
-
-<section id="factcheck">
+</section></div></div>
+<div class="drawer" id="d-factcheck" role="dialog" aria-modal="true" aria-label="Fact-check ladder"><div class="sheet"><button class="dclose" aria-label="Close">✕ Close</button><section id="factcheck">
   <div class="wrap reveal">
     <div class="kicker">Fact-check</div>
     <h2 class="h2">Six steps <span class="grad">before anything posts.</span></h2>
@@ -550,9 +610,8 @@ footer{padding:26px 0;text-align:center;font-size:13px;color:var(--mut)}
     <div class="levels" id="levels"></div>
     <div class="speed">Accuracy beats speed. Every verified claim goes into a searchable record.</div>
   </div>
-</section>
-
-<section id="formats" style="background:#fff">
+</section></div></div>
+<div class="drawer" id="d-formats" role="dialog" aria-modal="true" aria-label="Six signature formats"><div class="sheet"><button class="dclose" aria-label="Close">✕ Close</button><section id="formats">
   <div class="wrap reveal">
     <div class="kicker">Signature formats</div>
     <h2 class="h2">Six formats <span class="grad">people will recognize.</span></h2>
@@ -563,34 +622,8 @@ footer{padding:26px 0;text-align:center;font-size:13px;color:var(--mut)}
       <div class="card"><b>🕸️ Follow the Network</b><br><span style="color:var(--mut);font-size:14px">Walks through the web of links behind a story.</span></div>
     </div>
   </div>
-</section>
-
-<section id="research">
-  <div class="wrap reveal">
-    <div class="kicker">The research</div>
-    <h2 class="h2"><span class="grad">14 investigations</span> ready to deploy.</h2>
-    <p class="lead">Filter by pillar. Every card opens the full investigation.</p>
-    <div class="filters" id="filters"></div>
-    <div class="gallery" id="gallery"></div>
-    <div class="archive-link"><a class="btn sec" href="https://the-neuron.net/section/research/" target="_blank" rel="noopener">Browse the full research archive &rarr;</a></div>
-  </div>
-</section>
-
-<section id="network" style="background:#fff">
-  <div class="wrap reveal">
-    <div class="kicker">Knowledge base</div>
-    <h2 class="h2">How the knowledge base <span class="grad">links research.</span></h2>
-    <p class="lead"><b id="orgCount2">54</b> organizations, 14 investigations and 21 people mapped so far. Every article is broken into people, organizations, subjects, findings, funding links, sources and dates. Tap a node, drag to explore.</p>
-    <div class="netlegend" id="netlegend"></div>
-    <div class="card netwrap">
-      <svg id="net"></svg>
-      <div class="card netinfo" id="netinfo"><h4>Tap any node</h4><div style="color:var(--mut)">See which research and clusters it links to. Numbered dots are investigations, rings are clusters.</div></div>
-    </div>
-    <div class="disclaimer">This map shows how the knowledge base indexes and cross-references published research. A line means an organization appears in, or is grouped with, that research. It is not an allegation of any relationship. People are stored in the knowledge base and shown here only as a count.</div>
-  </div>
-</section>
-
-<section id="links">
+</section></div></div>
+<div class="drawer" id="d-links" role="dialog" aria-modal="true" aria-label="Links with purpose"><div class="sheet"><button class="dclose" aria-label="Close">✕ Close</button><section id="links">
   <div class="wrap reveal">
     <div class="kicker">Links with purpose</div>
     <h2 class="h2">Every link <span class="grad">earns its place.</span></h2>
@@ -630,9 +663,8 @@ footer{padding:26px 0;text-align:center;font-size:13px;color:var(--mut)}
       </div>
     </div>
   </div>
-</section>
-
-<section id="audience" style="background:#fff">
+</section></div></div>
+<div class="drawer" id="d-audience" role="dialog" aria-modal="true" aria-label="Audience"><div class="sheet"><button class="dclose" aria-label="Close">✕ Close</button><section id="audience">
   <div class="wrap reveal">
     <div class="kicker">Audience</div>
     <h2 class="h2">The right people, <span class="grad">not the loudest.</span></h2>
@@ -654,9 +686,8 @@ footer{padding:26px 0;text-align:center;font-size:13px;color:var(--mut)}
       <div>No forced connections</div>
     </div>
   </div>
-</section>
-
-<section id="measure">
+</section></div></div>
+<div class="drawer" id="d-measure" role="dialog" aria-modal="true" aria-label="Measurement"><div class="sheet"><button class="dclose" aria-label="Close">✕ Close</button><section id="measure">
   <div class="wrap reveal">
     <div class="kicker">Measurement</div>
     <h2 class="h2">Measured by <span class="grad">what matters.</span></h2>
@@ -684,19 +715,8 @@ footer{padding:26px 0;text-align:center;font-size:13px;color:var(--mut)}
     </div>
     <div class="card baseline"><div style="font-size:30px">📏</div><div><b>Month one sets the baseline.</b><br><span style="color:var(--mut)">No performance figures yet. Targets are set from first-month results, not picked at random.</span></div></div>
   </div>
-</section>
-
-<section class="close" id="follow">
-  <canvas id="neural2" style="position:absolute;inset:0;width:100%;height:100%;opacity:.5"></canvas>
-  <div class="wrap" style="position:relative">
-    <h2>Known for the quality of its connections, <span style="color:#67e8f9">not how often it posts.</span></h2>
-    <p>Information, connections and context for the conversations that matter.</p>
-    <div class="cta-row" style="justify-content:center">
-      <a class="btn pri" href="https://the-neuron.net" target="_blank" rel="noopener">Follow The Neuron &rarr;</a>
-      <a class="btn sec" href="https://the-neuron.net/section/research/" target="_blank" rel="noopener">Read the research</a>
-    </div>
-  </div>
-</section>
+</section></div></div>
+</div>
 <footer>The Neuron &middot; <a href="https://the-neuron.net" target="_blank" rel="noopener">the-neuron.net</a></footer>
 <script>
 (function(){
@@ -758,7 +778,7 @@ setTimeout(()=>$$('[data-count]').forEach(countUp),250);
 
 const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.05});
 $$('.reveal').forEach(e=>io.observe(e));
-const secs=$$('section[id]');
+const secs=$$('main section[id]');
 addEventListener('scroll',()=>{const h=document.documentElement;$('#prog').style.width=(h.scrollTop/(h.scrollHeight-h.clientHeight)*100)+'%';
   let cur='';secs.forEach(s=>{if(s.getBoundingClientRect().top<120)cur=s.id});$$('#navlinks a').forEach(a=>a.classList.toggle('on',a.getAttribute('href')==='#'+cur));},{passive:true});
 
@@ -786,13 +806,13 @@ function dial(){const v=+$('#dial').value,o=$('#dialOut');let h,b,bg;
   o.innerHTML=`<b>${h}</b>${b}`;o.style.background=bg;$$('#traits .trait').forEach(t=>t.classList.toggle('on',v>=30&&v<=70));}
 $('#dial').oninput=dial;dial();
 const FLY=[
- {t:'Knowledge Base',i:'🧠',c:'#4f46e5',d:'Every article, broken into parts.',l:['People, organizations and subjects','Findings and funding links','Sources and dates','Recognizes related concepts, not just exact names']},
- {t:'Monitoring',i:'📡',c:'#0891b2',d:'Listens for conversations that matter.',l:['Topics, people and organizations','Current developments','Relevant conversations','Keywords, curated lists and news alerts']},
- {t:'Opportunity Scoring',i:'🎯',c:'#7c3aed',d:'Picks where we can add the most.',l:['Six weighted criteria','A 0 to 100 priority','Accuracy always outranks the score']},
- {t:'Fact-Check',i:'🔍',c:'#d97706',d:'Verifies before anything posts.',l:['Six steps from claim to approval','Three verification levels','Human approval for serious allegations']},
- {t:'Engage and Publish',i:'💬',c:'#db2777',d:'Adds evidence, context and connections.',l:['Replies with substance','Original posts and threads','Launch campaigns for new work']},
- {t:'Measure',i:'📊',c:'#059669',d:'Tracks what actually lands.',l:['Relevant engagement per post','Post, investigation and audience records','Consistent tracking links']},
- {t:'Weekly Review',i:'🗓️',c:'#e11d48',d:"Sets next week's priorities.",l:['Key conversations and opportunities','New people and relationships','Research worth resurfacing','New investigative leads']}
+ {t:'Knowledge Base',o:[['@network','Open the network map']],i:'🧠',c:'#4f46e5',d:'Every article, broken into parts.',l:['People, organizations and subjects','Findings and funding links','Sources and dates','Recognizes related concepts, not just exact names']},
+ {t:'Monitoring',o:[['monitor','Open monitoring']],i:'📡',c:'#0891b2',d:'Listens for conversations that matter.',l:['Topics, people and organizations','Current developments','Relevant conversations','Keywords, curated lists and news alerts']},
+ {t:'Opportunity Scoring',o:[['score','Open the score calculator']],i:'🎯',c:'#7c3aed',d:'Picks where we can add the most.',l:['Six weighted criteria','A 0 to 100 priority','Accuracy always outranks the score']},
+ {t:'Fact-Check',o:[['factcheck','Open the fact-check ladder']],i:'🔍',c:'#d97706',d:'Verifies before anything posts.',l:['Six steps from claim to approval','Three verification levels','Human approval for serious allegations']},
+ {t:'Engage and Publish',o:[['launch','Launch campaign'],['formats','Six formats'],['links','Links with purpose'],['audience','Audience']],i:'💬',c:'#db2777',d:'Adds evidence, context and connections.',l:['Replies with substance','Original posts and threads','Launch campaigns for new work']},
+ {t:'Measure',o:[['measure','Open measurement']],i:'📊',c:'#059669',d:'Tracks what actually lands.',l:['Relevant engagement per post','Post, investigation and audience records','Consistent tracking links']},
+ {t:'Weekly Review',o:[['archive','Open the living archive']],i:'🗓️',c:'#e11d48',d:"Sets next week's priorities.",l:['Key conversations and opportunities','New people and relationships','Research worth resurfacing','New investigative leads']}
 ];
 const fs=$('#flysvg');let fi=0,ftimer=null;
 (function(){let h=`<circle cx="250" cy="250" r="175" fill="none" stroke="#e6e9f5" stroke-width="3" stroke-dasharray="6 8"><animateTransform attributeName="transform" type="rotate" from="0 250 250" to="360 250 250" dur="40s" repeatCount="indefinite"/></circle>
@@ -807,6 +827,7 @@ function setFly(i){fi=i;const f=FLY[i];
  $$('#flysvg .node').forEach((n,k)=>{const c=n.querySelector('circle');c.setAttribute('r',k===i?48:40);c.setAttribute('fill',k===i?f.c:'#fff');});
  const p=$('#flyPulse');p.setAttribute('cx',250+(f.x-250)*.62);p.setAttribute('cy',250+(f.y-250)*.62);p.setAttribute('fill',f.c);
  $('#flypanel').innerHTML=`<div class="step">STEP ${i+1} OF ${FLY.length}</div><h3>${f.i} ${f.t}</h3><div style="font-size:18px">${f.d}</div><ul>${f.l.map(x=>`<li>${x}</li>`).join('')}</ul>
+ <div class="morerow detail" style="justify-content:flex-start">${f.o.map(o=>o[0][0]==='@'?`<button class="morebtn" data-view="${o[0].slice(1)}">${o[1]} &rarr;</button>`:`<button class="morebtn" data-open="${o[0]}">${o[1]} &rarr;</button>`).join('')}</div>
  <div class="ctrls"><button id="fPrev">&larr; Back</button><button class="go" id="fPlay">${ftimer?'❚❚ Pause':'▶ Play loop'}</button><button id="fNext">Next &rarr;</button></div>`;
  $('#fPrev').onclick=()=>{stopFly();setFly((fi+FLY.length-1)%FLY.length)};$('#fNext').onclick=()=>{stopFly();setFly((fi+1)%FLY.length)};
  $('#fPlay').onclick=()=>{if(ftimer){stopFly();setFly(fi)}else{ftimer=setInterval(()=>setFly((fi+1)%FLY.length),2600);setFly((fi+1)%FLY.length)}};}
@@ -874,7 +895,7 @@ function setFc(i){fci=i;$$('#ladder .rung').forEach((r,k)=>{r.classList.toggle('
  $('#fcpanel').innerHTML=`<div style="font-size:13px;font-weight:800;color:var(--a)">STEP ${i+1} OF 6</div><h3>${f.t}</h3><div style="font-size:17px">${f.d}</div>`+
  (f.pairs?`<div class="pairs">${PAIRS.map(p=>`<div class="pair"><div class="in"><div class="f">${p[0]}</div><div class="k">${p[1]}</div></div></div>`).join('')}</div>`:`<div class="chips">${f.l.map((x,k)=>`<span class="chip" style="animation-delay:${k*70}ms">${x}</span>`).join('')}</div>`)+
  `<div class="ctrls"><button id="fcB">&larr; Back</button><button class="go" id="fcN">${i===5?'✓ Approved. Restart':'Next step &rarr;'}</button></div>`;
- $$('#fcpanel .pair').forEach(p=>p.onclick=()=>p.classList.toggle('flip'));
+ $$('#fcpanel .pair').forEach(p=>p.onclick=()=>p.classList.toggle('turned'));
  $('#fcB').onclick=()=>setFc(Math.max(0,fci-1));$('#fcN').onclick=()=>setFc(fci===5?0:fci+1);}
 $$('#ladder .rung').forEach(r=>r.onclick=()=>setFc(+r.dataset.i));setFc(0);
 const LV=[['Level 1','General commentary','Checked against reliable sources',33,'#10b981'],['Level 2','Organizations, funding, relationships','Checked against the original research and evidence',66,'#f59e0b'],['Level 3','Serious allegations','Full source verification plus human editorial approval',100,'#e11d48']];
@@ -943,8 +964,19 @@ function focus(n){svg.classList.add('focus');$$('#net .hl').forEach(x=>x.classLi
  $('#netinfo').innerHTML=h;}
 $('#netlegend').innerHTML=CLUSTERS.map((c,i)=>`<button data-i="${i}"><i style="background:${c.c}"></i>${c.n} (${c.orgs.length})</button>`).join('')+`<button data-i="-1">Show all</button>`;
 $$('#netlegend button').forEach(b=>b.onclick=()=>{$$('#netlegend button').forEach(x=>x.classList.remove('on'));const i=+b.dataset.i;if(i<0){svg.classList.remove('focus');$$('#net .hl').forEach(x=>x.classList.remove('hl'));return}b.classList.add('on');focus(nodes[i]);});
-layout();draw();
-let rz;addEventListener('resize',()=>{clearTimeout(rz);rz=setTimeout(()=>{const r=svg.getBoundingClientRect();if(Math.abs(r.width-NW)>40){layout();draw();}},300)});
+let netReady=false;
+function showView(v){$$('.viewtoggle button').forEach(b=>b.classList.toggle('on',b.dataset.view===v));$('#viewGallery').hidden=v!=='gallery';$('#viewNetwork').hidden=v!=='network';
+ if(v==='network'&&!netReady){layout();draw();netReady=true;}}
+let rz;addEventListener('resize',()=>{clearTimeout(rz);rz=setTimeout(()=>{if($('#viewNetwork').hidden)return;const r=svg.getBoundingClientRect();if(Math.abs(r.width-NW)>40){layout();draw();}},300)});
+let lastFocus=null;
+function openDrawer(k){const d=$('#d-'+k);if(!d)return;$$('.drawer.open').forEach(x=>x.classList.remove('open'));lastFocus=document.activeElement;d.classList.add('open');d.scrollTop=0;document.body.classList.add('locked');d.querySelectorAll('.reveal').forEach(x=>x.classList.add('in'));d.querySelector('.dclose').focus({preventScroll:true});}
+function closeDrawer(){$$('.drawer.open').forEach(x=>x.classList.remove('open'));document.body.classList.remove('locked');if(lastFocus&&lastFocus.focus)lastFocus.focus({preventScroll:true});}
+document.addEventListener('click',e=>{
+ const o=e.target.closest('[data-open]');if(o){e.preventDefault();openDrawer(o.dataset.open);return}
+ const v=e.target.closest('[data-view]');if(v){e.preventDefault();closeDrawer();showView(v.dataset.view);if(!v.closest('.viewtoggle'))$('#research').scrollIntoView({behavior:'smooth'});return}
+ if(e.target.closest('.dclose')||e.target.classList.contains('drawer'))closeDrawer();});
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeDrawer();});
+window.__openDrawer=openDrawer;window.__showView=showView;
 
 $('#utmInv').innerHTML=INV.map((v,i)=>`<option value="${i}">${v.t}</option>`).join('');
 function utm(){const v=INV[+$('#utmInv').value],t=$('#utmType').value;$('#utmOut').innerHTML=`${v.u}?<span class="k">utm_source</span>=<span class="v">x</span>&amp;<span class="k">utm_medium</span>=<span class="v">social</span>&amp;<span class="k">utm_campaign</span>=<span class="v">${v.s}</span>&amp;<span class="k">utm_content</span>=<span class="v">${t}</span>`;}
