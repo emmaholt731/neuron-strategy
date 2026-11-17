@@ -1,734 +1,551 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>The Neuron on X: Connecting the Networks Behind the News</title>
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 32 32%22%3E%3Ccircle cx=%2216%22 cy=%2216%22 r=%2214%22 fill=%22%234f46e5%22/%3E%3Ccircle cx=%2212%22 cy=%2212%22 r=%224%22 fill=%22%23fff%22/%3E%3C/svg%3E">
-<meta name="description" content="How The Neuron turns investigative research into a recognizable voice on X.">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>The Neuron on X</title>
+<meta name="description" content="The Neuron on X: research, engine, outreach, audience and measurement.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 32 32%22%3E%3Ccircle cx=%2216%22 cy=%2216%22 r=%2214%22 fill=%22%233B6FE0%22/%3E%3Ccircle cx=%2212%22 cy=%2212%22 r=%224%22 fill=%22%23fff%22/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet">
 <style>
-:root{
-  --bg:#f6f8fc;--card:#ffffff;--ink:#0f172a;--mut:#5b6478;--line:#e3e8f2;
-  --a:#4f46e5;--b:#06b6d4;--c:#ec4899;--d:#f59e0b;--e:#10b981;
-  --p1:#4f46e5;--p2:#0891b2;--p3:#d97706;--p4:#db2777;--p5:#059669;
-  --r:18px;--sh:0 10px 30px -12px rgba(30,41,90,.18);
-}
-*{box-sizing:border-box}
-html{scroll-behavior:smooth}
-body{margin:0;font-family:Inter,system-ui,sans-serif;background:var(--bg);color:var(--ink);line-height:1.5;-webkit-font-smoothing:antialiased}
-h1,h2,h3,h4{font-family:'Space Grotesk',Inter,sans-serif;margin:0;letter-spacing:-.02em}
-a{color:var(--a)}
-button{font:inherit;cursor:pointer}
-.wrap{max-width:1120px;margin:0 auto;padding:0 20px}
-section{padding:84px 0;position:relative}
-.kicker{display:inline-block;font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--a);background:#eef0ff;border-radius:99px;padding:6px 12px;margin:0 0 14px}
-.h2{font-size:clamp(28px,4.4vw,44px);line-height:1.08;margin:0 0 10px}
-.lead{color:var(--mut);font-size:18px;max-width:640px;margin:0 0 34px}
-.grad{background:linear-gradient(90deg,var(--a),var(--b) 50%,var(--c));-webkit-background-clip:text;background-clip:text;color:transparent}
-.card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--sh)}
-.hint{font-size:13px;color:var(--mut);margin-top:12px}
-.hint b{color:var(--a)}
-.reveal{opacity:0;transform:translateY(24px);transition:opacity .7s ease,transform .7s ease}
-.reveal.in{opacity:1;transform:none}
-#prog{position:fixed;top:0;left:0;height:3px;width:0;background:linear-gradient(90deg,var(--a),var(--b),var(--c));z-index:60}
-nav.top{position:sticky;top:0;z-index:50;background:rgba(246,248,252,.85);backdrop-filter:blur(10px);border-block-end:1px solid var(--line)}
-nav.top .wrap{display:flex;align-items:center;gap:18px;height:58px}
-.logo{display:flex;align-items:center;gap:10px;font-family:'Space Grotesk';font-weight:700;font-size:18px;text-decoration:none;color:var(--ink);white-space:nowrap}
-.logo i{width:28px;height:28px;border-radius:50%;background:radial-gradient(circle at 35% 35%,#fff 0 12%,transparent 13%),conic-gradient(var(--a),var(--b),var(--c),var(--a));display:block}
-.navlinks{display:flex;gap:4px;overflow-x:auto;scrollbar-width:none;margin-left:auto}
-.navlinks::-webkit-scrollbar{display:none}
-.navlinks a{font-size:13px;font-weight:600;color:var(--mut);text-decoration:none;padding:7px 11px;border-radius:99px;white-space:nowrap}
-.navlinks a:hover,.navlinks a.on{background:#eef0ff;color:var(--a)}
-.hero{min-height:92vh;display:flex;align-items:center;overflow:hidden;padding:60px 0}
-#neural{position:absolute;inset:0;width:100%;height:100%;z-index:0}
-.hero .wrap{position:relative;z-index:1}
-.hero h1{font-size:clamp(40px,7.4vw,86px);line-height:.98;max-width:980px}
-.hero p.sub{font-size:clamp(17px,2vw,21px);color:var(--mut);max-width:620px;margin:22px 0 34px}
-.counters{display:grid;grid-template-columns:repeat(6,1fr);gap:12px;max-width:980px}
-.ctr{padding:18px 14px;text-align:left;border:1px solid var(--line);background:rgba(255,255,255,.86);border-radius:16px;transition:transform .25s, box-shadow .25s;cursor:pointer;text-decoration:none;color:inherit;display:block}
-.ctr:hover{transform:translateY(-4px);box-shadow:var(--sh)}
-.ctr b{display:block;font-family:'Space Grotesk';font-size:clamp(30px,4vw,44px);line-height:1}
-.ctr span{font-size:12.5px;color:var(--mut);font-weight:600}
-.ctr:nth-child(1) b{color:var(--p1)}.ctr:nth-child(2) b{color:var(--p2)}.ctr:nth-child(3) b{color:var(--p4)}.ctr:nth-child(4) b{color:var(--p3)}.ctr:nth-child(5) b{color:var(--p5)}.ctr:nth-child(6) b{color:#7c3aed}
-.cta-row{display:flex;gap:12px;flex-wrap:wrap;margin-top:30px}
-.btn{display:inline-flex;align-items:center;gap:8px;border:0;border-radius:99px;padding:13px 22px;font-weight:700;text-decoration:none;font-size:15px;transition:transform .2s}
-.btn:hover{transform:translateY(-2px)}
-.btn.pri{background:var(--ink);color:#fff}
-.btn.sec{background:#fff;color:var(--ink);border:1px solid var(--line)}
-.q{background:linear-gradient(135deg,#0f172a,#1e1b4b 60%,#312e81);color:#fff;overflow:hidden}
-.q .kicker{background:rgba(255,255,255,.12);color:#c7d2fe}
-.qline{font-family:'Space Grotesk';font-size:clamp(28px,5vw,58px);line-height:1.1;max-width:1000px;margin:0}
-.qline .w{display:inline-block;padding:0 .08em;border-radius:8px;cursor:pointer;transition:background .2s,color .2s}
-.qline .w.key{color:#a5b4fc;text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:6px}
-.qline .w.key:hover,.qline .w.key.on{background:#a5b4fc;color:#1e1b4b}
-.qexplain{min-height:56px;margin-top:26px;font-size:18px;color:#c7d2fe;max-width:700px}
-.principle{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:40px;max-width:900px}
-.principle div{border-radius:16px;padding:20px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12)}
-.principle h4{font-size:15px;margin-block-end:6px}
-.principle .no h4{color:#fda4af}.principle .yes h4{color:#86efac}
-.principle p{margin:0;color:#e0e7ff;font-size:15px}
-.obj{display:grid;grid-template-columns:repeat(5,1fr);gap:12px}
-.ob{padding:20px 16px;text-align:center;cursor:pointer;transition:transform .25s}
-.ob:hover,.ob.on{transform:translateY(-6px);border-color:var(--a)}
-.ob .ic{font-size:30px}
-.ob h4{font-size:16px;margin:8px 0 4px}
-.ob p{font-size:13px;color:var(--mut);margin:0;max-height:0;overflow:hidden;transition:max-height .35s}
-.ob.on p{max-height:120px}
-.pillars{display:grid;grid-template-columns:repeat(5,1fr);gap:12px}
-.pil{padding:20px 18px;cursor:pointer;position:relative;overflow:hidden;transition:all .35s;border-top:5px solid var(--pc)}
-.pil:hover{transform:translateY(-4px)}
-.pil .n{font-family:'Space Grotesk';font-size:40px;font-weight:700;color:var(--pc);line-height:1}
-.pil h3{font-size:17px;margin:8px 0 6px;line-height:1.2}
-.pil .more{font-size:12px;font-weight:700;color:var(--pc)}
-.pil-detail{margin-top:16px;padding:26px;display:none;border-left:6px solid var(--pc)}
-.pil-detail.show{display:block;animation:pop .35s ease}
-@keyframes pop{from{opacity:0;transform:scale(.97)}to{opacity:1;transform:none}}
-.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
-.chip{font-size:13.5px;font-weight:600;padding:8px 13px;border-radius:99px;background:#f1f4fa;border:1px solid var(--line);opacity:0;transform:translateY(8px);animation:chipIn .4s forwards}
-@keyframes chipIn{to{opacity:1;transform:none}}
-.pil-detail .inv-links{margin-top:16px;font-size:14px;color:var(--mut)}
-.connector{text-align:center;color:var(--mut);font-size:14px;margin-top:18px;font-weight:600}
-.voice{display:grid;grid-template-columns:1.1fr 1fr;gap:20px;align-items:stretch}
-.dial{padding:26px}
-.dial input{width:100%}
-.dial .ends{display:flex;justify-content:space-between;font-size:12.5px;color:var(--mut);font-weight:700;margin-top:6px}
-.dial .out{margin-top:18px;padding:18px;border-radius:14px;background:#f6f7fb;min-height:110px;transition:background .3s}
-.dial .out b{font-family:'Space Grotesk';font-size:20px;display:block;margin-block-end:4px}
-.traits{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
-.trait{padding:16px 12px;text-align:center;cursor:pointer;transition:all .25s}
-.trait:hover,.trait.on{background:var(--ink);color:#fff}
-.trait .t{font-family:'Space Grotesk';font-weight:700}
-.trait .d{font-size:12.5px;color:var(--mut);margin-top:4px}
-.trait.on .d,.trait:hover .d{color:#cbd5e1}
-.fly{display:grid;grid-template-columns:1.05fr 1fr;gap:28px;align-items:center}
-#flysvg{width:100%;max-width:500px;display:block;margin:auto}
-#flysvg .node{cursor:pointer}
-#flysvg .node circle{transition:all .35s}
-#flysvg .node text{font-family:'Space Grotesk';font-weight:700;font-size:13px;pointer-events:none}
-.flypanel{padding:28px;min-height:330px}
-.flypanel .step{font-size:13px;font-weight:700;color:var(--a)}
-.flypanel h3{font-size:30px;margin:4px 0 10px}
-.flypanel ul{padding-left:18px;margin:10px 0 0;color:var(--mut)}
-.flypanel li{margin:5px 0}
-.ctrls{display:flex;gap:8px;margin-top:20px;flex-wrap:wrap}
-.ctrls button{border:1px solid var(--line);background:#fff;border-radius:99px;padding:9px 16px;font-weight:700;font-size:14px}
-.ctrls button.go{background:var(--a);color:#fff;border-color:var(--a)}
-.calc{display:grid;grid-template-columns:1.2fr 1fr;gap:22px}
-.sliders{padding:26px}
-.sl{margin:0 0 18px}
-.sl .top{display:flex;justify-content:space-between;align-items:baseline;gap:8px}
-.sl label{font-weight:700;font-size:15px}
-.sl .w{font-size:12px;font-weight:700;color:var(--mut);background:#f1f4fa;border-radius:99px;padding:2px 8px}
-.sl .v{font-family:'Space Grotesk';font-weight:700;color:var(--a);min-width:28px;text-align:right}
-.sl small{display:block;color:var(--mut);font-size:12.5px;margin-top:2px}
-input[type=range]{-webkit-appearance:none;appearance:none;width:100%;height:8px;border-radius:99px;background:#e6e9f5;outline:none;margin-top:8px}
-input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:22px;height:22px;border-radius:50%;background:var(--a);border:3px solid #fff;box-shadow:0 2px 8px rgba(79,70,229,.5);cursor:pointer}
-input[type=range]::-moz-range-thumb{width:20px;height:20px;border-radius:50%;background:var(--a);border:3px solid #fff;cursor:pointer}
-.gauge{padding:26px;text-align:center;display:flex;flex-direction:column;align-items:center;justify-content:center}
-#gsvg{width:100%;max-width:300px}
-.score{font-family:'Space Grotesk';font-size:64px;font-weight:700;line-height:1;margin-top:-70px}
-.verdict{margin-top:14px;padding:12px 16px;border-radius:14px;font-weight:700;font-size:16px;width:100%;transition:background .3s,color .3s}
-.bands{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;width:100%;margin-top:14px;font-size:11.5px;font-weight:700}
-.bands div{padding:8px 4px;border-radius:10px;opacity:.45;transition:opacity .3s,transform .3s}
-.bands div.on{opacity:1;transform:scale(1.06)}
-.presets{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 18px}
-.presets button{border:1px dashed #c7cde0;background:#fff;border-radius:99px;padding:7px 13px;font-size:13px;font-weight:600}
-.presets button:hover{border-color:var(--a);color:var(--a)}
-.rules3{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:18px}
-.rules3 div{padding:16px;font-size:14px}
-.rules3 b{display:block;font-family:'Space Grotesk';font-size:16px;margin-block-end:4px}
-.phases{display:grid;grid-template-columns:repeat(4,1fr);gap:0;position:relative;margin-top:10px}
-.phases:before{content:"";position:absolute;left:12%;right:12%;top:31px;height:4px;background:var(--line);border-radius:4px}
-#phaseFill{position:absolute;left:12%;top:31px;height:4px;background:linear-gradient(90deg,var(--a),var(--c));border-radius:4px;transition:width .6s;width:0}
-.ph{text-align:center;cursor:pointer;position:relative;z-index:1;padding:0 6px}
-.ph .dot{width:66px;height:66px;border-radius:50%;margin:0 auto;background:#fff;border:4px solid var(--line);display:flex;align-items:center;justify-content:center;font-size:26px;transition:all .35s}
-.ph.on .dot{border-color:var(--a);transform:scale(1.12);box-shadow:0 8px 24px -8px rgba(79,70,229,.6)}
-.ph.done .dot{border-color:var(--a)}
-.ph h4{margin-top:10px;font-size:15px}
-.ph small{color:var(--mut);font-size:12.5px}
-.phbody{margin-top:26px;padding:26px;min-height:200px}
-.items{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px;margin-top:14px}
-.item{padding:14px;border-radius:14px;background:#f6f7fb;border:1px solid var(--line);font-size:14px;font-weight:600;opacity:0;transform:translateY(10px);animation:chipIn .4s forwards}
-.item span{display:block;font-size:20px;margin-block-end:4px}
-.noquota{margin-top:16px;display:flex;gap:10px;flex-wrap:wrap}
-.noquota span{background:#fff1f2;color:#be123c;border-radius:99px;padding:7px 13px;font-size:13px;font-weight:700}
-.arch{display:grid;grid-template-columns:1fr 1.2fr;gap:22px}
-.modes{display:flex;flex-direction:column;gap:10px}
-.mode{padding:18px 20px;cursor:pointer;transition:all .25s;display:flex;gap:14px;align-items:flex-start}
-.mode .ic{font-size:26px}
-.mode h4{font-size:17px}
-.mode p{margin:2px 0 0;font-size:14px;color:var(--mut)}
-.mode.on{border-color:var(--a);box-shadow:0 0 0 3px #e0e3ff}
-.engine{padding:24px}
-.engine .trig{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0 16px}
-.engine .trig button{border:1px solid var(--line);background:#fff;border-radius:12px;padding:9px 12px;font-size:13.5px;font-weight:600;text-align:left}
-.engine .trig button.on{background:var(--ink);color:#fff;border-color:var(--ink)}
-.scan{height:6px;border-radius:99px;background:#eef0f7;overflow:hidden;margin:6px 0 14px}
-.scan i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--b),var(--a));transition:width .9s ease}
-.match{padding:14px 16px;border-radius:14px;background:#f0fdf4;border:1px solid #bbf7d0;margin-top:10px;font-size:14px;opacity:0;transform:translateX(-10px);transition:all .4s}
-.match.in{opacity:1;transform:none}
-.match a{font-weight:700;text-decoration:none}
-.recheck{margin-top:14px;font-size:13px;font-weight:700;color:#b45309;background:#fffbeb;border:1px solid #fde68a;border-radius:12px;padding:10px 12px}
-.fc{display:grid;grid-template-columns:1fr 1.15fr;gap:22px;align-items:start}
-.ladder{display:flex;flex-direction:column-reverse;gap:8px}
-.rung{display:flex;align-items:center;gap:14px;padding:14px 16px;cursor:pointer;transition:all .3s;opacity:.55}
-.rung .num{width:38px;height:38px;flex:none;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Space Grotesk';font-weight:700;background:#eef0f7;color:var(--mut);transition:all .3s}
-.rung h4{font-size:16px}
-.rung.done{opacity:1}
-.rung.done .num{background:var(--e);color:#fff}
-.rung.on{opacity:1;border-color:var(--a);transform:translateX(8px)}
-.rung.on .num{background:var(--a);color:#fff}
-.fcpanel{padding:26px}
-.fcpanel h3{font-size:26px;margin:4px 0 8px}
-.pairs{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px}
-.pair{perspective:600px;height:64px;cursor:pointer}
-.pair .in{position:relative;width:100%;height:100%;transition:transform .5s;transform-style:preserve-3d}
-.pair.turned .in{transform:rotateY(180deg)}
-.pair .f,.pair .k{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;display:flex;align-items:center;justify-content:center;text-align:center;border-radius:12px;font-weight:700;font-size:13.5px;padding:6px}
-.pair .f{background:#fef2f2;color:#b91c1c;border:1px solid #fecaca}
-.pair .k{background:#ecfdf5;color:#047857;border:1px solid #a7f3d0;transform:rotateY(180deg)}
-.levels{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:22px}
-.lvl{padding:20px;cursor:pointer;transition:all .3s;position:relative;overflow:hidden}
-.lvl .bar{height:8px;border-radius:99px;background:#eef0f7;margin:10px 0}
-.lvl .bar i{display:block;height:100%;border-radius:99px}
-.lvl h4{font-size:18px}
-.lvl p{margin:0;font-size:14px;color:var(--mut)}
-.lvl:hover{transform:translateY(-4px)}
-.speed{margin-top:18px;text-align:center;font-family:'Space Grotesk';font-size:22px;font-weight:700}
-.formats{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
-.flip{perspective:1000px;height:230px;cursor:pointer}
-.flip .in{position:relative;width:100%;height:100%;transition:transform .7s cubic-bezier(.3,1.4,.5,1);transform-style:preserve-3d}
-.flip.on .in{transform:rotateY(180deg)}
-.flip .f,.flip .k{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:var(--r);padding:24px;display:flex;flex-direction:column;justify-content:space-between}
-.flip .f{color:#fff}
-.flip .f h3{font-size:24px;line-height:1.1}
-.flip .f .ic{font-size:34px}
-.flip .f small{font-weight:700;opacity:.85;font-size:12.5px}
-.flip .k{background:#fff;border:1px solid var(--line);transform:rotateY(180deg)}
-.flip .k p{margin:0;font-size:15.5px}
-.flip .k .ex{font-size:13px;color:var(--mut);border-left:3px solid var(--line);padding-left:10px;font-style:italic}
-.archfeat{display:flex;gap:12px;margin-top:16px;flex-wrap:wrap}
-.archfeat div{flex:1;min-width:230px;padding:18px 20px}
-.filters{display:flex;gap:8px;flex-wrap:wrap;margin-block-end:20px}
-.filters button{border:1px solid var(--line);background:#fff;border-radius:99px;padding:9px 15px;font-weight:700;font-size:13.5px;transition:all .2s}
-.filters button.on{background:var(--ink);color:#fff;border-color:var(--ink)}
-.filters button i{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:6px;vertical-align:1px}
-.gallery{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:14px}
-.inv{padding:20px;text-decoration:none;color:inherit;display:flex;flex-direction:column;gap:10px;transition:transform .3s,opacity .3s,box-shadow .3s;border-top:4px solid var(--pc);min-height:170px}
-.inv:hover{transform:translateY(-5px) rotate(-.4deg);box-shadow:0 18px 40px -16px rgba(30,41,90,.35)}
-.inv.hide{display:none}
-.inv .meta{display:flex;justify-content:space-between;font-size:12px;font-weight:700;color:var(--mut)}
-.inv .pt{color:var(--pc)}
-.inv h4{font-size:17.5px;line-height:1.25}
-.inv .go{margin-top:auto;font-size:13px;font-weight:700;color:var(--a)}
-.archive-link{margin-top:18px;text-align:center}
-.netwrap{padding:14px;display:grid;grid-template-columns:1fr 290px;gap:14px;align-items:start}
-#net{width:100%;height:660px;display:block;touch-action:none}
-#net .lk{stroke:#cbd3e6;stroke-width:1;transition:stroke .2s,opacity .2s}
+
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#F5F7FC;--p:#FFFFFF;--p2:#F8F9FE;--ink:#13203F;--mute:#4A5675;--blue:#3B6FE0;--blue2:#2F64D6;--amber:#D96C0A;--teal:#0C9A78;--gold:#B87A00;--pink:#D93B70;--violet:#6E4FD8}
+body{background:radial-gradient(900px 600px at 100% 0%,rgba(120,150,255,.16),transparent 60%),radial-gradient(800px 700px at 0% 100%,rgba(190,160,255,.14),transparent 60%),linear-gradient(180deg,#F8F9FF,#EEF1FB);background-attachment:fixed;color:var(--ink);font-family:Inter,Poppins,system-ui,sans-serif;min-height:100vh}
+a{color:var(--blue2);text-decoration:none;font-weight:600} a:hover{text-decoration:underline}
+.wrap{max-width:1120px;margin:0 auto;padding:40px 28px 60px}
+header .k{font:700 14px Poppins;letter-spacing:4px;text-transform:uppercase;color:var(--gold)}
+header h1{font:800 54px/1.05 Poppins;letter-spacing:-1.5px;margin-top:10px}
+header h1 span{color:var(--teal)}
+header p{color:var(--mute);font-size:19px;margin-top:10px}
+.tabs{display:flex;gap:8px;margin:28px 0 22px;background:var(--p);padding:6px;border-radius:16px;width:max-content;border:1px solid rgba(255,255,255,.06)}
+.tab{font:700 16px Poppins;color:var(--mute);padding:11px 20px;border-radius:12px;cursor:pointer;border:0;background:none;transition:.25s}
+.tab:hover{color:var(--ink)} .tab.on{background:var(--ink);color:#0A0F1F}
+.view{display:none;animation:fade .5s ease} .view.on{display:block}
+@keyframes fade{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+.cap{color:var(--mute);font-size:16px;margin:-4px 0 18px}
+h2{font:700 26px Poppins;margin:30px 0 8px}
+/* hero */
+.hero{display:flex;gap:30px;align-items:center;padding:26px 30px;border-radius:24px;cursor:pointer;position:relative;overflow:hidden;
+background:linear-gradient(110deg,rgba(255,209,102,.18),rgba(79,140,255,.14));border:1px solid rgba(255,209,102,.45);transition:transform .2s}
+.hero:hover{transform:translateY(-3px) scale(1.005)}
+.ring{width:180px;height:180px;position:relative;flex:none}
+.ring circle.fg{transition:stroke-dashoffset 2s cubic-bezier(.2,.8,.2,1)}
+.ring .pct{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;font:800 40px Poppins;color:var(--gold)}
+.ring small{font:600 12px Inter;letter-spacing:2px;color:var(--mute)}
+.big{font:800 72px/1 Poppins;letter-spacing:-2px}.big span{color:var(--mute);font-size:36px}
+.hero h3{font-size:22px;margin-top:6px}.hero p{color:var(--mute);margin-top:6px;font-size:16px}
+.hint{font-size:13px;color:var(--gold);margin-top:10px;font-weight:600}
+/* flow */
+.flow{display:flex;gap:10px;flex-wrap:wrap}
+.st{flex:1 1 130px;background:var(--p);border-radius:16px;padding:14px;border:1px solid rgba(255,255,255,.06);transition:.25s;position:relative;cursor:default}
+.st:hover{transform:translateY(-4px);border-color:var(--c,var(--blue))}
+.st .e{font-size:26px} .st b{display:block;font-size:15px;margin-top:6px} .st span{font-size:13px;color:var(--mute);display:block;margin-top:3px;line-height:1.35}
+.st.hold{border:1.5px dashed var(--gold)}
+/* cards */
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.card{perspective:1200px;height:300px;cursor:pointer}
+.inner{position:relative;width:100%;height:100%;transition:transform .7s cubic-bezier(.2,.8,.2,1);transform-style:preserve-3d}
+.card.flip .inner{transform:rotateY(180deg)}
+.face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:20px;padding:20px;background:var(--p);border:1px solid rgba(255,255,255,.07);border-top:4px solid var(--c)}
+.card:hover .front{box-shadow:0 14px 40px -12px var(--c)}
+.front .v{font:800 56px/1 Poppins;color:var(--c);letter-spacing:-1px;margin-top:6px}.front .v small{font-size:24px;color:var(--mute)}
+.front h4{font-size:19px;margin-top:12px}.front p{color:var(--mute);font-size:14.5px;margin-top:6px;line-height:1.4}
+.front .tap{position:absolute;inset-block-end:16px;left:20px;font-size:12.5px;color:var(--c);font-weight:700;letter-spacing:.5px}
+.front .em{font-size:28px}
+.back{transform:rotateY(180deg);overflow:auto;background:var(--p2);scrollbar-width:thin;scrollbar-color:var(--c) transparent}
+.back h5{font-size:15px;color:var(--c);margin-block-end:8px}
+.back .mean{font-size:13.5px;color:var(--ink);background:rgba(255,255,255,.06);padding:8px 10px;border-radius:10px;margin-top:10px;line-height:1.4}
+.back .mean b{color:var(--c)}
+.li{display:flex;justify-content:space-between;gap:8px;font-size:13.5px;padding:4px 0;border-block-end:1px solid rgba(255,255,255,.05)}
+.li span{color:var(--mute);white-space:nowrap}
+.bar{height:7px;border-radius:4px;background:var(--c);margin:2px 0 6px;width:0;transition:width 1s ease}
+.card.flip .bar{width:var(--w)}
+.tl{font-size:13.5px;padding:5px 0 5px 16px;border-left:2px solid var(--c);margin-left:4px;position:relative}
+.tl:before{content:"";position:absolute;left:-6px;top:10px;width:10px;height:10px;border-radius:50%;background:var(--c)}
+.tl.x:before{background:var(--pink)}
+/* chart */
+.chart{background:var(--p);border-radius:20px;padding:20px 22px;border:1px solid rgba(255,255,255,.06)}
+.chart svg{width:100%;height:auto;display:block}
+.legend{display:flex;gap:18px;font-size:13.5px;color:var(--mute);margin-block-end:6px}
+.legend i{display:inline-block;width:12px;height:12px;border-radius:3px;margin-right:6px;vertical-align:-1px}
+.draw{stroke-dasharray:3000;stroke-dashoffset:3000}
+.view.on .draw{animation:draw 2.4s ease forwards .2s}
+@keyframes draw{to{stroke-dashoffset:0}}
+.areaf{opacity:0}.view.on .areaf{animation:fadein 1.2s ease forwards 1.6s}@keyframes fadein{to{opacity:1}}
+/* outreach */
+.pills{display:flex;gap:8px;flex-wrap:wrap;margin-block-end:18px}
+.pill{font:700 14px Inter;padding:9px 16px;border-radius:999px;border:1px solid rgba(255,159,67,.4);color:var(--amber);background:rgba(255,159,67,.08);cursor:pointer;transition:.2s}
+.pill:hover{background:rgba(255,159,67,.2)} .pill.on{background:var(--amber);color:#0A0F1F}
+.bars{display:flex;flex-direction:column;gap:12px}
+.brow{display:grid;grid-template-columns:140px 1fr 60px;align-items:center;gap:12px;font-size:15px;transition:opacity .3s}
+.brow .tr{height:22px;background:rgba(255,255,255,.06);border-radius:8px;overflow:hidden}
+.brow .fl{height:100%;width:0;border-radius:8px;transition:width 1.4s cubic-bezier(.2,.8,.2,1)}
+.brow b{font:800 18px Poppins;text-align:right}
+.brow.dim{opacity:.25}
+.og{display:none}.og.on{display:grid;animation:fade .4s}
+/* team */
+.org{background:var(--p);border-radius:22px;padding:26px;display:flex;flex-direction:column;align-items:center;gap:14px;border:1px solid rgba(255,255,255,.06)}
+.you{font:800 20px Poppins;padding:10px 30px;border-radius:999px;background:var(--teal);color:#0A0F1F;box-shadow:0 0 0 0 rgba(46,230,184,.6);animation:pulse 2s infinite}
+@keyframes pulse{70%{box-shadow:0 0 0 16px rgba(46,230,184,0)}100%{box-shadow:0 0 0 0 rgba(46,230,184,0)}}
+.vl{width:2px;height:22px;background:linear-gradient(var(--teal),transparent)}
+.leads{display:flex;gap:14px;flex-wrap:wrap;justify-content:center}
+.lead{min-width:180px;text-align:center;padding:12px;border-radius:16px;background:rgba(46,230,184,.1);border:1px solid rgba(46,230,184,.4);transition:.2s}
+.lead:hover{transform:translateY(-4px);background:rgba(46,230,184,.2)}
+.lead b{font-size:18px;display:block}.lead span{font-size:13px;color:var(--mute)}
+.chain{display:flex;gap:6px;flex-wrap:wrap;justify-content:center;align-items:center}
+.chip{font-size:14px;font-weight:600;padding:7px 12px;border-radius:10px;background:#22305A;opacity:.35;transition:.3s}
+.chip.lit{opacity:1;background:var(--teal);color:#0A0F1F;transform:scale(1.08)}
+.chev{color:var(--teal);font-weight:800}
+.lab{font-size:12.5px;letter-spacing:2px;color:var(--mute);font-weight:700;text-transform:uppercase}
+.rules{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:16px}
+.rules .card{height:200px}
+body.still .draw{animation:none!important;stroke-dashoffset:0}body.still .areaf{animation:none!important;opacity:1}body.still *{transition:none!important}
+#confetti{position:fixed;inset:0;pointer-events:none;z-index:50}
+footer{margin-top:34px;color:#7F89AD;font-size:13px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px}
+
+/* light theme */
+.tabs,.st,.face,.chart,.org{border:1px solid #E1E6F2;box-shadow:0 6px 22px -12px rgba(30,45,90,.25)}
+.face{border-top:4px solid var(--c)}
+.st.hold{border:1.5px dashed var(--gold)}
+.tab.on{background:var(--blue);color:#FFFFFF}
+.hero{background:linear-gradient(110deg,#FFF6DD,#E8F0FF);border:1px solid #F0D58A;box-shadow:0 10px 30px -16px rgba(184,122,0,.45)}
+.back .mean{background:#EEF2FB}
+.li{border-block-end:1px solid #E6EAF4}
+.brow .tr{background:#E9EDF6}
+.pill{border:1px solid rgba(217,108,10,.45);background:rgba(217,108,10,.07)}
+.pill.on{background:var(--amber);color:#FFFFFF}
+.you,.chip.lit{color:#06231B}
+.chip{background:#DDE3F1;color:var(--ink);opacity:.55}
+.chip.lit{opacity:1}
+.lead{background:rgba(12,154,120,.08);border:1px solid rgba(12,154,120,.35)}
+footer{color:#56617F}
+
+
+.lead{cursor:pointer;position:relative}
+.lead.on,.lead:hover{transform:translateY(-4px);background:rgba(12,154,120,.18);box-shadow:0 10px 24px -14px rgba(12,154,120,.55)}
+.lead .mini{display:none;font-size:11px;color:var(--gold);font-weight:700;margin-top:4px}
+.lead.on .mini{display:block}
+
+.guide{background:linear-gradient(110deg,#FFF6DD,#E8F0FF);border:1px solid #F0D58A;border-radius:22px;padding:20px 22px;margin-block-end:18px}
+.guide h3{font:800 22px Poppins;margin:0 0 6px}
+.guide .gcap{color:var(--mute);font-size:14.5px;margin-block-end:14px}
+.gdots{display:flex;gap:8px;flex-wrap:wrap;margin-block-end:14px}
+.gdot{width:12px;height:12px;border-radius:50%;background:#D0D7EA;cursor:pointer;transition:.25s;border:0;padding:0}
+.gdot.on{background:var(--gold);transform:scale(1.25);box-shadow:0 0 0 4px rgba(184,122,0,.2)}
+.gdot.done{background:var(--teal)}
+.gcard{background:#fff;border-radius:16px;padding:16px 18px;min-height:110px;border:1px solid #E1E6F2;animation:fade .35s}
+.gcard .step{font:800 12px Inter;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-block-end:6px}
+.gcard .title{font:800 20px Poppins;margin-block-end:6px}
+.gcard .body{color:var(--mute);font-size:15px;line-height:1.45}
+.gnav{display:flex;gap:10px;margin-top:12px;flex-wrap:wrap}
+.gbtn{font:700 14px Inter;padding:10px 16px;border-radius:12px;border:0;cursor:pointer;background:var(--blue);color:#fff;transition:.2s}
+.gbtn:hover{transform:translateY(-1px)}.gbtn.ghost{background:#EEF2FB;color:var(--ink)}
+.journey{background:var(--p);border:1px solid #E1E6F2;border-radius:20px;padding:18px;margin:16px 0;box-shadow:0 6px 22px -12px rgba(30,45,90,.25)}
+.journey h3{font:800 18px Poppins;margin:0 0 4px}
+.journey .jcap{color:var(--mute);font-size:13.5px;margin-block-end:12px}
+.jtrack{display:flex;gap:6px;flex-wrap:wrap;align-items:center;justify-content:center}
+.jstep{font-size:12.5px;font-weight:700;padding:8px 10px;border-radius:999px;background:#EEF2FB;color:var(--mute);opacity:.5;transition:.35s}
+.jstep.on{opacity:1;background:var(--amber);color:#fff;transform:scale(1.08)}
+.jstep.done{opacity:1;background:rgba(12,154,120,.15);color:var(--teal)}
+.jnote{text-align:center;margin-top:12px;font-weight:700;font-size:14.5px;min-height:22px;color:var(--ink)}
+.jtoggle{display:flex;gap:8px;justify-content:center;margin-block-end:12px;flex-wrap:wrap}
+.tdetail{display:none;background:var(--p);border:1px solid #E1E6F2;border-radius:18px;padding:16px 18px;margin:14px 0 8px;box-shadow:0 6px 22px -12px rgba(30,45,90,.25);animation:fade .35s}
+.tdetail.on{display:block}
+.tdetail h4{font-size:18px;margin-block-end:6px}
+.tdetail p{color:var(--mute);font-size:14px;line-height:1.45;margin:4px 0}
+.tdetail .statrow{display:flex;flex-wrap:wrap;gap:10px;margin-top:10px}
+.tdetail .stat{background:#EEF2FB;border-radius:12px;padding:8px 12px;font-weight:700;font-size:13.5px}
+.tdetail .stat b{display:block;font-size:20px;color:var(--blue)}
+.tpills{display:flex;gap:8px;flex-wrap:wrap;margin:16px 0 10px}
+.tpill{font:700 13px Inter;padding:8px 14px;border-radius:999px;border:1px solid #D0D7EA;color:var(--mute);background:#fff;cursor:pointer;transition:.2s}
+.tpill:hover{border-color:var(--blue);color:var(--ink)}.tpill.on{background:var(--blue);color:#fff;border-color:var(--blue)}
+.tflow{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;align-items:center;margin:8px 0 14px;min-height:48px}
+.tnode{font-size:13px;font-weight:700;padding:8px 12px;border-radius:12px;background:#DDE3F1;color:var(--ink);opacity:.45;transition:.3s}
+.tnode.lit{opacity:1;background:var(--teal);color:#06231B;transform:scale(1.06);box-shadow:0 0 0 3px rgba(12,154,120,.2)}
+.tnode.dim{opacity:.2}
+.tarr{color:var(--teal);font-weight:800}
+.tfacts{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:8px}
+@media(max-width:860px){.tfacts{grid-template-columns:1fr}}
+.tfact{background:var(--p);border:1px dashed #D0D7EA;border-radius:16px;padding:14px;cursor:pointer;transition:.25s;user-select:none}
+.tfact:hover{border-style:solid;transform:translateY(-2px);box-shadow:0 8px 20px -14px rgba(30,45,90,.4)}
+.tfact .q{font-weight:800;font-size:13px;color:var(--blue);letter-spacing:.5px;text-transform:uppercase}
+.tfact .a{display:none;margin-top:8px;font-size:14.5px;font-weight:600;line-height:1.4;color:var(--ink)}
+.tfact.open .a{display:block;animation:fade .3s}
+.tfact.open{border-color:var(--gold);border-style:solid}
+.chip.linkable{cursor:pointer}
+.chip.linkable:hover{opacity:1}
+.avatar{width:72px;height:72px;border-radius:50%;object-fit:cover;display:block;border:3px solid var(--c,#3B6FE0);box-shadow:0 6px 18px -8px rgba(30,45,90,.45);transition:transform .35s cubic-bezier(.2,.8,.2,1),box-shadow .35s;background:#F7F3EA}
+.avatar:hover,.card:hover .avatar{transform:scale(1.08) rotate(-3deg);box-shadow:0 10px 26px -10px rgba(30,45,90,.55)}
+.avatar.sm{width:40px;height:40px;border-width:2px;display:inline-block;vertical-align:-10px;margin-right:8px}
+.face.front .avatar{margin-block-end:4px}
+.face.back .avatar.sm{margin-block-end:6px}
+.ohigh{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:0 0 18px}
+@media(max-width:860px){.ohigh{grid-template-columns:1fr}}
+.odonut{background:var(--p);border-radius:20px;padding:18px 20px;border:1px solid #E1E6F2;box-shadow:0 6px 22px -12px rgba(30,45,90,.25);display:flex;gap:18px;align-items:center;flex-wrap:wrap}
+.odonut svg{width:160px;height:160px;flex:none;cursor:pointer;transition:transform .25s}
+.odonut svg:hover{transform:scale(1.04)}
+.odonut .dleg{flex:1;min-width:160px}
+.odonut .dleg .li{cursor:pointer;padding:6px 4px;border-radius:8px;transition:background .2s}
+.odonut .dleg .li:hover,.odonut .dleg .li.on{background:#EEF2FB}
+.odonut .dcenter{font:800 22px Poppins;fill:var(--ink)}
+.odonut .dsub{font:600 11px Inter;fill:var(--mute);letter-spacing:1px}
+.brow{position:relative;cursor:default}
+.brow .tip{position:absolute;left:50%;inset-block-end:calc(100% + 6px);transform:translateX(-50%) translateY(4px);background:#13203F;color:#fff;font-size:12.5px;font-weight:600;padding:6px 10px;border-radius:8px;white-space:nowrap;opacity:0;pointer-events:none;transition:.2s;z-index:5}
+.brow:hover .tip,.brow:focus-within .tip{opacity:1;transform:translateX(-50%) translateY(0)}
+.spotlight{background:linear-gradient(110deg,#FFF6DD,#E8F0FF);border:1px solid #F0D58A;border-radius:20px;padding:18px 22px;margin-block-end:16px;display:none;animation:fade .4s}
+.spotlight.on{display:block}
+.spotlight .row{display:flex;flex-wrap:wrap;gap:18px;align-items:center}
+.spotlight .n{font:800 42px/1 Poppins;letter-spacing:-1px;color:var(--amber)}
+.spotlight .n small{font-size:18px;color:var(--mute);font-weight:700}
+.spotlight p{color:var(--mute);margin-top:4px;font-size:14px}
+.dyk{background:var(--p);border:1px dashed #F0D58A;border-radius:18px;padding:16px 18px;cursor:pointer;margin:18px 0 8px;transition:.25s;user-select:none}
+.dyk:hover{transform:translateY(-2px);box-shadow:0 10px 24px -14px rgba(184,122,0,.45);border-style:solid}
+.dyk .q{font-weight:800;color:var(--gold);font-size:14px;letter-spacing:1px;text-transform:uppercase}
+.dyk .a{display:none;margin-top:10px;font-size:16px;font-weight:700;line-height:1.4}
+.dyk.open .a{display:block;animation:fade .35s}
+.dyk.open .q::after{content:" · tap to hide"}
+.dyk:not(.open) .q::after{content:" · tap to reveal"}
+.accts{grid-template-columns:repeat(2,1fr);margin-block-end:8px}
+@media(max-width:860px){.grid,.rules,.accts{grid-template-columns:1fr}.hero{flex-direction:column;text-align:center}header h1{font-size:40px}}
+/* Neuron additions, same tokens */
+header h1{font-size:48px}
+header p{font-size:16px}
+.stats{display:grid;grid-template-columns:repeat(6,1fr);gap:12px;margin-top:22px}
+.stat6{background:var(--p);border:1px solid #E1E6F2;border-radius:16px;padding:14px 14px 12px;box-shadow:0 6px 22px -12px rgba(30,45,90,.25);cursor:pointer;transition:.25s;position:relative;border-top:4px solid var(--c);text-align:left;font:inherit;color:inherit}
+.stat6:hover{transform:translateY(-4px);box-shadow:0 14px 34px -14px var(--c)}
+.stat6 .n{font:800 34px/1 Poppins;color:var(--c);letter-spacing:-1px}
+.stat6 .l{font-size:13px;color:var(--mute);font-weight:600;margin-top:4px;display:block}
+.stat6 .tip,.has-tip .tip{position:absolute;left:50%;inset-block-end:calc(100% + 8px);transform:translateX(-50%) translateY(4px);background:#13203F;color:#fff;font-size:12px;font-weight:600;padding:6px 10px;border-radius:8px;white-space:nowrap;opacity:0;pointer-events:none;transition:.2s;z-index:6}
+.stat6:hover .tip,.stat6:focus .tip{opacity:1;transform:translateX(-50%) translateY(0)}
+.tabs{max-width:100%;overflow-x:auto;scrollbar-width:none}
+.tabs::-webkit-scrollbar{display:none}
+.tab{white-space:nowrap}
+.g5{grid-template-columns:repeat(3,1fr)}
+.card.sm{height:250px}
+.card.inv{height:230px}
+.front .meta{display:flex;justify-content:space-between;font-size:12px;font-weight:700;color:var(--c);letter-spacing:.5px;text-transform:uppercase}
+.front h4.t{font-size:17px;line-height:1.3}
+.back a.go{display:inline-block;margin-top:10px;font-size:13.5px}
+.og2{display:grid}
+.hide{display:none!important}
+.panel{background:var(--p);border:1px solid #E1E6F2;border-radius:20px;padding:20px 22px;box-shadow:0 6px 22px -12px rgba(30,45,90,.25)}
+.panel h3{font:800 18px Poppins;margin:0 0 4px}
+.panel .pc{color:var(--mute);font-size:13.5px;margin-block-end:12px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.sl{margin:0 0 12px}
+.sl .top{display:flex;justify-content:space-between;align-items:baseline;gap:8px;font-size:14px;font-weight:700}
+.sl .w{font-size:11.5px;color:var(--mute);background:#EEF2FB;border-radius:999px;padding:2px 8px;margin-left:6px}
+.sl .val{font:800 16px Poppins;color:var(--blue)}
+.sl small{display:block;color:var(--mute);font-size:12.5px}
+input[type=range]{-webkit-appearance:none;appearance:none;width:100%;height:8px;border-radius:99px;background:#E3E8F3;outline:none;margin:8px 0 2px}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:20px;height:20px;border-radius:50%;background:var(--blue);border:3px solid #fff;box-shadow:0 2px 8px rgba(59,111,224,.5);cursor:pointer}
+input[type=range]::-moz-range-thumb{width:18px;height:18px;border-radius:50%;background:var(--blue);border:3px solid #fff;cursor:pointer}
+.gwrap{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:10px}
+.gwrap .ring{width:170px;height:170px}
+.gwrap .ring .pct{font-size:38px}
+.verdict{font-weight:800;font-size:15px;padding:10px 14px;border-radius:12px;width:100%;transition:.3s}
+.bands4{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;width:100%;font-size:11.5px;font-weight:700}
+.bands4 div{padding:7px 4px;border-radius:10px;opacity:.4;transition:.3s}
+.bands4 div.on{opacity:1;transform:scale(1.06)}
+.presets{display:flex;gap:8px;flex-wrap:wrap;margin-block-end:14px}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.themecount{font-weight:800;color:var(--teal);margin-top:12px;font-size:14px}
+#net{width:100%;height:560px;display:block;touch-action:none}
+#net .lk{stroke:#CDD5E8;stroke-width:1;transition:opacity .2s}
 #net .nd{cursor:pointer;transition:opacity .2s}
-#net .nd text{font-size:10px;font-weight:600;fill:#334155;pointer-events:none;paint-order:stroke;stroke:#fff;stroke-width:3px}
-#net.focus .lk{opacity:.12}
-#net.focus .nd{opacity:.18}
-#net.focus .lk.hl{opacity:1;stroke:var(--a);stroke-width:2}
-#net.focus .nd.hl{opacity:1}
-.netinfo{padding:18px;font-size:14px;max-height:660px;overflow:auto;box-shadow:none;background:#f8f9fd}
-.netinfo h4{font-size:17px;margin-block-end:6px}
-.netinfo ul{margin:6px 0 0;padding-left:18px;color:var(--mut)}
-.netlegend{display:flex;flex-wrap:wrap;gap:8px;margin-block-end:12px}
-.netlegend button{border:1px solid var(--line);background:#fff;border-radius:99px;padding:7px 12px;font-size:12.5px;font-weight:700}
-.netlegend button i{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:6px;vertical-align:0}
-.netlegend button.on{background:var(--ink);color:#fff}
-.disclaimer{font-size:12.5px;color:var(--mut);margin-top:10px}
-.mon{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-block-end:22px}
-.mon div{padding:16px;text-align:center}
-.mon .ic{font-size:26px}
-.mon h4{font-size:15px;margin-top:6px}
-.mon p{margin:2px 0 0;font-size:12.5px;color:var(--mut)}
-.themes{display:flex;flex-wrap:wrap;gap:8px}
-.theme{padding:9px 14px;border-radius:99px;background:#fff;border:1px solid var(--line);font-size:13.5px;font-weight:600;cursor:pointer;transition:all .25s;user-select:none}
-.theme:hover{transform:translateY(-2px)}
-.theme.on{color:#fff;border-color:transparent}
-.radar{display:flex;align-items:center;gap:14px;margin-top:18px;font-weight:700}
-.radar .pulse{width:14px;height:14px;border-radius:50%;background:var(--e);box-shadow:0 0 0 0 rgba(16,185,129,.6);animation:pulse 1.6s infinite}
-@keyframes pulse{to{box-shadow:0 0 0 16px rgba(16,185,129,0)}}
-.links{display:grid;grid-template-columns:1fr 1fr;gap:22px}
-.utm{padding:24px}
-.utm select{width:100%;padding:11px 12px;border-radius:12px;border:1px solid var(--line);font:inherit;font-size:14px;margin:6px 0 12px;background:#fff}
-.url{font-family:ui-monospace,Menlo,monospace;font-size:12.5px;background:#0f172a;color:#e2e8f0;border-radius:12px;padding:14px;word-break:break-all;line-height:1.6}
-.url .k{color:#a5b4fc}.url .v{color:#86efac}
-.lp{padding:24px}
-.lpmock{border:1px solid var(--line);border-radius:14px;overflow:hidden;margin-top:12px}
-.lpmock .img{height:90px;background:linear-gradient(135deg,var(--a),var(--b),var(--c))}
-.lpmock .b{padding:14px}
-.lpmock .row{display:flex;align-items:center;gap:10px;padding:7px 0;font-size:13.5px;font-weight:600;cursor:pointer;border-block-end:1px dashed var(--line);flex-wrap:wrap}
-.lpmock .row:last-child{border:0}
-.lpmock .row span{font-size:12px;color:var(--mut);font-weight:500;display:none}
-.lpmock .row.on span{display:inline}
-.when{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px;font-size:13.5px}
-.when div{padding:14px;border-radius:14px}
-.when .y{background:#ecfdf5}.when .n{background:#fef2f2}
-.when b{display:block;margin-block-end:4px}
-.when ul{margin:0;padding-left:16px}
-.aud{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
-.ag{padding:18px;cursor:pointer;transition:all .25s}
-.ag:hover,.ag.on{transform:translateY(-4px);border-color:var(--b)}
-.ag .ic{font-size:28px}
-.ag h4{font-size:16px;margin-top:6px}
-.ag p{margin:4px 0 0;font-size:13px;color:var(--mut)}
-.rel{display:grid;grid-template-columns:1.2fr 1fr;gap:22px;margin-top:22px}
-.relout{padding:26px;text-align:center;display:flex;flex-direction:column;justify-content:center}
-.relout .big{font-family:'Space Grotesk';font-size:56px;font-weight:700;line-height:1}
-.ring{width:180px;height:180px;margin:0 auto 10px;position:relative}
-.ring svg{transform:rotate(-90deg)}
-.ring .big{position:absolute;inset:0;display:flex;align-items:center;justify-content:center}
-.never{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:22px}
-.never div{padding:14px 16px;font-size:14px;font-weight:600;display:flex;gap:10px;align-items:center}
-.never div:before{content:"\2715";color:#e11d48;font-weight:800}
-.never div.yes:before{content:"\2713";color:var(--e)}
-.hero-metric{padding:30px;text-align:center;background:linear-gradient(135deg,#eef2ff,#ecfeff);border:1px solid #c7d2fe;margin-block-end:20px}
-.hero-metric .l{font-size:13px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--a)}
-.hero-metric h3{font-size:clamp(28px,4.4vw,46px);margin:6px 0}
-.hero-metric p{margin:0;color:var(--mut)}
-.cmp{display:flex;gap:12px;justify-content:center;margin-top:18px;flex-wrap:wrap}
-.cmp div{background:#fff;border:2px solid var(--line);border-radius:14px;padding:12px 16px;font-size:14px;text-align:left;min-width:240px;cursor:pointer}
-.cmp div b{display:block;font-family:'Space Grotesk';font-size:16px}
-.cmp .win{border-color:var(--e)}
-.meas{display:grid;grid-template-columns:repeat(5,1fr);gap:12px}
-.ms{padding:20px 16px;cursor:pointer;transition:all .3s}
-.ms .ic{font-size:28px}
-.ms h4{font-size:16px;margin:8px 0 4px;line-height:1.2}
-.ms ul{list-style:none;padding:0;margin:8px 0 0;font-size:13px;color:var(--mut);display:none}
-.ms li{padding:5px 0;border-top:1px dashed var(--line)}
-.ms.on ul{display:block;animation:pop .3s}
-.ms.on{border-color:var(--a)}
-.ms .t{font-size:12px;font-weight:700;color:var(--a)}
-.records{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:22px}
-.rec{padding:20px}
-.rec h4{font-size:16px}
-.rec p{margin:4px 0 0;font-size:13.5px;color:var(--mut)}
-.cad{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:22px}
-.cd{padding:18px;text-align:center}
-.cd .ring2{width:64px;height:64px;border-radius:50%;margin:0 auto 10px;border:5px solid var(--line);border-top-color:var(--a);animation:spin var(--sp) linear infinite}
-@keyframes spin{to{transform:rotate(360deg)}}
-.cd h4{font-size:16px}
-.cd p{margin:4px 0 0;font-size:13px;color:var(--mut)}
-.baseline{margin-top:20px;padding:18px 22px;display:flex;align-items:center;gap:16px;background:#fffbeb;border-color:#fde68a}
-.baseline b{font-family:'Space Grotesk';font-size:18px}
-.close{background:linear-gradient(135deg,#0f172a,#1e1b4b 55%,#0e7490);color:#fff;text-align:center;overflow:hidden}
-.close h2{font-size:clamp(34px,6vw,66px);line-height:1.04;max-width:900px;margin:0 auto 18px}
-.close p{color:#c7d2fe;font-size:19px;max-width:620px;margin:0 auto 30px}
-.close .btn.pri{background:#fff;color:var(--ink)}
-.close .btn.sec{background:transparent;color:#fff;border-color:rgba(255,255,255,.35)}
-footer{padding:26px 0;text-align:center;font-size:13px;color:var(--mut)}
-
-.morerow{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-top:22px}
-.morebtn{border:1px dashed #b8c0dc;background:#fff;border-radius:99px;padding:10px 16px;font-weight:700;font-size:14px;color:var(--ink);transition:all .2s}
-.morebtn:hover{border-color:var(--a);color:var(--a);transform:translateY(-2px)}
-.viewtoggle{display:inline-flex;background:#e9ecf6;border-radius:99px;padding:4px;margin-block-end:20px}
-.viewtoggle button{border:0;background:transparent;border-radius:99px;padding:10px 18px;font-weight:700;font-size:14px;color:var(--mut)}
-.viewtoggle button.on{background:#fff;color:var(--ink);box-shadow:0 2px 8px rgba(30,41,90,.12)}
-.tiles{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px}
-.tile{text-align:left;padding:20px 18px;display:flex;flex-direction:column;gap:4px;transition:transform .25s,box-shadow .25s,border-color .25s;color:var(--ink)}
-.tile:hover{transform:translateY(-5px) rotate(-.5deg);border-color:var(--a);box-shadow:0 18px 40px -16px rgba(79,70,229,.4)}
-.tile .ic{font-size:30px}
-.tile b{font-family:'Space Grotesk';font-size:17px}
-.tile small{color:var(--mut);font-size:13px}
-.tile em{font-style:normal;font-weight:700;font-size:13px;color:var(--a);margin-top:6px}
-.drawer{position:fixed;inset:0;z-index:100;background:rgba(15,23,42,.5);backdrop-filter:blur(4px);display:none;overflow-y:auto;padding:3vh 12px}
-.drawer.open{display:block;animation:fadeIn .25s ease}
-@keyframes fadeIn{from{opacity:0}to{opacity:1}}
-.drawer .sheet{position:relative;max-width:1160px;margin:0 auto;background:var(--bg);border-radius:24px;box-shadow:0 30px 80px -20px rgba(0,0,0,.5);animation:sheetUp .35s cubic-bezier(.2,1.2,.4,1)}
-@keyframes sheetUp{from{transform:translateY(40px);opacity:.4}to{transform:none;opacity:1}}
-.drawer section{padding:56px 0 48px}
-.dclose{position:sticky;top:12px;float:right;margin:12px 12px 0 0;z-index:5;border:0;background:var(--ink);color:#fff;border-radius:99px;padding:9px 16px;font-weight:700;font-size:14px}
-body.locked{overflow:hidden}
-.flypanel .detail{margin-top:14px}
-@media (max-width:600px){.drawer{padding:0}.drawer .sheet{border-radius:0;min-height:100%}}
-@media (max-width:980px){
-  .counters{grid-template-columns:repeat(3,1fr)}
-  .pillars,.obj,.meas,.mon{grid-template-columns:repeat(2,1fr)}
-  .fly,.calc,.arch,.fc,.links,.rel,.voice{grid-template-columns:1fr}
-  .formats,.aud,.never,.records{grid-template-columns:repeat(2,1fr)}
-  .cad{grid-template-columns:repeat(2,1fr)}
-  .netwrap{grid-template-columns:1fr}.netinfo{max-height:none}
-  #net{height:520px}
-}
-@media (max-width:600px){
-  section{padding:64px 0}
-  .counters{grid-template-columns:repeat(2,1fr)}
-  .pillars,.obj,.formats,.aud,.never,.records,.levels,.rules3,.principle,.meas,.mon,.traits{grid-template-columns:1fr}
-  .phases{grid-template-columns:repeat(2,1fr);row-gap:22px}
-  .phases:before,#phaseFill{display:none}
-  .pairs,.when{grid-template-columns:1fr}
-  #net{height:460px}
-}
-@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.reveal{opacity:1;transform:none}}
-</style>
-</head>
+#net .nd text{font-size:10px;font-weight:600;fill:#13203F;pointer-events:none;paint-order:stroke;stroke:#fff;stroke-width:3px}
+#net.focus .lk{opacity:.1}#net.focus .nd{opacity:.16}
+#net.focus .lk.hl{opacity:1;stroke:var(--blue);stroke-width:2}#net.focus .nd.hl{opacity:1}
+.netgrid{display:grid;grid-template-columns:1fr 290px;gap:16px;align-items:start}
+.netinfo{font-size:14px;max-height:560px;overflow:auto}
+.netinfo ul{margin:6px 0 0;padding-left:18px;color:var(--mute)}
+.netinfo h4{font-size:17px;margin:2px 0 6px}
+.small{font-size:12.5px;color:var(--mute);margin-top:10px;line-height:1.45}
+.url{font:12.5px/1.6 ui-monospace,Menlo,monospace;background:#13203F;color:#E6ECFF;border-radius:12px;padding:12px 14px;word-break:break-all;margin-top:10px}
+.url .k{color:#9DB8FF}.url .v{color:#7EE2C4}
+select{width:100%;padding:10px 12px;border-radius:12px;border:1px solid #D0D7EA;font:600 14px Inter;color:var(--ink);background:#fff;margin:4px 0 10px}
+label.f{font-size:12.5px;font-weight:700;color:var(--mute);letter-spacing:.5px;text-transform:uppercase}
+.match{background:#EAF8F3;border:1px solid rgba(12,154,120,.35);border-radius:14px;padding:10px 14px;margin-top:8px;font-size:14px;animation:fade .35s}
+.lead .mini{font-size:12px;color:var(--mute);font-weight:600}
+.lead.on .mini{color:var(--ink)}
+.lead .e{font-size:24px;display:block}
+.cmp{display:flex;gap:12px;flex-wrap:wrap;margin-top:10px}
+.cmp button{flex:1;min-width:200px;text-align:left;background:#fff;border:2px solid #E1E6F2;border-radius:14px;padding:12px 14px;font:600 14px Inter;color:var(--ink);cursor:pointer;transition:.2s}
+.cmp button b{display:block;font:800 16px Poppins}
+.cmp button.win{border-color:var(--teal);background:#EAF8F3}
+.cmp button.lose{opacity:.55}
+.jstep{cursor:pointer;border:0;font-family:Inter}
+.base{display:flex;gap:18px;align-items:center;flex-wrap:wrap}
+.base .ring{width:150px;height:150px}
+.base .ring .pct{font-size:30px;color:var(--teal)}
+@media(max-width:980px){.stats{grid-template-columns:repeat(3,1fr)}.netgrid{grid-template-columns:1fr}.netinfo{max-height:none}}
+@media(max-width:860px){.two,.g5{grid-template-columns:1fr}header h1{font-size:36px}#net{height:460px}}
+@media(max-width:520px){.stats{grid-template-columns:repeat(2,1fr)}.wrap{padding:24px 16px 50px}.brow{grid-template-columns:96px 1fr 40px;font-size:13px}.tab{padding:10px 14px;font-size:14px}}
+.tfacts.c2{grid-template-columns:repeat(2,1fr)}.tfacts.c3{grid-template-columns:repeat(3,1fr)}.tfacts.c4{grid-template-columns:repeat(4,1fr)}.tfacts.c5{grid-template-columns:repeat(5,1fr)}
+@media(max-width:980px){.tfacts.c4,.tfacts.c5{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:600px){.tfacts.c2,.tfacts.c3,.tfacts.c4,.tfacts.c5{grid-template-columns:1fr}.lead{min-width:0;flex:1 1 140px}.bands4{font-size:10.5px}.cmp button{min-width:0}.stat6 .n{font-size:28px}.hero{padding:20px}.big{font-size:48px}}
+@media(max-width:600px){.stat6 .tip,.brow .tip{display:none}}
+</style></head>
 <body>
-<div id="prog"></div>
-<nav class="top"><div class="wrap">
-  <a class="logo" href="#top"><i></i>The Neuron on X</a>
-  <div class="navlinks" id="navlinks">
-    <a href="#question">Question</a><a href="#pillars">Pillars</a><a href="#system">How it works</a><a href="#research">Research</a><a href="#explore">Explore</a><a href="#follow">Follow</a>
-  </div>
-</div></nav>
-
-<header class="hero" id="top">
-  <canvas id="neural"></canvas>
-  <div class="wrap">
-    <div class="kicker">The Neuron on X</div>
-    <h1>We connect the people, organizations, money and networks <span class="grad">behind the stories everyone else is discussing.</span></h1>
-    <p class="sub">An investigative research desk, live on X. Every post draws on documented research.</p>
-    <div class="counters">
-      <a class="ctr" href="#research"><b data-count="14">0</b><span>investigations published</span></a>
-      <a class="ctr" href="#pillars"><b data-count="5">0</b><span>editorial pillars</span></a>
-      <a class="ctr" href="#formats" data-open="formats"><b data-count="6">0</b><span>signature formats</span></a>
-      <a class="ctr" href="#monitor" data-open="monitor"><b data-count="20">0</b><span>themes monitored</span></a>
-      <a class="ctr" href="#research" data-view="network"><b data-count="54" id="orgCount">0</b><span>organizations mapped</span></a>
-      <a class="ctr" href="#research" data-view="network"><b data-count="21">0</b><span>people mapped</span></a>
-    </div>
-    <div class="cta-row">
-      <a class="btn pri" href="#system">See how it works &rarr;</a>
-      <a class="btn sec" href="#score" data-open="score">Try the scoring engine</a>
-    </div>
+<canvas id="confetti"></canvas>
+<div class="wrap">
+<header>
+  <div class="k">The Neuron · on X</div>
+  <h1>The Neuron <span>on X</span></h1>
+  <p>Connecting the people, organizations, money and networks behind the stories everyone else is discussing.</p>
+  <div class="stats" id="stats">
+    <button class="stat6" style="--c:var(--blue)" data-go="r"><span class="tip">Open the research gallery</span><div class="n cu" data-to="14">0</div><span class="l">investigations</span></button>
+    <button class="stat6" style="--c:var(--teal)" data-go="ov"><span class="tip">See the five pillars</span><div class="n cu" data-to="5">0</div><span class="l">editorial pillars</span></button>
+    <button class="stat6" style="--c:var(--pink)" data-go="o"><span class="tip">Flip the six formats</span><div class="n cu" data-to="6">0</div><span class="l">signature formats</span></button>
+    <button class="stat6" style="--c:var(--amber)" data-go="e" data-to-id="themes"><span class="tip">Light up the 20 themes</span><div class="n cu" data-to="20">0</div><span class="l">monitored themes</span></button>
+    <button class="stat6" style="--c:var(--violet)" data-go="r" data-net="1"><span class="tip">Open the network map</span><div class="n cu" data-to="54" id="orgStat">0</div><span class="l">organizations mapped</span></button>
+    <button class="stat6" style="--c:var(--gold)" data-go="r" data-net="1"><span class="tip">Counted in the knowledge base, not named</span><div class="n cu" data-to="21">0</div><span class="l">people mapped</span></button>
   </div>
 </header>
-<main>
-<section class="q" id="question">
-  <div class="wrap">
-    <div class="kicker">One question drives everything</div>
-    <p class="qline" id="qline">
-      <span class="w key" data-x="We trace influence to its source: the person, group or state at the start of the chain.">Who</span>
-      <span class="w">is</span> <span class="w key" data-x="Influence is a verb. We document what is actually happening, not what is assumed.">influencing</span>
-      <span class="w key" data-x="Influence lands somewhere: a campus, a party, a newsroom, an encyclopedia.">whom,</span>
-      <span class="w">through what</span> <span class="w key" data-x="Nonprofits, foundations, fronts and fiscal sponsors. The vehicles influence travels in.">organizations,</span>
-      <span class="w key" data-x="Shared leaders, board seats, partnerships and personnel overlaps.">relationships,</span>
-      <span class="w key" data-x="Money, grants and funding structures. We follow the money.">resources,</span>
-      <span class="w">and</span> <span class="w key" data-x="Campaigns, narratives, lawsuits and messaging. The how behind the what.">mechanisms?</span>
-    </p>
-    <div class="qexplain" id="qexplain">Tap any highlighted word.</div>
-    <div class="principle">
-      <div class="no"><h4>Not the goal</h4><p>Posting as often as possible.</p></div>
-      <div class="yes"><h4>The goal</h4><p>Be relevant, informative and interesting to the right people. Known for quality, not volume.</p></div>
-    </div>
-  </div>
-</section>
-<section id="pillars" style="background:#fff">
-  <div class="wrap reveal">
-    <div class="kicker">Editorial scope</div>
-    <h2 class="h2">Five pillars. <span class="grad">One thread.</span></h2>
-    <p class="lead">The networks, institutions, funding, relationships and influence operations shaping political movements, public discourse and Western institutions. Tap a pillar.</p>
-    <div class="pillars" id="pillarGrid"></div>
-    <div class="card pil-detail" id="pilDetail"></div>
-    <div class="connector">Interconnected areas of investigation, not five separate identities.</div>
-    <div class="morerow"><button class="morebtn" data-open="objective">💬 What the account does: five jobs &rarr;</button><button class="morebtn" data-open="voice">🎚️ The voice dial &rarr;</button><button class="morebtn" data-open="monitor">📡 20 monitored themes &rarr;</button></div>
-  </div>
-</section>
-<section id="system" style="background:#fff">
-  <div class="wrap reveal">
-    <div class="kicker">The system</div>
-    <h2 class="h2">How it works: <span class="grad">seven parts, one loop.</span></h2>
-    <p class="lead">Each part feeds the next. Tap a step, then open its full detail.</p>
-    <div class="fly">
-      <svg id="flysvg" viewBox="0 0 500 500" aria-label="System loop"></svg>
-      <div class="card flypanel" id="flypanel"></div>
-    </div>
-  </div>
-</section>
-<section id="research">
-  <div class="wrap reveal">
-    <div class="kicker">The research</div>
-    <h2 class="h2"><span class="grad">14 investigations.</span> One connected knowledge base.</h2>
-    <p class="lead">Browse the investigations, or flip to the map of how the knowledge base links them: <b id="orgCount2">54</b> organizations, 14 investigations and 21 people mapped so far.</p>
-    <div class="viewtoggle" role="tablist"><button class="on" data-view="gallery">🗂️ Investigations</button><button data-view="network">🕸️ Network map</button></div>
-    <div id="viewGallery">
-    <div class="filters" id="filters"></div>
-    <div class="gallery" id="gallery"></div>
-    <div class="archive-link"><a class="btn sec" href="https://the-neuron.net/section/research/" target="_blank" rel="noopener">Browse the full research archive &rarr;</a></div>
-    </div>
-    <div id="viewNetwork" hidden>
-    <h3 style="font-size:22px;margin:0 0 6px">How the knowledge base links research</h3>
-    <p class="hint" style="margin:0 0 12px">Every article is broken into people, organizations, subjects, findings, funding links, sources and dates. Tap a node, drag to explore.</p>
-    <div class="netlegend" id="netlegend"></div>
-    <div class="card netwrap">
-      <svg id="net"></svg>
-      <div class="card netinfo" id="netinfo"><h4>Tap any node</h4><div style="color:var(--mut)">See which research and clusters it links to. Numbered dots are investigations, rings are clusters.</div></div>
-    </div>
-    <div class="disclaimer">This map shows how the knowledge base indexes and cross-references published research. A line means an organization appears in, or is grouped with, that research. It is not an allegation of any relationship. People are stored in the knowledge base and shown here only as a count.</div>
-    </div>
-  </div>
-</section>
-<section id="explore">
-  <div class="wrap reveal">
-    <div class="kicker">Explore more</div>
-    <h2 class="h2">Go deeper. <span class="grad">Tap any tile.</span></h2>
-    <p class="lead">Every part of the plan, one tap away.</p>
-    <div class="tiles"><button class="card tile" data-open="objective"><span class="ic">💬</span><b>Five jobs</b><small>What the account does beyond posting links</small><em>Open &rarr;</em></button><button class="card tile" data-open="voice"><span class="ic">🎚️</span><b>The voice dial</b><small>Find the sweet spot between dry and outrage</small><em>Open &rarr;</em></button><button class="card tile" data-open="monitor"><span class="ic">📡</span><b>Monitoring</b><small>20 themes and five things it listens for</small><em>Open &rarr;</em></button><button class="card tile" data-open="score"><span class="ic">🎯</span><b>Score an opportunity</b><small>Live 0 to 100 priority calculator</small><em>Open &rarr;</em></button><button class="card tile" data-open="launch"><span class="ic">🚀</span><b>Launch campaign</b><small>Step through a launch, phase by phase</small><em>Open &rarr;</em></button><button class="card tile" data-open="archive"><span class="ic">🗄️</span><b>Living archive</b><small>Watch the context engine find past research</small><em>Open &rarr;</em></button><button class="card tile" data-open="factcheck"><span class="ic">🔍</span><b>Fact-check ladder</b><small>Six steps and three verification levels</small><em>Open &rarr;</em></button><button class="card tile" data-open="formats"><span class="ic">🃏</span><b>Six signature formats</b><small>Flip cards for each recurring format</small><em>Open &rarr;</em></button><button class="card tile" data-open="links"><span class="ic">🔗</span><b>Links with purpose</b><small>Tracking-link builder and landing page</small><em>Open &rarr;</em></button><button class="card tile" data-open="audience"><span class="ic">👥</span><b>Audience</b><small>Six groups and a relevance calculator</small><em>Open &rarr;</em></button><button class="card tile" data-open="measure"><span class="ic">📊</span><b>Measurement</b><small>The hero metric, five categories, cadence</small><em>Open &rarr;</em></button></div>
-  </div>
-</section>
-<section class="close" id="follow">
-  <canvas id="neural2" style="position:absolute;inset:0;width:100%;height:100%;opacity:.5"></canvas>
-  <div class="wrap" style="position:relative">
-    <h2>Known for the quality of its connections, <span style="color:#67e8f9">not how often it posts.</span></h2>
-    <p>Information, connections and context for the conversations that matter.</p>
-    <div class="cta-row" style="justify-content:center">
-      <a class="btn pri" href="https://the-neuron.net" target="_blank" rel="noopener">Follow The Neuron &rarr;</a>
-      <a class="btn sec" href="https://the-neuron.net/section/research/" target="_blank" rel="noopener">Read the research</a>
-    </div>
-  </div>
-</section>
-</main>
-<div id="drawers">
-<div class="drawer" id="d-objective" role="dialog" aria-modal="true" aria-label="Five jobs"><div class="sheet"><button class="dclose" aria-label="Close">✕ Close</button><section id="objective">
-  <div class="wrap reveal">
-    <div class="kicker">More than an article feed</div>
-    <h2 class="h2">Five jobs, one account.</h2>
-    <p class="lead">An extension of the investigative desk, growing into a recognizable source of investigative commentary. Tap each job.</p>
-    <div class="obj" id="obj">
-      <div class="card ob"><div class="ic">💬</div><h4>Join</h4><p>Takes part in relevant conversations with something substantive to add.</p></div>
-      <div class="card ob"><div class="ic">🔦</div><h4>Introduce</h4><p>Brings key findings from the investigations to the people who need them.</p></div>
-      <div class="card ob"><div class="ic">🧩</div><h4>Connect</h4><p>Links today's news to research already published.</p></div>
-      <div class="card ob"><div class="ic">🤝</div><h4>Relate</h4><p>Builds relationships with people who genuinely care about these subjects.</p></div>
-      <div class="card ob"><div class="ic">🧭</div><h4>Discover</h4><p>Spots new developments and fresh research leads.</p></div>
-    </div>
-  </div>
-</section></div></div>
-<div class="drawer" id="d-voice" role="dialog" aria-modal="true" aria-label="The voice dial"><div class="sheet"><button class="dclose" aria-label="Close">✕ Close</button><section id="voice">
-  <div class="wrap reveal">
-    <div class="kicker">Voice</div>
-    <h2 class="h2">Find the sweet spot.</h2>
-    <p class="lead">Drag the dial. Between a dry feed and an outrage account sits the voice of The Neuron.</p>
-    <div class="voice">
-      <div class="card dial">
-        <input type="range" id="dial" min="0" max="100" value="15" aria-label="Voice dial">
-        <div class="ends"><span>Dry announcement feed</span><span>Outrage account</span></div>
-        <div class="out" id="dialOut"></div>
-      </div>
-      <div class="traits" id="traits"></div>
-    </div>
-  </div>
-</section></div></div>
-<div class="drawer" id="d-monitor" role="dialog" aria-modal="true" aria-label="Monitoring"><div class="sheet"><button class="dclose" aria-label="Close">✕ Close</button><section id="monitor">
-  <div class="wrap reveal">
-    <div class="kicker">Monitoring</div>
-    <h2 class="h2">20 themes. <span class="grad">Always listening.</span></h2>
-    <p class="lead">Keywords, curated lists and news alerts. It recognizes related ideas, not just exact names. Tap themes to light up the radar.</p>
-    <div class="mon">
-      <div class="card"><div class="ic">🗂️</div><h4>Topics</h4><p>All five pillars</p></div>
-      <div class="card"><div class="ic">🧑‍💼</div><h4>People</h4><p>Journalists, researchers, policymakers</p></div>
-      <div class="card"><div class="ic">🏛️</div><h4>Organizations</h4><p>Investigated or worth investigating</p></div>
-      <div class="card"><div class="ic">📰</div><h4>Developments</h4><p>News, reports, statements</p></div>
-      <div class="card"><div class="ic">🗣️</div><h4>Conversations</h4><p>Even with no mention of The Neuron</p></div>
-    </div>
-    <div class="themes" id="themes"></div>
-    <div class="radar"><div class="pulse"></div><span id="radarTxt">0 of 20 themes on the radar</span></div>
-  </div>
-</section></div></div>
-<div class="drawer" id="d-score" role="dialog" aria-modal="true" aria-label="Score an opportunity"><div class="sheet"><button class="dclose" aria-label="Close">✕ Close</button><section id="score">
-  <div class="wrap reveal">
-    <div class="kicker">Opportunity scoring</div>
-    <h2 class="h2">Should we reply? <span class="grad">Score it.</span></h2>
-    <p class="lead">Six criteria, scored 0 to 5, weighted into a 0 to 100 priority. Move the sliders or try an example.</p>
-    <div class="calc">
-      <div class="card sliders">
-        <div class="presets">
-          <button data-p="5,5,4,5,4,4">Breaking story we investigated</button>
-          <button data-p="3,2,3,3,3,2">Loosely related thread</button>
-          <button data-p="1,1,2,0,1,1">Off-topic viral post</button>
-        </div>
-        <div id="oppSliders"></div>
-      </div>
-      <div class="card gauge">
-        <svg id="gsvg" viewBox="0 0 300 170">
-          <path d="M30 150 A120 120 0 0 1 270 150" fill="none" stroke="#e6e9f5" stroke-width="22" stroke-linecap="round"/>
-          <path id="garc" d="M30 150 A120 120 0 0 1 270 150" fill="none" stroke="url(#gg)" stroke-width="22" stroke-linecap="round" stroke-dasharray="377" stroke-dashoffset="377" style="transition:stroke-dashoffset .5s"/>
-          <defs><linearGradient id="gg" x1="0" x2="1"><stop offset="0" stop-color="#f43f5e"/><stop offset=".45" stop-color="#f59e0b"/><stop offset=".7" stop-color="#06b6d4"/><stop offset="1" stop-color="#10b981"/></linearGradient></defs>
-        </svg>
-        <div class="score" id="scoreNum">0</div>
-        <div style="font-size:13px;color:var(--mut);font-weight:700">priority score out of 100</div>
-        <div class="verdict" id="verdict"></div>
-        <div class="bands" id="bands">
-          <div style="background:#fee2e2;color:#b91c1c">0 to 39<br>Skip</div>
-          <div style="background:#fef3c7;color:#b45309">40 to 59<br>Monitor</div>
-          <div style="background:#cffafe;color:#0e7490">60 to 79<br>Engage</div>
-          <div style="background:#d1fae5;color:#047857">80 to 100<br>High priority</div>
-        </div>
-      </div>
-    </div>
-    <div class="rules3">
-      <div class="card"><b>🛡️ Accuracy wins</b>Research quality always outranks a high score.</div>
-      <div class="card"><b>🔁 Memory</b>Repeated unanswered approaches lower the priority.</div>
-      <div class="card"><b>🎯 Fit over size</b>A small specialist account can beat a big generic one.</div>
-    </div>
-  </div>
-</section></div></div>
-<div class="drawer" id="d-launch" role="dialog" aria-modal="true" aria-label="Launch campaign"><div class="sheet"><button class="dclose" aria-label="Close">✕ Close</button><section id="launch">
-  <div class="wrap reveal">
-    <div class="kicker">Launch campaign</div>
-    <h2 class="h2">Every investigation <span class="grad">gets a launch.</span></h2>
-    <p class="lead">A coordinated burst on X, timed to each new publication. Tap a phase or press play.</p>
-    <div class="phases" id="phases"><div id="phaseFill"></div></div>
-    <div class="card phbody" id="phbody"></div>
-    <div class="ctrls"><button class="go" id="launchPlay">▶ Play the campaign</button></div>
-    <div class="noquota"><span>✕ No daily quota</span><span>✕ No manufactured content</span><span>✕ No "new article" posts with no reason to read</span></div>
-  </div>
-</section></div></div>
-<div class="drawer" id="d-archive" role="dialog" aria-modal="true" aria-label="Living archive"><div class="sheet"><button class="dclose" aria-label="Close">✕ Close</button><section id="archive">
-  <div class="wrap reveal">
-    <div class="kicker">Living archive</div>
-    <h2 class="h2">Old research, <span class="grad">new relevance.</span></h2>
-    <p class="lead">The context engine matches today's news to past investigations. Pick a sample trigger and watch it search.</p>
-    <div class="arch">
-      <div class="modes" id="modes">
-        <div class="card mode on"><div class="ic">⚡</div><div><h4>Trigger-based</h4><p>News breaks. The archive is checked for related findings.</p></div></div>
-        <div class="card mode"><div class="ic">🗓️</div><div><h4>Editorial</h4><p>The weekly review finds discoveries that deserve more attention.</p></div></div>
-        <div class="card mode"><div class="ic">🔁</div><div><h4>Recurring features</h4><p>From The Archives, The Missing Context, Previously Investigated, Follow the Network, What We Know.</p></div></div>
-      </div>
-      <div class="card engine">
-        <h4 style="font-size:18px">Context engine demo</h4>
-        <div class="trig" id="trig"></div>
-        <div class="scan"><i id="scanbar"></i></div>
-        <div id="matches"><div class="hint">Choose a sample trigger above.</div></div>
-        <div class="recheck">⏱ Before reuse, every old finding is rechecked for later developments and clearly dated.</div>
-      </div>
-    </div>
-  </div>
-</section></div></div>
-<div class="drawer" id="d-factcheck" role="dialog" aria-modal="true" aria-label="Fact-check ladder"><div class="sheet"><button class="dclose" aria-label="Close">✕ Close</button><section id="factcheck">
-  <div class="wrap reveal">
-    <div class="kicker">Fact-check</div>
-    <h2 class="h2">Six steps <span class="grad">before anything posts.</span></h2>
-    <p class="lead">Every material claim climbs the ladder. Step through it.</p>
-    <div class="fc">
-      <div class="ladder" id="ladder"></div>
-      <div class="card fcpanel" id="fcpanel"></div>
-    </div>
-    <div class="levels" id="levels"></div>
-    <div class="speed">Accuracy beats speed. Every verified claim goes into a searchable record.</div>
-  </div>
-</section></div></div>
-<div class="drawer" id="d-formats" role="dialog" aria-modal="true" aria-label="Six signature formats"><div class="sheet"><button class="dclose" aria-label="Close">✕ Close</button><section id="formats">
-  <div class="wrap reveal">
-    <div class="kicker">Signature formats</div>
-    <h2 class="h2">Six formats <span class="grad">people will recognize.</span></h2>
-    <p class="lead">Tap a card to flip it.</p>
-    <div class="formats" id="fmtGrid"></div>
-    <div class="archfeat">
-      <div class="card"><b>📚 From The Archives</b><br><span style="color:var(--mut);font-size:14px">Revisits past research when it matters again.</span></div>
-      <div class="card"><b>🕸️ Follow the Network</b><br><span style="color:var(--mut);font-size:14px">Walks through the web of links behind a story.</span></div>
-    </div>
-  </div>
-</section></div></div>
-<div class="drawer" id="d-links" role="dialog" aria-modal="true" aria-label="Links with purpose"><div class="sheet"><button class="dclose" aria-label="Close">✕ Close</button><section id="links">
-  <div class="wrap reveal">
-    <div class="kicker">Links with purpose</div>
-    <h2 class="h2">Every link <span class="grad">earns its place.</span></h2>
-    <p class="lead">Only when the research adds to the point. Every click is measurable.</p>
-    <div class="links">
-      <div class="card utm">
-        <h4 style="font-size:18px">Tracking link builder</h4>
-        <label for="utmInv" style="font-size:13px;font-weight:700;color:var(--mut);display:block;margin-top:10px">Investigation</label>
-        <select id="utmInv"></select>
-        <label for="utmType" style="font-size:13px;font-weight:700;color:var(--mut)">Post type</label>
-        <select id="utmType">
-          <option value="launch_post">Launch post</option>
-          <option value="evidence_post">Evidence post</option>
-          <option value="reply">Reply</option>
-          <option value="archive_feature">Archive feature</option>
-        </select>
-        <div class="url" id="utmOut"></div>
-        <div class="when">
-          <div class="y"><b>✓ Link when</b><ul><li>The reply draws on an investigation</li><li>The article adds evidence or context</li><li>Someone asks about the subject</li></ul></div>
-          <div class="n"><b>✕ Skip the link when</b><ul><li>Simply joining a conversation</li><li>The article is only loosely related</li><li>It would feel like an advert</li></ul></div>
-        </div>
-      </div>
-      <div class="card lp">
-        <h4 style="font-size:18px">Branded landing page, per investigation</h4>
-        <div class="lpmock">
-          <div class="img"></div>
-          <div class="b" id="lpRows">
-            <div class="row">📰 Headline <span>A compelling, clear headline.</span></div>
-            <div class="row">🖼️ Featured image <span>A strong thumbnail.</span></div>
-            <div class="row">✍️ Summary <span>Why the investigation matters, fast.</span></div>
-            <div class="row">🔑 2 or 3 key findings <span>The best discoveries up front.</span></div>
-            <div class="row">➡️ Full article link <span>One clear path to the full research.</span></div>
-            <div class="row">🔗 Related research <span>Links to connected investigations.</span></div>
-          </div>
-        </div>
-        <div class="hint">Tap each row. Branded, fast, transparent and mobile-friendly. If a page adds nothing, link straight to the article.</div>
-      </div>
-    </div>
-  </div>
-</section></div></div>
-<div class="drawer" id="d-audience" role="dialog" aria-modal="true" aria-label="Audience"><div class="sheet"><button class="dclose" aria-label="Close">✕ Close</button><section id="audience">
-  <div class="wrap reveal">
-    <div class="kicker">Audience</div>
-    <h2 class="h2">The right people, <span class="grad">not the loudest.</span></h2>
-    <p class="lead">Six priority groups, ranked by genuine interest. Tap a group, then score a contact.</p>
-    <div class="aud" id="aud"></div>
-    <div class="rel">
-      <div class="card sliders"><h4 style="font-size:18px;margin-block-end:12px">Relevance score</h4><div id="relSliders"></div></div>
-      <div class="card relout">
-        <div class="ring"><svg width="180" height="180"><circle cx="90" cy="90" r="76" fill="none" stroke="#e6e9f5" stroke-width="16"/><circle id="relRing" cx="90" cy="90" r="76" fill="none" stroke="url(#rg)" stroke-width="16" stroke-linecap="round" stroke-dasharray="477.5" stroke-dashoffset="477.5" style="transition:stroke-dashoffset .5s"/><defs><linearGradient id="rg"><stop offset="0" stop-color="#06b6d4"/><stop offset="1" stop-color="#4f46e5"/></linearGradient></defs></svg><div class="big" id="relNum">0</div></div>
-        <div style="font-weight:700" id="relTxt"></div>
-      </div>
-    </div>
-    <div class="never">
-      <div class="yes">Relevance first, always</div>
-      <div>No tagging for prominence</div>
-      <div>No repeated sends of one article</div>
-      <div>No unsolicited promo DMs</div>
-      <div>No mass or automated replies</div>
-      <div>No forced connections</div>
-    </div>
-  </div>
-</section></div></div>
-<div class="drawer" id="d-measure" role="dialog" aria-modal="true" aria-label="Measurement"><div class="sheet"><button class="dclose" aria-label="Close">✕ Close</button><section id="measure">
-  <div class="wrap reveal">
-    <div class="kicker">Measurement</div>
-    <h2 class="h2">Measured by <span class="grad">what matters.</span></h2>
-    <div class="card hero-metric">
-      <div class="l">The hero metric</div>
-      <h3>Relevant engagement per post</h3>
-      <p>Which post wins? Tap one.</p>
-      <div class="cmp" id="cmp">
-        <div data-w="0"><b>Post A</b>A large pile of generic likes</div>
-        <div data-w="1"><b>Post B</b>A few replies from journalists and researchers</div>
-      </div>
-      <p id="cmpTxt" style="margin-top:12px;font-weight:700;min-height:24px"></p>
-    </div>
-    <div class="meas" id="meas"></div>
-    <div class="records">
-      <div class="card rec"><h4>📝 Post performance</h4><p>Date, type, topic, investigation, impressions, engagements, profile visits, clicks, relevant interactions.</p></div>
-      <div class="card rec"><h4>🔬 Investigation performance</h4><p>Launch campaign, follow-up posts, traffic, outside engagement, times resurfaced.</p></div>
-      <div class="card rec"><h4>👥 Audience performance</h4><p>Relevant people, their interests, interactions and how relationships grow.</p></div>
-    </div>
-    <div class="cad">
-      <div class="card cd" style="--sp:1.2s"><div class="ring2"></div><h4>Every campaign</h4><p>Review that campaign</p></div>
-      <div class="card cd" style="--sp:2.4s"><div class="ring2"></div><h4>Weekly</h4><p>Opportunities and interactions</p></div>
-      <div class="card cd" style="--sp:4.8s"><div class="ring2"></div><h4>Monthly</h4><p>Topics, formats and growth</p></div>
-      <div class="card cd" style="--sp:9.6s"><div class="ring2"></div><h4>Quarterly</h4><p>Reassess the strategy</p></div>
-    </div>
-    <div class="card baseline"><div style="font-size:30px">📏</div><div><b>Month one sets the baseline.</b><br><span style="color:var(--mut)">No performance figures yet. Targets are set from first-month results, not picked at random.</span></div></div>
-  </div>
-</section></div></div>
+
+<div class="tabs" role="tablist">
+  <button class="tab on" data-v="ov">🧭 Overview</button>
+  <button class="tab" data-v="r">📚 Research</button>
+  <button class="tab" data-v="e">⚙️ Engine</button>
+  <button class="tab" data-v="o">📣 Outreach</button>
+  <button class="tab" data-v="a">👥 Audience</button>
+  <button class="tab" data-v="m">📊 Measurement</button>
 </div>
-<footer>The Neuron &middot; <a href="https://the-neuron.net" target="_blank" rel="noopener">the-neuron.net</a></footer>
+
+<!-- OVERVIEW -->
+<section class="view on" id="v-ov">
+  <p class="cap">An investigative research desk on X. Tap anything to see what is behind it.</p>
+  <h2>Five pillars</h2>
+  <p class="cap">One thread runs through all five. Tap a card.</p>
+  <div class="grid g5" id="pillarCards"></div>
+
+  <h2>What the account does</h2>
+  <p class="cap">Five jobs, beyond posting links. Tap to reveal.</p>
+  <div class="tfacts c5" id="jobs"></div>
+
+  <h2>Voice</h2>
+  <p class="cap">Pick a setting. Then tap a trait.</p>
+  <div class="journey">
+    <div class="jtoggle" id="voiceToggle">
+      <button class="tpill" data-vo="dry">🧊 Too dry</button>
+      <button class="tpill on" data-vo="neuron">🧠 The Neuron</button>
+      <button class="tpill" data-vo="hot">🔥 Too hot</button>
+    </div>
+    <div class="jnote" id="voiceNote"></div>
+    <div class="tfacts" id="traits" style="margin-top:14px"></div>
+  </div>
+  <div class="dyk" id="dykPrinciple" tabindex="0"><div class="q">Volume or value?</div><div class="a">Value. Be relevant, informative and interesting to the right people. The account should be known for the quality of its information, connections and context, not for how often it posts.</div></div>
+</section>
+
+<!-- RESEARCH -->
+<section class="view" id="v-r">
+  <p class="cap">14 investigations, filed by pillar and linked in one knowledge base.</p>
+  <div class="ohigh">
+    <div class="odonut" id="pdonut">
+      <svg id="donutSvg" viewBox="0 0 160 160" aria-label="Investigations by pillar"></svg>
+      <div class="dleg" id="dleg"></div>
+    </div>
+    <div class="chart">
+      <div class="lab" style="margin-block-end:12px">Published by month · hover a bar</div>
+      <div class="bars" id="monthBars"></div>
+    </div>
+  </div>
+  <div class="spotlight" id="pspot"></div>
+
+  <div class="jtoggle" style="justify-content:flex-start" id="rview">
+    <button class="tpill on" data-rv="gal">🗂️ Gallery</button>
+    <button class="tpill" data-rv="net">🕸️ Network map</button>
+  </div>
+
+  <div id="rv-gal">
+    <div class="pills" id="pfilter"></div>
+    <div class="grid" id="invCards"></div>
+    <p class="small"><a href="https://the-neuron.net/section/research/" target="_blank" rel="noopener">Browse the full research archive →</a></p>
+  </div>
+
+  <div id="rv-net" class="hide">
+    <div class="netgrid">
+      <div class="chart" style="padding:10px"><svg id="net"></svg></div>
+      <div>
+        <div class="panel netinfo" id="netinfo"><h3>How the knowledge base links research</h3><div class="pc">Tap a node or a cluster bar. Numbered dots are investigations, rings are clusters.</div></div>
+        <div class="panel" style="margin-top:12px"><div class="lab" style="margin-block-end:10px">Organizations by cluster</div><div class="bars" id="clusterBars"></div></div>
+      </div>
+    </div>
+    <p class="small">This map shows how the knowledge base indexes and cross-references published research. A line means an organization appears in, or is grouped with, that research. It is not an allegation of any relationship. People are stored in the knowledge base and shown only as a count.</p>
+  </div>
+
+  <h2>What the knowledge base captures</h2>
+  <p class="cap">Every article is broken into parts. Tap each.</p>
+  <div class="tfacts c4" id="kbFacts"></div>
+</section>
+
+<!-- ENGINE -->
+<section class="view" id="v-e">
+  <p class="cap">Seven parts that work as one loop. Tap a step.</p>
+  <div class="flow" id="loop"></div>
+  <div class="tdetail" id="loopDetail"></div>
+
+  <div class="journey">
+    <h3>Follow one opportunity</h3>
+    <div class="jcap">From a post on X to next week's plan. Tap a stop or press play.</div>
+    <div class="jtrack" id="oppTrack"></div>
+    <div class="jnote" id="oppNote"></div>
+    <div class="gnav" style="justify-content:center"><button class="gbtn" id="oppPlay">▶ Play</button></div>
+  </div>
+
+  <h2 id="scoreH">Opportunity score</h2>
+  <p class="cap">Six criteria, 0 to 5 each, weighted into a 0 to 100 priority.</p>
+  <div class="two">
+    <div class="panel"><div class="presets" id="oppPresets"></div><div id="oppSliders"></div></div>
+    <div class="panel gwrap">
+      <div class="ring"><svg viewBox="0 0 180 180" width="170" height="170"><circle cx="90" cy="90" r="76" fill="none" stroke="#E3E8F3" stroke-width="16"/><circle id="oppRing" cx="90" cy="90" r="76" fill="none" stroke="#3B6FE0" stroke-width="16" stroke-linecap="round" stroke-dasharray="477.5" stroke-dashoffset="477.5" transform="rotate(-90 90 90)" style="transition:stroke-dashoffset .6s,stroke .3s"/></svg>
+        <div class="pct"><span id="oppNum">0</span><small>PRIORITY</small></div></div>
+      <div class="verdict" id="oppVerdict"></div>
+      <div class="bands4" id="oppBands">
+        <div style="background:#FDE7EE;color:#B0264F">0 to 39<br>Skip</div>
+        <div style="background:#FFF1DC;color:#A85A06">40 to 59<br>Monitor</div>
+        <div style="background:#E4EDFF;color:#2F64D6">60 to 79<br>Engage</div>
+        <div style="background:#DDF4EC;color:#08795E">80 to 100<br>High priority</div>
+      </div>
+    </div>
+  </div>
+  <div class="rules" id="scoreRules"></div>
+
+  <h2>Fact-check</h2>
+  <p class="cap">Six steps before anything posts. Step through it.</p>
+  <div class="guide">
+    <h3>From claim to approved wording</h3>
+    <div class="gcap">Every material claim, in every post, reply or thread.</div>
+    <div class="gdots" id="fcDots"></div>
+    <div class="gcard" id="fcCard"></div>
+    <div class="gnav"><button class="gbtn ghost" id="fcPrev">← Back</button><button class="gbtn" id="fcNext">Next →</button></div>
+  </div>
+  <p class="cap" style="margin-top:14px">Three verification levels. Tap a card.</p>
+  <div class="rules" id="levels"></div>
+  <p class="cap" style="margin-top:18px">Review the wording. Tap each question.</p>
+  <div class="tfacts c5" id="pairs"></div>
+
+  <h2 id="themes">Monitoring</h2>
+  <p class="cap">Keywords, curated lists and news alerts. It recognizes related ideas, not just exact names.</p>
+  <div class="flow" id="monAreas"></div>
+  <div class="panel" style="margin-top:14px"><div class="lab" style="margin-block-end:10px">20 monitored themes · tap to light up</div><div class="chips" id="themeChips"></div><div class="themecount" id="themeCount"></div></div>
+</section>
+
+<!-- OUTREACH -->
+<section class="view" id="v-o">
+  <p class="cap">How research reaches X: formats, launches, the archive and links.</p>
+  <h2>Six signature formats</h2>
+  <p class="cap">Tap to flip.</p>
+  <div class="grid" id="fmtCards"></div>
+  <div class="tfacts c2" id="archFeats" style="margin-top:14px"></div>
+
+  <h2>Launch campaign</h2>
+  <p class="cap">Every new investigation gets a coordinated burst. Tap a phase or press play.</p>
+  <div class="journey">
+    <div class="jtrack" id="launchTrack"></div>
+    <div class="tdetail on" id="launchDetail" style="margin-block-end:0"></div>
+    <div class="gnav" style="justify-content:center"><button class="gbtn" id="launchPlay">▶ Play the campaign</button></div>
+  </div>
+  <div class="tfacts c3" id="launchRules"></div>
+
+  <h2>Living archive</h2>
+  <p class="cap">Older research resurfaces three ways. Then try the context engine.</p>
+  <div class="tfacts" id="modes"></div>
+  <div class="journey">
+    <h3>Context engine</h3>
+    <div class="jcap">Pick a sample trigger. Watch it search the archive.</div>
+    <div class="tpills" id="trigPills" style="justify-content:center"></div>
+    <div class="tflow" id="trigFlow"></div>
+    <div id="trigOut"></div>
+  </div>
+
+  <h2>Links and tracking</h2>
+  <p class="cap">A link only when the research adds to the point. Every click measurable.</p>
+  <div class="two">
+    <div class="panel">
+      <h3>Tracking link builder</h3>
+      <div class="pc">Same parameters for every investigation and post type.</div>
+      <label class="f" for="utmInv">Investigation</label><select id="utmInv"></select>
+      <label class="f" for="utmType">Post type</label>
+      <select id="utmType"><option value="launch_post">Launch post</option><option value="evidence_post">Evidence post</option><option value="reply">Reply</option><option value="archive_feature">Archive feature</option></select>
+      <div class="url" id="utmOut"></div>
+    </div>
+    <div class="panel">
+      <h3>Landing page, per investigation</h3>
+      <div class="pc">Tap a part to see its job.</div>
+      <div class="chain" id="lpChain" style="justify-content:flex-start"></div>
+      <div class="jnote" id="lpNote" style="text-align:left"></div>
+      <div class="tfacts c2" id="linkWhen" style="margin-top:10px"></div>
+    </div>
+  </div>
+</section>
+
+<!-- AUDIENCE -->
+<section class="view" id="v-a">
+  <p class="cap">The right people, not the loudest. Tap a group.</p>
+  <div class="org">
+    <div class="you">The Neuron</div><div class="vl"></div>
+    <div class="leads" id="audLeads"></div>
+  </div>
+  <h2>Relevance score</h2>
+  <p class="cap">Five weighted criteria. Score a contact.</p>
+  <div class="two">
+    <div class="panel"><div id="relSliders"></div></div>
+    <div class="panel gwrap">
+      <div class="ring"><svg viewBox="0 0 180 180" width="170" height="170"><circle cx="90" cy="90" r="76" fill="none" stroke="#E3E8F3" stroke-width="16"/><circle id="relRing" cx="90" cy="90" r="76" fill="none" stroke="#0C9A78" stroke-width="16" stroke-linecap="round" stroke-dasharray="477.5" stroke-dashoffset="477.5" transform="rotate(-90 90 90)" style="transition:stroke-dashoffset .6s"/></svg>
+        <div class="pct" style="color:var(--teal)"><span id="relNum">0</span><small>RELEVANCE</small></div></div>
+      <div class="verdict" id="relVerdict" style="background:#EAF8F3;color:#08795E"></div>
+    </div>
+  </div>
+  <h2>How we find people</h2>
+  <p class="cap">Five discovery methods. Tap to reveal.</p>
+  <div class="tfacts c5" id="discover"></div>
+  <h2>Ground rules</h2>
+  <p class="cap">Tap each question.</p>
+  <div class="tfacts" id="audRules"></div>
+  <h2>What we keep on each contact</h2>
+  <div class="chain" id="relChain"></div>
+</section>
+
+<!-- MEASUREMENT -->
+<section class="view" id="v-m">
+  <p class="cap">No performance figures yet. The baseline is set in month one, then targets follow.</p>
+  <div class="hero" id="baseHero">
+    <div class="ring"><svg viewBox="0 0 180 180" width="180" height="180"><circle cx="90" cy="90" r="76" fill="none" stroke="#E3E8F3" stroke-width="16"/><circle id="baseRing" cx="90" cy="90" r="76" fill="none" stroke="#0C9A78" stroke-width="16" stroke-linecap="round" stroke-dasharray="477.5" stroke-dashoffset="477.5" transform="rotate(-90 90 90)" style="transition:stroke-dashoffset 2s"/></svg>
+      <div class="pct" style="color:var(--teal)">M1<small>BASELINE</small></div></div>
+    <div>
+      <div class="lab">Hero metric</div>
+      <h3 style="font:800 30px Poppins;margin-top:6px">Relevant engagement per post</h3>
+      <p>Meaningful interactions from journalists, researchers and specialist commentators count most.</p>
+      <div class="hint">Which post wins? Tap one.</div>
+      <div class="cmp" id="cmp"><button data-w="0"><b>Post A</b>A big pile of generic likes</button><button data-w="1"><b>Post B</b>A few replies from journalists and researchers</button></div>
+      <div class="jnote" id="cmpNote" style="text-align:left"></div>
+    </div>
+  </div>
+  <h2>Five categories</h2>
+  <p class="cap">Tap a card for its signals.</p>
+  <div class="grid" id="measCards"></div>
+  <h2>Three linked records</h2>
+  <div class="rules" id="records"></div>
+  <h2>Review cadence</h2>
+  <p class="cap">Tap a stop.</p>
+  <div class="journey"><div class="jtrack" id="cadTrack"></div><div class="jnote" id="cadNote"></div></div>
+</section>
+
+<footer><span>The Neuron · <a href="https://the-neuron.net" target="_blank" rel="noopener">Follow The Neuron</a> · <a href="https://the-neuron.net/section/research/" target="_blank" rel="noopener">Research archive</a></span><span>Performance baseline is set in month one.</span></footer>
+</div>
 <script>
 (function(){
-const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
-const PC={1:'#4f46e5',2:'#0891b2',3:'#d97706',4:'#db2777',5:'#059669'};
+const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
+const STILL=matchMedia('(prefers-reduced-motion: reduce)').matches;
+const PC={1:'#3B6FE0',2:'#0C9A78',3:'#D96C0A',4:'#D93B70',5:'#6E4FD8'};
 const PILLARS=[
- {n:1,t:'Foreign Influence and Geopolitical Networks',s:'States and networks reaching across borders',items:['CCP and United Front networks','Foreign state interference','Qatar and its networks','Turkish influence','Foreign investment','Transnational networks']},
- {n:2,t:'Organizational Networks and Funding',s:'The organizations and money behind movements',items:['Nonprofits and foundations','Money sources and funding structures','Fiscal sponsors and intermediaries','Leadership links','Overlapping personnel','Infrastructure behind movements']},
- {n:3,t:'Influence Within Western Institutions',s:'Where influence lands',items:['Foreign funding of US and UK universities','University partnerships','Political parties','NGOs and think tanks','Media and culture','Information platforms']},
- {n:4,t:'Political Movements and Extremist Networks',s:'Movements and their organizational backbone',items:['Muslim Brotherhood networks','Hamas and PFLP-related networks','Samidoun','Islamist movements','Radical movement infrastructure','Antisemitism and anti-Israel activism']},
- {n:5,t:'Information, Narratives, and Influence',s:'How narratives are shaped and spread',items:['Wikipedia and information integrity','Coordinated messaging','Online influence campaigns','How narratives spread','Foreign influence in information ecosystems']}
+ {n:1,e:'🌍',t:'Foreign Influence and Geopolitical Networks',s:'States and networks reaching across borders',items:['CCP and United Front networks','Foreign state interference','Qatar and its networks','Turkish influence','Foreign investment','Transnational networks']},
+ {n:2,e:'🏦',t:'Organizational Networks and Funding',s:'The organizations and money behind movements',items:['Nonprofits and foundations','Money sources and funding structures','Fiscal sponsors and intermediaries','Leadership links','Overlapping personnel','Infrastructure behind movements']},
+ {n:3,e:'🏛️',t:'Influence Within Western Institutions',s:'Where influence lands',items:['Foreign funding of US and UK universities','University partnerships','Political parties','NGOs and think tanks','Media and culture','Information platforms']},
+ {n:4,e:'🧭',t:'Political Movements and Extremist Networks',s:'Movements and their organizational backbone',items:['Muslim Brotherhood networks','Hamas and PFLP-related networks','Samidoun','Islamist movements','Radical movement infrastructure','Antisemitism and anti-Israel activism']},
+ {n:5,e:'📡',t:'Information, Narratives, and Influence',s:'How narratives are shaped and spread',items:['Wikipedia and information integrity','Coordinated messaging','Online influence campaigns','How narratives spread','Foreign influence in information ecosystems']}
 ];
+const SHORT={1:'Foreign Influence',2:'Networks and Funding',3:'Western Institutions',4:'Movements',5:'Information'};
 const INV=[
  {t:'NEO Philanthropy: The $180 Million Charity',d:'Jul 2026',p:2,u:'https://the-neuron.net/research/what-is-neo-philanthropy-and-does-it-support-hamas-affiliated-groups/',s:'neo_philanthropy'},
  {t:'A Chinese Government-Linked Network Is Trying to Reach the Halls of the U.S. Government',d:'Jul 2026',p:1,u:'https://the-neuron.net/research/a-chinese-government-linked-network-is-trying-to-reach-the-halls-of-the-u-s-government/',s:'chinese_network_us_government'},
@@ -746,177 +563,80 @@ const INV=[
  {t:'The China-Affiliated Hub in the Heart of NYC',d:'Mar 2026',p:2,u:'https://the-neuron.net/research/the-china-affiliated-hub-in-the-heart-of-nyc/',s:'china_hub_nyc'}
 ];
 const CLUSTERS=[
- {k:'mb',n:'Muslim Brotherhood networks',c:'#db2777',orgs:['Muslim Brotherhood','CAIR','ISNA','NAIT','MAS','IAP','ICNA','Fiqh Council']},
- {k:'hp',n:'Hamas, PFLP and associated',c:'#e11d48',orgs:['Hamas','PFLP','Samidoun','Masar Badil','Freedom Flotilla Coalition','PCPA','International Solidarity Movement','International Union of Muslim Scholars','Hind Rajab Foundation','March 30 Movement','Palestinian Center for Human Rights','Global Legal Action Network']},
- {k:'cn',n:'Chinese influence',c:'#4f46e5',orgs:['PSL',"The People's Forum",'BreakThrough News','1804 Books','ANSWER Coalition','Progress Unity Fund','Justice and Education Fund','United Community Fund','Goldman Sachs Philanthropy Services','Huawei','Chinese Communist Party','United Front Work Department']},
- {k:'qt',n:'Qatar and Turkey',c:'#d97706',orgs:['Qatar Foundation','Northwestern University','Northwestern University in Qatar','Al Jazeera','Diyanet Center of America','Turkish American National Steering Committee','Turkish Heritage Organization','Turkish Coalition of America','MÜSİAD','Turken Foundation']},
- {k:'ot',n:'Other organizations',c:'#059669',orgs:['NEO Philanthropy','MPower Change','NEO Philanthropy Action Fund','Charity & Security Network','Palestinian American Medical Association','Baitulmaal','Tides Foundation','Wikimedia Foundation','Wikipedia','Green Party of England and Wales','Greens for Palestine','Riverway to the Sea']}
+ {k:'mb',n:'Muslim Brotherhood networks',c:'#D93B70',orgs:['Muslim Brotherhood','CAIR','ISNA','NAIT','MAS','IAP','ICNA','Fiqh Council']},
+ {k:'hp',n:'Hamas, PFLP and associated',c:'#B8264F',orgs:['Hamas','PFLP','Samidoun','Masar Badil','Freedom Flotilla Coalition','PCPA','International Solidarity Movement','International Union of Muslim Scholars','Hind Rajab Foundation','March 30 Movement','Palestinian Center for Human Rights','Global Legal Action Network']},
+ {k:'cn',n:'Chinese influence',c:'#3B6FE0',orgs:['PSL',"The People's Forum",'BreakThrough News','1804 Books','ANSWER Coalition','Progress Unity Fund','Justice and Education Fund','United Community Fund','Goldman Sachs Philanthropy Services','Huawei','Chinese Communist Party','United Front Work Department']},
+ {k:'qt',n:'Qatar and Turkey',c:'#D96C0A',orgs:['Qatar Foundation','Northwestern University','Northwestern University in Qatar','Al Jazeera','Diyanet Center of America','Turkish American National Steering Committee','Turkish Heritage Organization','Turkish Coalition of America','MÜSİAD','Turken Foundation']},
+ {k:'ot',n:'Other organizations',c:'#0C9A78',orgs:['NEO Philanthropy','MPower Change','NEO Philanthropy Action Fund','Charity & Security Network','Palestinian American Medical Association','Baitulmaal','Tides Foundation','Wikimedia Foundation','Wikipedia','Green Party of England and Wales','Greens for Palestine','Riverway to the Sea']}
 ];
 const ORG2INV={'NEO Philanthropy':[0],'NEO Philanthropy Action Fund':[0],'Chinese Communist Party':[1,12],'Muslim Brotherhood':[8],'Samidoun':[3],'Freedom Flotilla Coalition':[4],'Hamas':[4],'Hind Rajab Foundation':[9],'Qatar Foundation':[5,6],'Northwestern University':[6],'Northwestern University in Qatar':[6],'Wikipedia':[7],'Wikimedia Foundation':[7],'Tides Foundation':[7],'Green Party of England and Wales':[10],'Greens for Palestine':[10],'Turkish American National Steering Committee':[11],'Turkish Heritage Organization':[11],'Turkish Coalition of America':[11]};
 const INV2CL={2:'mb',13:'cn'};
 const ORG_TOTAL=CLUSTERS.reduce((a,c)=>a+c.orgs.length,0);
-$('#orgCount').dataset.count=ORG_TOTAL; $('#orgCount2').textContent=ORG_TOTAL;
+$('#orgStat').dataset.to=ORG_TOTAL;
+const INV_ORGS=INV.map((_,i)=>Object.keys(ORG2INV).filter(o=>ORG2INV[o].includes(i)));
 
-function neural(cv,dark){
-  const ctx=cv.getContext('2d');let W,H,pts=[];const dpr=window.devicePixelRatio||1;
-  function size(){const r=cv.getBoundingClientRect();W=cv.width=Math.max(1,r.width*dpr);H=cv.height=Math.max(1,r.height*dpr);
-    const n=Math.max(20,Math.min(90,Math.round(r.width*r.height/14000)));pts=[];for(let i=0;i<n;i++)pts.push({x:Math.random()*W,y:Math.random()*H,vx:(Math.random()-.5)*.35*dpr,vy:(Math.random()-.5)*.35*dpr,p:Math.random()*6.28});}
-  size();addEventListener('resize',size);
-  let mx=-1e4,my=-1e4;cv.parentElement.addEventListener('pointermove',e=>{const r=cv.getBoundingClientRect();mx=(e.clientX-r.left)*dpr;my=(e.clientY-r.top)*dpr});
-  const L=140*dpr;
-  (function f(){ctx.clearRect(0,0,W,H);
-    for(const p of pts){p.x+=p.vx;p.y+=p.vy;p.p+=.03;if(p.x<0||p.x>W)p.vx*=-1;if(p.y<0||p.y>H)p.vy*=-1;}
-    for(let i=0;i<pts.length;i++)for(let j=i+1;j<pts.length;j++){const a=pts[i],b=pts[j],d=Math.hypot(a.x-b.x,a.y-b.y);if(d<L){ctx.strokeStyle=dark?`rgba(165,180,252,${(1-d/L)*.5})`:`rgba(79,70,229,${(1-d/L)*.22})`;ctx.lineWidth=dpr;ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(b.x,b.y);ctx.stroke();}}
-    for(const p of pts){const near=Math.hypot(p.x-mx,p.y-my)<L;ctx.fillStyle=near?'#ec4899':(dark?'#a5f3fc':'rgba(6,182,212,.7)');ctx.beginPath();ctx.arc(p.x,p.y,(near?4:2.2+Math.sin(p.p))*dpr,0,7);ctx.fill();
-      if(near){ctx.strokeStyle='rgba(236,72,153,.4)';ctx.beginPath();ctx.moveTo(p.x,p.y);ctx.lineTo(mx,my);ctx.stroke();}}
-    requestAnimationFrame(f);})();
-}
-neural($('#neural'));neural($('#neural2'),true);
+/* helpers (same patterns as the Grokipedia dashboard) */
+function countUp(root){root.querySelectorAll('.cu').forEach(el=>{const to=+el.dataset.to,dec=+(el.dataset.dec||0),t0=performance.now(),d=STILL?1:1600;
+ (function f(t){const k=Math.min(1,Math.max(0,(t-t0)/d)),e=1-Math.pow(1-k,3),v=to*e;el.textContent=dec?v.toFixed(dec):Math.round(v).toLocaleString();if(k<1)requestAnimationFrame(f)})(t0)})}
+function card(c,front,back,cls=''){return `<div class="card ${cls}" style="--c:${c}"><div class="inner"><div class="face front">${front}<div class="tap">TAP FOR DETAILS ↻</div></div><div class="face back">${back}</div></div></div>`;}
+function tfacts(host,list){host.innerHTML=list.map(([q,a])=>`<div class="tfact" tabindex="0"><div class="q">${q}</div><div class="a">${a}</div></div>`).join('');}
+document.addEventListener('click',e=>{const c=e.target.closest('.card');if(c&&!e.target.closest('a'))c.classList.toggle('flip');
+ const f=e.target.closest('.tfact');if(f)f.classList.toggle('open');});
+document.addEventListener('keydown',e=>{if((e.key==='Enter'||e.key===' ')&&e.target.classList&&(e.target.classList.contains('tfact')||e.target.classList.contains('dyk'))){e.preventDefault();e.target.click();}});
 
-function countUp(el){const t=+el.dataset.count,st=performance.now(),D=1400;(function f(n){const k=Math.max(0,Math.min(1,(n-st)/D));el.textContent=Math.round(t*(1-Math.pow(1-k,3)));if(k<1)requestAnimationFrame(f);})(st);}
-setTimeout(()=>$$('[data-count]').forEach(countUp),250);
+/* tabs */
+const onShow={};
+function show(v){$$('.tab').forEach(t=>t.classList.toggle('on',t.dataset.v===v));$$('.view').forEach(s=>s.classList.toggle('on',s.id==='v-'+v));
+ const s=$('#v-'+v);countUp(s);if(onShow[v])onShow[v]();try{history.replaceState(null,'','#'+v)}catch(e){}}
+$$('.tab').forEach(t=>t.onclick=()=>show(t.dataset.v));
+$$('.stat6').forEach(b=>b.onclick=()=>{show(b.dataset.go);if(b.dataset.net)setRView('net');else if(b.dataset.go==='r')setRView('gal');
+ const id=b.dataset.toId;setTimeout(()=>{(id?document.getElementById(id):$('.tabs')).scrollIntoView({behavior:STILL?'auto':'smooth',block:'start'})},60);});
 
-const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.05});
-$$('.reveal').forEach(e=>io.observe(e));
-const secs=$$('main section[id]');
-addEventListener('scroll',()=>{const h=document.documentElement;$('#prog').style.width=(h.scrollTop/(h.scrollHeight-h.clientHeight)*100)+'%';
-  let cur='';secs.forEach(s=>{if(s.getBoundingClientRect().top<120)cur=s.id});$$('#navlinks a').forEach(a=>a.classList.toggle('on',a.getAttribute('href')==='#'+cur));},{passive:true});
+/* OVERVIEW */
+$('#pillarCards').innerHTML=PILLARS.map(p=>{const inv=INV.map((v,i)=>({...v,i})).filter(v=>v.p===p.n);
+ return card(PC[p.n],`<div class="em">${p.e}</div><div class="v"><span class="cu" data-to="${inv.length}">0</span><small> investigations</small></div><h4>${p.n}. ${p.t}</h4><p>${p.s}</p>`,
+ `<h5>${p.t}</h5>${p.items.map(x=>`<div class="li">${x}<span>●</span></div>`).join('')}<div class="mean"><b>Filed here:</b> ${inv.map(v=>`<a href="${v.u}" target="_blank" rel="noopener">${v.t}</a>`).join(' · ')}</div>`);}).join('')+
+ card('#B87A00',`<div class="em">🧵</div><div class="v">1<small> question</small></div><h4>The thread through all five</h4><p>Who is influencing whom, and how?</p>`,
+ `<h5>The guiding question</h5><div class="mean" style="margin-top:0">Who is influencing whom, through what organizations, relationships, resources, and mechanisms?</div><div class="li">Five pillars<span>one identity</span></div><div class="li">Priority<span>links to existing research</span></div><div class="li">Also<span>real chances to investigate further</span></div>`);
+tfacts($('#jobs'),[['💬 Join','Takes part in relevant conversations with something substantive to add.'],['🔦 Introduce','Brings key findings from the investigations to people who need them.'],['🧩 Connect','Links current developments to research already published.'],['🤝 Relate','Builds relationships with people who genuinely care about these subjects.'],['🧭 Discover','Spots new developments and fresh research leads.']]);
+const VOICE={dry:'🧊 Announces, explains nothing. "New article out now" gives nobody a reason to read.',neuron:'🧠 Researchers who understand the networks behind the headlines, explaining what they found, with evidence.',hot:'🔥 Outrage, accusations and point-scoring. Loud, but not credible.'};
+function setVoice(k){$$('#voiceToggle .tpill').forEach(b=>b.classList.toggle('on',b.dataset.vo===k));$('#voiceNote').textContent=VOICE[k];$$('#traits .tfact').forEach(t=>t.style.opacity=k==='neuron'?'':'.35');}
+$$('#voiceToggle .tpill').forEach(b=>b.onclick=()=>setVoice(b.dataset.vo));
+tfacts($('#traits'),[['Confident','Clearly states documented findings, without lifeless hedging.'],['Investigative','Shows it understands the people, organizations, funding and relationships behind headlines.'],['Analytical','Explains why developments matter and how they connect.'],['Curious','Finds unanswered questions and connections worth a closer look.'],['Skeptical','Examines institutions, relationships and claims critically.'],['Provocative, responsibly','Makes people think without exaggerating or unsupported claims.']]);
+setVoice('neuron');
+$('#dykPrinciple').onclick=()=>$('#dykPrinciple').classList.toggle('open');
 
-$$('#qline .key').forEach(w=>w.addEventListener('click',()=>{$$('#qline .key').forEach(x=>x.classList.remove('on'));w.classList.add('on');$('#qexplain').textContent=w.dataset.x;}));
-$$('#obj .ob').forEach(o=>o.addEventListener('click',()=>o.classList.toggle('on')));
-
-const pg=$('#pillarGrid');
-PILLARS.forEach((p,i)=>{const d=document.createElement('div');d.className='card pil';d.style.setProperty('--pc',PC[p.n]);
-  d.innerHTML=`<div class="n">0${p.n}</div><h3>${p.t}</h3><div class="more">Explore &rarr;</div>`;d.onclick=()=>showPil(i);pg.appendChild(d);});
-function showPil(i){const p=PILLARS[i],det=$('#pilDetail');det.style.setProperty('--pc',PC[p.n]);
-  const inv=INV.filter(v=>v.p===p.n);
-  det.innerHTML=`<div style="font-size:13px;font-weight:800;color:${PC[p.n]}">PILLAR ${p.n}</div><h3 style="font-size:26px;margin:4px 0">${p.t}</h3><div style="color:var(--mut)">${p.s}</div>
-  <div class="chips">${p.items.map((x,k)=>`<span class="chip" style="animation-delay:${k*60}ms">${x}</span>`).join('')}</div>
-  <div class="inv-links"><b>${inv.length}</b> investigation${inv.length>1?'s':''} filed here: ${inv.map(v=>`<a href="${v.u}" target="_blank" rel="noopener">${v.t}</a>`).join(' &middot; ')}</div>`;
-  det.classList.remove('show');void det.offsetWidth;det.classList.add('show');
-  $$('#pillarGrid .pil').forEach((x,k)=>x.style.opacity=k===i?1:.55);}
-
-const TRAITS=[['Confident','States documented findings clearly'],['Investigative','Knows the networks behind headlines'],['Analytical','Explains why it matters'],['Curious','Chases unanswered questions'],['Skeptical','Examines claims critically'],['Provocative, responsibly','Makes people think, never exaggerates']];
-$('#traits').innerHTML=TRAITS.map(t=>`<div class="card trait"><div class="t">${t[0]}</div><div class="d">${t[1]}</div></div>`).join('');
-$$('#traits .trait').forEach(t=>t.onclick=()=>t.classList.toggle('on'));
-function dial(){const v=+$('#dial').value,o=$('#dialOut');let h,b,bg;
-  if(v<30){h='Too dry';b='"New article out now." Announces, explains nothing, gives no reason to read.';bg='#f1f5f9';}
-  else if(v<=70){h='✓ The Neuron';b='Researchers who understand the networks behind the headlines, explaining what they found, with evidence.';bg='#ecfdf5';}
-  else{h='Too hot';b='Outrage, accusations and point-scoring. Loud, but not credible.';bg='#fef2f2';}
-  o.innerHTML=`<b>${h}</b>${b}`;o.style.background=bg;$$('#traits .trait').forEach(t=>t.classList.toggle('on',v>=30&&v<=70));}
-$('#dial').oninput=dial;dial();
-const FLY=[
- {t:'Knowledge Base',o:[['@network','Open the network map']],i:'🧠',c:'#4f46e5',d:'Every article, broken into parts.',l:['People, organizations and subjects','Findings and funding links','Sources and dates','Recognizes related concepts, not just exact names']},
- {t:'Monitoring',o:[['monitor','Open monitoring']],i:'📡',c:'#0891b2',d:'Listens for conversations that matter.',l:['Topics, people and organizations','Current developments','Relevant conversations','Keywords, curated lists and news alerts']},
- {t:'Opportunity Scoring',o:[['score','Open the score calculator']],i:'🎯',c:'#7c3aed',d:'Picks where we can add the most.',l:['Six weighted criteria','A 0 to 100 priority','Accuracy always outranks the score']},
- {t:'Fact-Check',o:[['factcheck','Open the fact-check ladder']],i:'🔍',c:'#d97706',d:'Verifies before anything posts.',l:['Six steps from claim to approval','Three verification levels','Human approval for serious allegations']},
- {t:'Engage and Publish',o:[['launch','Launch campaign'],['formats','Six formats'],['links','Links with purpose'],['audience','Audience']],i:'💬',c:'#db2777',d:'Adds evidence, context and connections.',l:['Replies with substance','Original posts and threads','Launch campaigns for new work']},
- {t:'Measure',o:[['measure','Open measurement']],i:'📊',c:'#059669',d:'Tracks what actually lands.',l:['Relevant engagement per post','Post, investigation and audience records','Consistent tracking links']},
- {t:'Weekly Review',o:[['archive','Open the living archive']],i:'🗓️',c:'#e11d48',d:"Sets next week's priorities.",l:['Key conversations and opportunities','New people and relationships','Research worth resurfacing','New investigative leads']}
-];
-const fs=$('#flysvg');let fi=0,ftimer=null;
-(function(){let h=`<circle cx="250" cy="250" r="175" fill="none" stroke="#e6e9f5" stroke-width="3" stroke-dasharray="6 8"><animateTransform attributeName="transform" type="rotate" from="0 250 250" to="360 250 250" dur="40s" repeatCount="indefinite"/></circle>
- <circle id="flyPulse" r="8" fill="#4f46e5"/>
- <text x="250" y="244" text-anchor="middle" font-family="Space Grotesk" font-weight="700" font-size="22" fill="#0f172a">The Neuron</text><text x="250" y="268" text-anchor="middle" font-size="13" fill="#5b6478">research engine</text>`;
- FLY.forEach((f,i)=>{const a=-Math.PI/2+i*2*Math.PI/FLY.length,x=250+175*Math.cos(a),y=250+175*Math.sin(a);f.x=x;f.y=y;
-  h+=`<g class="node" data-i="${i}" transform="translate(${x},${y})"><circle r="40" fill="#fff" stroke="${f.c}" stroke-width="3"/><text y="8" text-anchor="middle" style="font-size:24px">${f.i}</text></g>`;
-  const ly=y+(y>250?62:-54);h+=`<text x="${x}" y="${ly}" text-anchor="middle" font-family="Space Grotesk" font-weight="700" font-size="14" fill="#334155">${f.t}</text>`;});
- fs.innerHTML=h;})();
-$$('#flysvg .node').forEach(n=>n.addEventListener('click',()=>{stopFly();setFly(+n.dataset.i)}));
-function setFly(i){fi=i;const f=FLY[i];
- $$('#flysvg .node').forEach((n,k)=>{const c=n.querySelector('circle');c.setAttribute('r',k===i?48:40);c.setAttribute('fill',k===i?f.c:'#fff');});
- const p=$('#flyPulse');p.setAttribute('cx',250+(f.x-250)*.62);p.setAttribute('cy',250+(f.y-250)*.62);p.setAttribute('fill',f.c);
- $('#flypanel').innerHTML=`<div class="step">STEP ${i+1} OF ${FLY.length}</div><h3>${f.i} ${f.t}</h3><div style="font-size:18px">${f.d}</div><ul>${f.l.map(x=>`<li>${x}</li>`).join('')}</ul>
- <div class="morerow detail" style="justify-content:flex-start">${f.o.map(o=>o[0][0]==='@'?`<button class="morebtn" data-view="${o[0].slice(1)}">${o[1]} &rarr;</button>`:`<button class="morebtn" data-open="${o[0]}">${o[1]} &rarr;</button>`).join('')}</div>
- <div class="ctrls"><button id="fPrev">&larr; Back</button><button class="go" id="fPlay">${ftimer?'❚❚ Pause':'▶ Play loop'}</button><button id="fNext">Next &rarr;</button></div>`;
- $('#fPrev').onclick=()=>{stopFly();setFly((fi+FLY.length-1)%FLY.length)};$('#fNext').onclick=()=>{stopFly();setFly((fi+1)%FLY.length)};
- $('#fPlay').onclick=()=>{if(ftimer){stopFly();setFly(fi)}else{ftimer=setInterval(()=>setFly((fi+1)%FLY.length),2600);setFly((fi+1)%FLY.length)}};}
-function stopFly(){clearInterval(ftimer);ftimer=null;}
-setFly(0);
-
-const THEMES=['Foreign influence ops','CCP and United Front','Muslim Brotherhood infrastructure','Hamas financing networks','PFLP networks','Pro-Palestinian advocacy funding','Foreign funding of US universities','Qatar in education and media','Turkish influence ops','Foreign influence in UK parties','Anti-American movements','Nonprofit funding and fiscal sponsorship','Campaign financing and activist networks','Institutional and personnel overlaps','Antisemitism and anti-Israel activism','Wikipedia and information integrity','Legal campaigns against Israeli soldiers and officials','Foreign strategic investment','Campus activism and radicalization','Sanctions, designations and FARA'];
-const TC=['#4f46e5','#0891b2','#d97706','#db2777','#059669','#7c3aed','#e11d48'];
-$('#themes').innerHTML=THEMES.map((t,i)=>`<span class="theme" data-c="${TC[i%TC.length]}">${t}</span>`).join('');
-$$('#themes .theme').forEach(t=>t.onclick=()=>{t.classList.toggle('on');t.style.background=t.classList.contains('on')?t.dataset.c:'';const n=$$('#themes .theme.on').length;$('#radarTxt').textContent=n===20?'All 20 themes on the radar. Full coverage.':`${n} of 20 themes on the radar`;});
-
-const OPP=[['Research relevance',25,'Connects to our existing work?'],['Timeliness',20,'Happening now?'],['Audience value',20,'Reaches the right people?'],['Unique contribution',15,'Can we add evidence others lack?'],['Strategic value',10,'Builds a relationship or a lead?'],['Engagement potential',10,'Real chance of a conversation?']];
-function mkSliders(host,list,init,cb){host.innerHTML=list.map((c,i)=>`<div class="sl"><div class="top"><label for="${host.id}${i}">${c[0]} <span class="w">${c[1]}%</span></label><span class="v" id="${host.id}v${i}">${init[i]}</span></div><input type="range" min="0" max="5" step="1" value="${init[i]}" id="${host.id}${i}"><small>${c[2]}</small></div>`).join('');
-  list.forEach((c,i)=>$('#'+host.id+i).addEventListener('input',cb));cb();}
-function vals(host,n){return [...Array(n)].map((_,i)=>+$('#'+host+i).value);}
-function calcOpp(){const v=vals('oppSliders',6);v.forEach((x,i)=>$('#oppSlidersv'+i).textContent=x);
-  const s=Math.round(v.reduce((a,x,i)=>a+x/5*OPP[i][1],0));$('#scoreNum').textContent=s;$('#garc').style.strokeDashoffset=377*(1-s/100);
-  let b,t,bg,c;if(s>=80){b=3;t='High priority: reply, post or thread';bg='#d1fae5';c='#047857'}else if(s>=60){b=2;t='Engage when we can add something useful';bg='#cffafe';c='#0e7490'}else if(s>=40){b=1;t='Monitor, save or investigate further';bg='#fef3c7';c='#b45309'}else{b=0;t='Generally skip';bg='#fee2e2';c='#b91c1c'}
-  const vd=$('#verdict');vd.textContent=t;vd.style.background=bg;vd.style.color=c;$('#scoreNum').style.color=c;$$('#bands div').forEach((d,i)=>d.classList.toggle('on',i===b));}
-mkSliders($('#oppSliders'),OPP,[4,3,3,4,2,3],calcOpp);
-$$('.presets button').forEach(b=>b.onclick=()=>{b.dataset.p.split(',').forEach((x,i)=>$('#oppSliders'+i).value=x);calcOpp();});
-
-const PH=[
- {t:'Before',i:'📦',s:'Build the package',items:[['🎯','Central finding'],['✨','Best discoveries'],['📑','Key evidence'],['📰','Headlines and openers'],['🖼️','Images and graphics'],['🔗','Link and landing page'],['🏛️','Relevant people and orgs'],['🔑','Keywords to watch']]},
- {t:'Launch day',i:'🚀',s:'Lead with the discovery',items:[['💥','Main post leads with the most compelling discovery'],['❓','Says why it matters'],['➡️','One clear link to the article']]},
- {t:'Following days',i:'📣',s:'A new angle each post',items:[['🧑‍💼','A key person or organization'],['💰','A funding link'],['📄','A standout document'],['🧩','A link to another investigation'],['🌍','Wider implications'],['🤝','Reach people with genuine interest']]},
- {t:'Afterwards',i:'🗄️',s:'Into the living archive',items:[['🧠','Added to the knowledge base'],['📡','Watched for related news'],['🔁','Ready to resurface when it matters']]}
-];
-const phs=$('#phases');PH.forEach((p,i)=>{const d=document.createElement('div');d.className='ph';d.innerHTML=`<div class="dot">${p.i}</div><h4>${p.t}</h4><small>${p.s}</small>`;d.onclick=()=>{stopLaunch();setPh(i)};phs.appendChild(d);});
-let ltimer=null;
-function setPh(i){$$('#phases .ph').forEach((d,k)=>{d.classList.toggle('on',k===i);d.classList.toggle('done',k<i)});$('#phaseFill').style.width=(i/(PH.length-1)*76)+'%';
- const p=PH[i];$('#phbody').innerHTML=`<div style="font-size:13px;font-weight:800;color:var(--a)">PHASE ${i+1} OF 4</div><h3 style="font-size:26px;margin:2px 0">${p.i} ${p.t}: ${p.s}</h3><div class="items">${p.items.map((x,k)=>`<div class="item" style="animation-delay:${k*70}ms"><span>${x[0]}</span>${x[1]}</div>`).join('')}</div>`;}
-function stopLaunch(){clearInterval(ltimer);ltimer=null;$('#launchPlay').textContent='▶ Play the campaign';}
-$('#launchPlay').onclick=()=>{if(ltimer){stopLaunch();return}let i=0;setPh(0);$('#launchPlay').textContent='❚❚ Pause';ltimer=setInterval(()=>{i++;if(i>=PH.length){stopLaunch();return}setPh(i)},2400);};
-setPh(0);
-
-$$('#modes .mode').forEach(m=>m.onclick=()=>{$$('#modes .mode').forEach(x=>x.classList.remove('on'));m.classList.add('on')});
-const TRIG=[
- {t:'🎓 A university announces a new Gulf partnership',m:[5,6],f:'Previously Investigated'},
- {t:'🌊 A new flotilla sets sail',m:[4],f:'The Missing Context'},
- {t:'📖 A row over a Wikipedia article',m:[7],f:'The Connection Others Are Missing'},
- {t:'🇹🇷 A Turkish lobbying story in Washington',m:[11],f:'What We Know'},
- {t:'🏙️ A New York activist hub makes headlines',m:[13,1],f:'Follow the Network'},
- {t:'🗳️ A UK election debate on party links',m:[10],f:'From The Archives'}
-];
-$('#trig').innerHTML=TRIG.map((t,i)=>`<button data-i="${i}">${t.t}</button>`).join('');
-$$('#trig button').forEach(b=>b.onclick=()=>{$$('#trig button').forEach(x=>x.classList.remove('on'));b.classList.add('on');const T=TRIG[+b.dataset.i];
- const bar=$('#scanbar');bar.style.transition='none';bar.style.width='0';void bar.offsetWidth;bar.style.transition='width .9s ease';bar.style.width='100%';
- $('#matches').innerHTML='<div class="hint">Searching 14 investigations...</div>';
- setTimeout(()=>{$('#matches').innerHTML=`<div class="hint"><b>${T.m.length} match${T.m.length>1?'es':''}</b> found. Suggested format: <b>${T.f}</b></div>`+T.m.map(k=>`<div class="match"><a href="${INV[k].u}" target="_blank" rel="noopener">${INV[k].t}</a><div style="color:var(--mut);font-size:12.5px">Published ${INV[k].d} &middot; Pillar ${INV[k].p}</div></div>`).join('');
-  $$('#matches .match').forEach((m,k)=>setTimeout(()=>m.classList.add('in'),k*150+30));},950);});
-
-const FC=[
- {t:'Identify the claim',d:'Exactly what does the post say?',l:['Separate facts, interpretations, questions and opinions']},
- {t:'Retrieve the research',d:'Pull the original investigation.',l:['Supporting documents','Original sources','The passages that establish the finding']},
- {t:'Verify the evidence',d:'Go to primary sources.',l:['Corporate and nonprofit filings','Financial and government records','Court records and official statements']},
- {t:'Check later developments',d:'Is it still current?',l:['Corrections and responses','Disputes and new evidence','Changed relationships']},
- {t:'Review the wording',d:'Say only what the evidence shows. Tap each pair.',pairs:true},
- {t:'Record and approve',d:'Lock it in.',l:['Sources consulted','Verification date','Caveats','Final approved wording']}
-];
-const PAIRS=[['Coordination?','Or only association?'],['Established fact?','Or an allegation?'],['Documented evidence?','Or an inference?'],['Current?','Or historical?'],['Does the source establish it?','Or only suggest it?']];
-$('#ladder').innerHTML=FC.map((f,i)=>`<div class="card rung" data-i="${i}"><div class="num">${i+1}</div><div><h4>${f.t}</h4><div style="font-size:13px;color:var(--mut)">${f.d}</div></div></div>`).join('');
-let fci=0;
-function setFc(i){fci=i;$$('#ladder .rung').forEach((r,k)=>{r.classList.toggle('on',k===i);r.classList.toggle('done',k<i)});const f=FC[i];
- $('#fcpanel').innerHTML=`<div style="font-size:13px;font-weight:800;color:var(--a)">STEP ${i+1} OF 6</div><h3>${f.t}</h3><div style="font-size:17px">${f.d}</div>`+
- (f.pairs?`<div class="pairs">${PAIRS.map(p=>`<div class="pair"><div class="in"><div class="f">${p[0]}</div><div class="k">${p[1]}</div></div></div>`).join('')}</div>`:`<div class="chips">${f.l.map((x,k)=>`<span class="chip" style="animation-delay:${k*70}ms">${x}</span>`).join('')}</div>`)+
- `<div class="ctrls"><button id="fcB">&larr; Back</button><button class="go" id="fcN">${i===5?'✓ Approved. Restart':'Next step &rarr;'}</button></div>`;
- $$('#fcpanel .pair').forEach(p=>p.onclick=()=>p.classList.toggle('turned'));
- $('#fcB').onclick=()=>setFc(Math.max(0,fci-1));$('#fcN').onclick=()=>setFc(fci===5?0:fci+1);}
-$$('#ladder .rung').forEach(r=>r.onclick=()=>setFc(+r.dataset.i));setFc(0);
-const LV=[['Level 1','General commentary','Checked against reliable sources',33,'#10b981'],['Level 2','Organizations, funding, relationships','Checked against the original research and evidence',66,'#f59e0b'],['Level 3','Serious allegations','Full source verification plus human editorial approval',100,'#e11d48']];
-$('#levels').innerHTML=LV.map(l=>`<div class="card lvl"><div style="font-size:12px;font-weight:800;color:${l[4]}">${l[0].toUpperCase()}</div><h4>${l[1]}</h4><div class="bar"><i style="width:0;background:${l[4]};transition:width 1s" data-w="${l[3]}"></i></div><p>${l[2]}</p></div>`).join('');
-const lvio=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){$$('#levels .bar i').forEach(i=>i.style.width=i.dataset.w+'%');lvio.disconnect()}}));lvio.observe($('#levels'));
-
-const FMT=[
- ['The Connection Others Are Missing','🧩','#4f46e5,#7c3aed','Shows how two developments, organizations or people connect, through documented research.','Two stories, one link nobody else spotted.'],
- ['Follow the Money','💸','#0891b2,#06b6d4','Explains funding structures, financial relationships and institutional arrangements.','Where the money starts, and where it lands.'],
- ['The Missing Context','🧭','#d97706,#f59e0b','Adds the history or past investigation a current debate is missing.','What the conversation leaves out.'],
- ['Previously Investigated','📂','#db2777,#ec4899','Brings an older Neuron investigation into a live conversation.','We looked into this already. Here is what we found.'],
- ['The Research Behind the Headline','📑','#059669,#10b981','Highlights the documents, records, timelines and evidence behind an investigation.','The receipts.'],
- ['What We Know','✅','#e11d48,#f43f5e','A short, evidence-based explainer on a subject we have investigated.','The facts, in one place.']
-];
-$('#fmtGrid').innerHTML=FMT.map((f,i)=>`<div class="flip"><div class="in"><div class="f" style="background:linear-gradient(135deg,${f[2]})"><div class="ic">${f[1]}</div><div><small>FORMAT 0${i+1} &middot; TAP TO FLIP</small><h3>${f[0]}</h3></div></div><div class="k"><p>${f[3]}</p><div class="ex">"${f[4]}"</div></div></div></div>`).join('');
-$$('#fmtGrid .flip').forEach(f=>f.onclick=()=>f.classList.toggle('on'));
-
-const SHORT={1:'Foreign Influence',2:'Networks and Funding',3:'Western Institutions',4:'Movements',5:'Information'};
-$('#filters').innerHTML=`<button class="on" data-p="0">All 14</button>`+PILLARS.map(p=>`<button data-p="${p.n}"><i style="background:${PC[p.n]}"></i>${SHORT[p.n]} (${INV.filter(v=>v.p===p.n).length})</button>`).join('');
-$('#gallery').innerHTML=INV.map(v=>`<a class="card inv" data-p="${v.p}" href="${v.u}" target="_blank" rel="noopener" style="--pc:${PC[v.p]}"><div class="meta"><span class="pt">Pillar ${v.p} &middot; ${SHORT[v.p]}</span><span>${v.d}</span></div><h4>${v.t}</h4><span class="go">Read the investigation &rarr;</span></a>`).join('');
-$$('#filters button').forEach(b=>b.onclick=()=>{$$('#filters button').forEach(x=>x.classList.remove('on'));b.classList.add('on');const p=+b.dataset.p;$$('#gallery .inv').forEach(c=>c.classList.toggle('hide',!!p&&+c.dataset.p!==p));});
+/* RESEARCH */
+let F={p:0,m:''};
+const MONTHS=['Mar 2026','May 2026','Jul 2026','Aug 2026','Oct 2026'];
+function drawDonut(focus){const svg=$('#donutSvg');const R=58,C=80,stroke=22;let a=-Math.PI/2,h='';const tot=INV.length;
+ PILLARS.forEach(p=>{const v=INV.filter(x=>x.p===p.n).length,ang=2*Math.PI*v/tot,x1=C+R*Math.cos(a),y1=C+R*Math.sin(a),a2=a+ang-0.03,x2=C+R*Math.cos(a2),y2=C+R*Math.sin(a2);
+  h+=`<path data-p="${p.n}" d="M ${x1} ${y1} A ${R} ${R} 0 ${ang>Math.PI?1:0} 1 ${x2} ${y2}" fill="none" stroke="${PC[p.n]}" stroke-width="${stroke}" opacity="${!focus||focus===p.n?1:.28}" style="cursor:pointer;transition:opacity .25s"><title>${p.t}: ${v}</title></path>`;a+=ang;});
+ const v=focus?INV.filter(x=>x.p===focus).length:tot;
+ h+=`<text class="dcenter" x="80" y="80" text-anchor="middle">${v}</text><text class="dsub" x="80" y="98" text-anchor="middle">${focus?'PILLAR '+focus:'TOTAL'}</text>`;
+ svg.innerHTML=h;svg.querySelectorAll('path').forEach(p=>p.addEventListener('click',e=>{e.stopPropagation();setPillar(+p.dataset.p===F.p?0:+p.dataset.p)}));}
+$('#dleg').innerHTML=`<div class="lab" style="margin-block-end:6px">By pillar · tap a slice</div>`+PILLARS.map(p=>`<div class="li" data-p="${p.n}"><span style="color:var(--ink);white-space:normal"><i style="display:inline-block;width:10px;height:10px;border-radius:3px;background:${PC[p.n]};margin-right:6px"></i>${SHORT[p.n]}</span><b>${INV.filter(x=>x.p===p.n).length}</b></div>`).join('');
+$$('#dleg .li').forEach(li=>li.onclick=()=>setPillar(+li.dataset.p===F.p?0:+li.dataset.p));
+$('#monthBars').innerHTML=MONTHS.map(m=>{const n=INV.filter(v=>v.d===m).length;return `<div class="brow" data-m="${m}" style="cursor:pointer"><span class="tip">${n} investigation${n>1?'s':''} · tap to filter</span><span>${m}</span><div class="tr"><div class="fl" data-w="${n}" style="background:linear-gradient(90deg,#3B6FE0,#6E4FD8)"></div></div><b>${n}</b></div>`}).join('');
+$$('#monthBars .brow').forEach(r=>r.onclick=()=>{F.m=F.m===r.dataset.m?'':r.dataset.m;applyF();});
+function bars(){const m=Math.max(...MONTHS.map(x=>INV.filter(v=>v.d===x).length));$$('#monthBars .fl').forEach(b=>{b.style.width=0;setTimeout(()=>b.style.width=(b.dataset.w/m*100)+'%',60)});}
+$('#pfilter').innerHTML=`<button class="pill on" data-p="0">All 14</button>`+PILLARS.map(p=>`<button class="pill" data-p="${p.n}">${p.e} ${SHORT[p.n]}</button>`).join('');
+$$('#pfilter .pill').forEach(b=>b.onclick=()=>setPillar(+b.dataset.p));
+function setPillar(p){F.p=p;applyF();}
+function applyF(){drawDonut(F.p||null);$$('#pfilter .pill').forEach(b=>b.classList.toggle('on',+b.dataset.p===F.p));$$('#dleg .li').forEach(l=>l.classList.toggle('on',+l.dataset.p===F.p));
+ $$('#monthBars .brow').forEach(r=>r.classList.toggle('dim',!!F.m&&r.dataset.m!==F.m));
+ $$('#invCards .card').forEach(c=>{const v=INV[+c.dataset.i];c.classList.toggle('hide',(F.p&&v.p!==F.p)||(F.m&&v.d!==F.m));});
+ const sp=$('#pspot');if(!F.p&&!F.m){sp.classList.remove('on');return}
+ const list=INV.filter(v=>(!F.p||v.p===F.p)&&(!F.m||v.d===F.m));const P=PILLARS[F.p-1];
+ sp.innerHTML=`<div class="row"><div class="n">${list.length}<small> of 14</small></div><div><b>${F.p?P.e+' '+P.t:'All pillars'}${F.m?' · '+F.m:''}</b><p>${list.map(v=>`<a href="${v.u}" target="_blank" rel="noopener">${v.t}</a>`).join(' · ')}</p></div></div>`;sp.classList.add('on');}
+$('#invCards').innerHTML=INV.map((v,i)=>{const orgs=INV_ORGS[i];const P=PILLARS[v.p-1];
+ return card(PC[v.p],`<div class="meta"><span>Pillar ${v.p} · ${SHORT[v.p]}</span><span>${v.d}</span></div><h4 class="t" style="margin-top:12px">${v.t}</h4>`,
+ `<h5>Investigation ${i+1}</h5><div class="li">Published<span>${v.d}</span></div><div class="li">Pillar<span>${SHORT[v.p]}</span></div>${orgs.length?`<div class="li">Organizations indexed<span>${orgs.length}</span></div><div class="mean">${orgs.join(' · ')}</div>`:`<div class="mean">Linked in the knowledge base through the ${CLUSTERS.find(c=>c.k===INV2CL[i]).n} cluster.</div>`}<a class="go" href="${v.u}" target="_blank" rel="noopener">Read the investigation →</a>`,'inv').replace('<div class="card inv"',`<div class="card inv" data-i="${i}"`);}).join('');
+tfacts($('#kbFacts'),[['👤 People','Every person mentioned. 21 mapped so far, kept inside the knowledge base and shown here only as a count.'],['🏛️ Organizations',ORG_TOTAL+' organizations and institutions so far, in five clusters.'],['🗂️ Subjects','Major subjects and recurring themes. 20 are monitored.'],['🔗 Relationships','Important relationships and connections between entities.'],['🔑 Findings','Key findings and conclusions from each investigation.'],['💰 Funding links','Funding relationships that the research documents.'],['📑 Sources','Sources and supporting documentation for every finding.'],['📅 Dates','Publication dates and later developments, so nothing is presented as current when it is not.']]);
+function setRView(v){$$('#rview .tpill').forEach(b=>b.classList.toggle('on',b.dataset.rv===v));$('#rv-gal').classList.toggle('hide',v!=='gal');$('#rv-net').classList.toggle('hide',v!=='net');if(v==='net')initNet();}
+$$('#rview .tpill').forEach(b=>b.onclick=()=>setRView(b.dataset.rv));
+onShow.r=()=>{applyF();bars();};
+/* NETWORK */
 const svg=$('#net'),NS='http://www.w3.org/2000/svg';
 let seed=7;const rnd=()=>{seed=(seed*16807)%2147483647;return seed/2147483647;};
 const nodes=[],links=[];
@@ -926,75 +646,166 @@ CLUSTERS.forEach((c,ci)=>c.orgs.forEach(o=>{nodes.push({id:'o'+o,type:'o',label:
 Object.entries(INV2CL).forEach(([i,k])=>links.push(['i'+i,'c'+k]));
 const byId=Object.fromEntries(nodes.map(n=>[n.id,n]));
 const L=links.map(([a,b])=>({s:byId[a],t:byId[b]}));
-let NW=900,NH=620;
-function layout(){const r=svg.getBoundingClientRect();NW=Math.round(r.width)||900;NH=Math.round(r.height)||620;seed=7;
+let NW=800,NH=560,netReady=false;
+function layout(){const r=svg.getBoundingClientRect();NW=Math.round(r.width)||800;NH=Math.round(r.height)||560;seed=7;
  const cx=NW/2,cy=NH/2,R=Math.min(NW,NH)*.34;
- nodes.forEach(n=>{if(n.type==='c'){const a=-Math.PI/2+n.ci*2*Math.PI/5;n.x=cx-30+R*Math.cos(a)*(NW>NH?1.1:1);n.y=cy+R*Math.sin(a);}n.vx=0;n.vy=0;});
+ nodes.forEach(n=>{if(n.type==='c'){const a=-Math.PI/2+n.ci*2*Math.PI/5;n.x=cx-45+R*Math.cos(a)*(NW>NH?1.05:1);n.y=cy+R*Math.sin(a);}n.vx=0;n.vy=0;});
  nodes.forEach(n=>{if(n.type==='o'){const c=nodes[n.ci];n.x=c.x+(rnd()-.5)*80;n.y=c.y+(rnd()-.5)*80;}else if(n.type==='i'){n.x=cx+(rnd()-.5)*R;n.y=cy+(rnd()-.5)*R;}});
  for(let it=0;it<450;it++)tick(1-it/450);}
 function tick(al){const k=al*.9;
  for(let i=0;i<nodes.length;i++)for(let j=i+1;j<nodes.length;j++){const a=nodes[i],b=nodes[j];let dx=a.x-b.x,dy=a.y-b.y,d2=dx*dx+dy*dy+.01;if(d2>140000)continue;const f=(a.type==='o'&&b.type==='o'?1400:2200)/d2;const d=Math.sqrt(d2);dx/=d;dy/=d;a.vx+=dx*f*k;a.vy+=dy*f*k;b.vx-=dx*f*k;b.vy-=dy*f*k;}
- L.forEach(l=>{const dx=l.t.x-l.s.x,dy=l.t.y-l.s.y,d=Math.hypot(dx,dy)||1,want=l.t.type==='c'?(NW<500?55:85):110,f=(d-want)*.025*k;l.s.vx+=dx/d*f;l.s.vy+=dy/d*f;l.t.vx-=dx/d*f;l.t.vy-=dy/d*f;});
- nodes.forEach(n=>{if(n.type==='c'||n.fixed){n.vx=n.vy=0;return}n.vx+=(NW/2-n.x)*.001*k;n.vy+=(NH/2-n.y)*.001*k;n.x+=Math.max(-20,Math.min(20,n.vx));n.y+=Math.max(-20,Math.min(20,n.vy));n.vx*=.6;n.vy*=.6;n.x=Math.max(14,Math.min(NW-(n.type==='o'?(NW<500?70:120):20),n.x));n.y=Math.max(14,Math.min(NH-14,n.y));});}
+ L.forEach(l=>{const dx=l.t.x-l.s.x,dy=l.t.y-l.s.y,d=Math.hypot(dx,dy)||1,want=l.t.type==='c'?(NW<500?55:80):105,f=(d-want)*.025*k;l.s.vx+=dx/d*f;l.s.vy+=dy/d*f;l.t.vx-=dx/d*f;l.t.vy-=dy/d*f;});
+ nodes.forEach(n=>{if(n.type==='c'||n.fixed){n.vx=n.vy=0;return}n.vx+=(NW/2-n.x)*.001*k;n.vy+=(NH/2-n.y)*.001*k;n.x+=Math.max(-20,Math.min(20,n.vx));n.y+=Math.max(-20,Math.min(20,n.vy));n.vx*=.6;n.vy*=.6;n.x=Math.max(14,Math.min(NW-(n.type==='o'?(NW<500?70:115):20),n.x));n.y=Math.max(14,Math.min(NH-14,n.y));});}
+let drag=null,moved=false;
 function draw(){svg.innerHTML='';svg.setAttribute('viewBox',`0 0 ${NW} ${NH}`);
  L.forEach(l=>{const e=document.createElementNS(NS,'line');e.setAttribute('class','lk');l.el=e;svg.appendChild(e);});
- nodes.forEach(n=>{const g=document.createElementNS(NS,'g');g.setAttribute('class','nd');n.el=g;
-  const r=n.type==='c'?20:n.type==='i'?11:5.5;
+ nodes.forEach(n=>{const g=document.createElementNS(NS,'g');g.setAttribute('class','nd');n.el=g;const r=n.type==='c'?20:n.type==='i'?11:5.5;
   g.innerHTML=n.type==='c'?`<circle r="${r}" fill="#fff" stroke="${n.col}" stroke-width="5"/><circle r="6" fill="${n.col}"/>`:n.type==='i'?`<circle r="${r}" fill="${n.col}" stroke="#fff" stroke-width="3"/><text y="3.5" text-anchor="middle" style="fill:#fff;stroke:none;font-size:9px;font-weight:800">${n.inv+1}</text>`:`<circle r="${r}" fill="${n.col}" opacity=".85"/>`;
   if(n.type!=='i'){const t=document.createElementNS(NS,'text');t.setAttribute('x',r+4);t.setAttribute('y',4);if(n.type==='c'){t.style.fontSize='12.5px';t.style.fontWeight='800';}t.textContent=n.type==='o'&&n.label.length>22?n.label.slice(0,21)+'…':n.label;g.appendChild(t);}
-  svg.appendChild(g);
-  g.addEventListener('click',e=>{e.stopPropagation();if(!moved)focus(n)});
-  g.addEventListener('pointerdown',e=>{if(n.type==='c')return;drag=n;moved=false;n.fixed=true;});});
+  svg.appendChild(g);g.addEventListener('click',e=>{e.stopPropagation();if(!moved)focusN(n)});
+  g.addEventListener('pointerdown',()=>{if(n.type==='c')return;drag=n;moved=false;n.fixed=true;});});
  pos();}
 function pos(){L.forEach(l=>{l.el.setAttribute('x1',l.s.x.toFixed(1));l.el.setAttribute('y1',l.s.y.toFixed(1));l.el.setAttribute('x2',l.t.x.toFixed(1));l.el.setAttribute('y2',l.t.y.toFixed(1));});nodes.forEach(n=>n.el.setAttribute('transform',`translate(${n.x.toFixed(1)},${n.y.toFixed(1)})`));}
-let drag=null,moved=false;
 svg.addEventListener('pointermove',e=>{if(!drag)return;moved=true;const r=svg.getBoundingClientRect();drag.x=(e.clientX-r.left)*NW/r.width;drag.y=(e.clientY-r.top)*NH/r.height;for(let i=0;i<2;i++)tick(.12);pos();});
 addEventListener('pointerup',()=>{if(drag){drag.fixed=false;drag=null;setTimeout(()=>moved=false,0)}});
-svg.addEventListener('click',()=>{svg.classList.remove('focus');$$('#net .hl').forEach(x=>x.classList.remove('hl'));});
-function nb(n){return L.filter(l=>l.s===n||l.t===n);}
-function hl(l){l.el.classList.add('hl');l.s.el.classList.add('hl');l.t.el.classList.add('hl');}
-function focus(n){svg.classList.add('focus');$$('#net .hl').forEach(x=>x.classList.remove('hl'));n.el.classList.add('hl');
- const ls=nb(n);ls.forEach(hl);
+svg.addEventListener('click',()=>{svg.classList.remove('focus');$$('#net .hl').forEach(x=>x.classList.remove('hl'));$$('#clusterBars .brow').forEach(r=>r.classList.remove('dim'));});
+const nb=n=>L.filter(l=>l.s===n||l.t===n);
+const hl=l=>{l.el.classList.add('hl');l.s.el.classList.add('hl');l.t.el.classList.add('hl');};
+function focusN(n){svg.classList.add('focus');$$('#net .hl').forEach(x=>x.classList.remove('hl'));n.el.classList.add('hl');const ls=nb(n);ls.forEach(hl);
  if(n.type==='c')nodes.filter(x=>x.ci===n.ci&&x.type==='o').forEach(o=>nb(o).forEach(hl));
+ $$('#clusterBars .brow').forEach(r=>r.classList.toggle('dim',n.type==='c'&&+r.dataset.ci!==n.ci));
  const other=ls.map(l=>l.s===n?l.t:l.s),inv=other.filter(x=>x.type==='i'),cl=other.filter(x=>x.type==='c'),orgs=other.filter(x=>x.type==='o');
- let h=`<div style="font-size:12px;font-weight:800;color:${n.col}">${n.type==='c'?'CLUSTER':n.type==='i'?'INVESTIGATION '+(n.inv+1):'ORGANIZATION'}</div><h4>${n.label}</h4>`;
- if(n.type==='i'){const v=INV[n.inv];h+=`<div style="color:var(--mut)">${v.d} &middot; Pillar ${v.p}</div>`;if(orgs.length)h+=`<b>Organizations indexed</b><ul>${orgs.map(o=>`<li>${o.label}</li>`).join('')}</ul>`;if(cl.length)h+=`<b>Cluster</b><ul>${cl.map(o=>`<li>${o.label}</li>`).join('')}</ul>`;h+=`<div style="margin-top:8px"><a href="${v.u}" target="_blank" rel="noopener" style="font-weight:700">Read it &rarr;</a></div>`;}
- else if(n.type==='c'){const o=nodes.filter(x=>x.ci===n.ci&&x.type==='o');h+=`<div><b>${o.length}</b> organizations in this cluster</div><ul>${o.map(x=>`<li>${x.label}</li>`).join('')}</ul>`;}
- else{h+=`<div>Cluster: <b>${cl.map(c=>c.label).join(', ')}</b></div>`;h+=inv.length?`<b>Indexed in research</b><ul>${inv.map(i=>`<li><a href="${INV[i.inv].u}" target="_blank" rel="noopener">${i.label}</a></li>`).join('')}</ul>`:`<div style="color:var(--mut);margin-top:6px">Stored in the knowledge base and linked through its cluster.</div>`;}
+ let h=`<div class="lab" style="color:${n.col}">${n.type==='c'?'Cluster':n.type==='i'?'Investigation '+(n.inv+1):'Organization'}</div><h4>${n.label}</h4>`;
+ if(n.type==='i'){const v=INV[n.inv];h+=`<div class="pc">${v.d} · Pillar ${v.p}</div>`;if(orgs.length)h+=`<b>Organizations indexed</b><ul>${orgs.map(o=>`<li>${o.label}</li>`).join('')}</ul>`;if(cl.length)h+=`<b>Cluster</b><ul>${cl.map(o=>`<li>${o.label}</li>`).join('')}</ul>`;h+=`<p style="margin-top:8px"><a href="${v.u}" target="_blank" rel="noopener">Read it →</a></p>`;}
+ else if(n.type==='c'){const o=nodes.filter(x=>x.ci===n.ci&&x.type==='o');h+=`<div class="pc"><b>${o.length}</b> organizations</div><ul>${o.map(x=>`<li>${x.label}</li>`).join('')}</ul>`;}
+ else{h+=`<div class="pc">Cluster: <b>${cl.map(c=>c.label).join(', ')}</b></div>`+(inv.length?`<b>Indexed in research</b><ul>${inv.map(i=>`<li><a href="${INV[i.inv].u}" target="_blank" rel="noopener">${i.label}</a></li>`).join('')}</ul>`:`<div class="pc">Stored in the knowledge base and linked through its cluster.</div>`);}
  $('#netinfo').innerHTML=h;}
-$('#netlegend').innerHTML=CLUSTERS.map((c,i)=>`<button data-i="${i}"><i style="background:${c.c}"></i>${c.n} (${c.orgs.length})</button>`).join('')+`<button data-i="-1">Show all</button>`;
-$$('#netlegend button').forEach(b=>b.onclick=()=>{$$('#netlegend button').forEach(x=>x.classList.remove('on'));const i=+b.dataset.i;if(i<0){svg.classList.remove('focus');$$('#net .hl').forEach(x=>x.classList.remove('hl'));return}b.classList.add('on');focus(nodes[i]);});
-let netReady=false;
-function showView(v){$$('.viewtoggle button').forEach(b=>b.classList.toggle('on',b.dataset.view===v));$('#viewGallery').hidden=v!=='gallery';$('#viewNetwork').hidden=v!=='network';
- if(v==='network'&&!netReady){layout();draw();netReady=true;}}
-let rz;addEventListener('resize',()=>{clearTimeout(rz);rz=setTimeout(()=>{if($('#viewNetwork').hidden)return;const r=svg.getBoundingClientRect();if(Math.abs(r.width-NW)>40){layout();draw();}},300)});
-let lastFocus=null;
-function openDrawer(k){const d=$('#d-'+k);if(!d)return;$$('.drawer.open').forEach(x=>x.classList.remove('open'));lastFocus=document.activeElement;d.classList.add('open');d.scrollTop=0;document.body.classList.add('locked');d.querySelectorAll('.reveal').forEach(x=>x.classList.add('in'));d.querySelector('.dclose').focus({preventScroll:true});}
-function closeDrawer(){$$('.drawer.open').forEach(x=>x.classList.remove('open'));document.body.classList.remove('locked');if(lastFocus&&lastFocus.focus)lastFocus.focus({preventScroll:true});}
-document.addEventListener('click',e=>{
- const o=e.target.closest('[data-open]');if(o){e.preventDefault();openDrawer(o.dataset.open);return}
- const v=e.target.closest('[data-view]');if(v){e.preventDefault();closeDrawer();showView(v.dataset.view);if(!v.closest('.viewtoggle'))$('#research').scrollIntoView({behavior:'smooth'});return}
- if(e.target.closest('.dclose')||e.target.classList.contains('drawer'))closeDrawer();});
-document.addEventListener('keydown',e=>{if(e.key==='Escape')closeDrawer();});
-window.__openDrawer=openDrawer;window.__showView=showView;
+$('#clusterBars').innerHTML=CLUSTERS.map((c,i)=>`<div class="brow" data-ci="${i}" style="cursor:pointer;grid-template-columns:110px 1fr 30px;font-size:13px"><span class="tip">Tap to highlight</span><span>${c.n.replace(' networks','').replace(' and associated','')}</span><div class="tr"><div class="fl" style="background:${c.c};width:${c.orgs.length/12*100}%"></div></div><b style="font-size:15px">${c.orgs.length}</b></div>`).join('');
+$$('#clusterBars .brow').forEach(r=>r.onclick=()=>{initNet();focusN(nodes[+r.dataset.ci]);});
+function initNet(){if(netReady)return;netReady=true;requestAnimationFrame(()=>{layout();draw();});}
+let rz;addEventListener('resize',()=>{clearTimeout(rz);rz=setTimeout(()=>{if(!netReady||$('#rv-net').classList.contains('hide'))return;const r=svg.getBoundingClientRect();if(Math.abs(r.width-NW)>40){layout();draw();}},300)});
 
+/* ENGINE: loop */
+const LOOP=[
+ {e:'🧠',t:'Knowledge Base',c:'#3B6FE0',s:'Every article, broken into parts',p:'Every investigation is broken into searchable people, organizations, subjects, findings, funding links, sources and dates. It recognizes related concepts, not just exact names.',st:[['14','investigations'],[String(ORG_TOTAL),'organizations'],['21','people'],['20','themes']]},
+ {e:'📡',t:'Monitoring',c:'#0C9A78',s:'Listens for what matters',p:'Watches topics, people, organizations, current developments and relevant conversations, even ones that never mention The Neuron.',st:[['5','areas watched'],['20','themes'],['3','methods: keywords, lists, alerts']]},
+ {e:'🎯',t:'Opportunity Scoring',c:'#6E4FD8',s:'Where we add the most',p:'Six weighted criteria turn each opportunity into a 0 to 100 priority. The score guides decisions. It never overrides accuracy.',st:[['6','criteria'],['0 to 100','priority'],['4','action bands']]},
+ {e:'🔍',t:'Fact-Check',c:'#D96C0A',s:'Verified before posting',p:'Six steps from claim to approved wording, with three verification levels. Serious allegations need human editorial approval.',st:[['6','steps'],['3','levels'],['1','searchable claims record']]},
+ {e:'💬',t:'Engage and Publish',c:'#D93B70',s:'Substance, not links',p:'Replies that add evidence, context or a connection. Original posts and threads. A launch campaign for every new investigation.',st:[['6','signature formats'],['4','launch phases'],['3','ways to resurface the archive']]},
+ {e:'📊',t:'Measure',c:'#0C9A78',s:'What actually lands',p:'Relevant engagement per post is the hero metric. Three linked records track posts, investigations and audience.',st:[['5','categories'],['3','linked records'],['M1','baseline month']]},
+ {e:'🗓️',t:'Weekly Review',c:'#B87A00',s:"Sets next week's plan",p:'Reviews key conversations, opportunities acted on, new people, relationship growth, recent posts, research worth resurfacing and new leads.',st:[['8','review questions'],['1','plan for next week']]}
+];
+$('#loop').innerHTML=LOOP.map((l,i)=>`<div class="st" data-i="${i}" style="--c:${l.c};cursor:pointer" tabindex="0"><div class="e">${l.e}</div><b>${l.t}</b><span>${l.s}</span></div>`).join('');
+function setLoop(i){$$('#loop .st').forEach((s,k)=>{s.style.borderColor=k===i?LOOP[i].c:'';s.style.transform=k===i?'translateY(-4px)':''});const l=LOOP[i],d=$('#loopDetail');
+ d.innerHTML=`<div class="lab" style="color:${l.c}">Step ${i+1} of 7 · tap another step</div><h4 style="margin-top:4px">${l.e} ${l.t}</h4><p>${l.p}</p><div class="statrow">${l.st.map(s=>`<div class="stat"><b style="color:${l.c}">${s[0]}</b>${s[1]}</div>`).join('')}</div>`;d.classList.add('on');}
+$$('#loop .st').forEach(s=>{s.onclick=()=>setLoop(+s.dataset.i);s.onkeydown=e=>{if(e.key==='Enter')setLoop(+s.dataset.i)}});
+setLoop(0);
+const OPPJ=[['👀 Spotted','A journalist posts about a subject The Neuron has investigated.'],['🧠 Matched','The knowledge base pulls the related investigation and findings.'],['🎯 Scored','Six criteria give it a priority. 80 or more means reply, post or thread.'],['🔍 Checked','Every claim in the draft is verified and the wording reviewed.'],['💬 Posted','A reply that adds evidence or context. A link only if the research adds to the point.'],['📊 Measured','Did relevant people engage? Logged against the post, investigation and audience records.'],['🗓️ Reviewed','The weekly review decides what to do next and spots new leads.']];
+$('#oppTrack').innerHTML=OPPJ.map((s,i)=>`<button class="jstep" data-i="${i}">${s[0]}</button>`).join('<span class="chev">›</span>');
+let oppT=null;function setOpp(i){$$('#oppTrack .jstep').forEach((b,k)=>{b.classList.toggle('on',k===i);b.classList.toggle('done',k<i)});$('#oppNote').textContent=OPPJ[i][1];}
+$$('#oppTrack .jstep').forEach(b=>b.onclick=()=>{stopOpp();setOpp(+b.dataset.i)});
+function stopOpp(){clearInterval(oppT);oppT=null;$('#oppPlay').textContent='▶ Play';}
+$('#oppPlay').onclick=()=>{if(oppT){stopOpp();return}let i=0;setOpp(0);$('#oppPlay').textContent='❚❚ Pause';oppT=setInterval(()=>{i++;if(i>=OPPJ.length){stopOpp();return}setOpp(i)},1800);};
+setOpp(0);
+/* sliders */
+function mkSliders(host,list,init,cb){host.innerHTML=list.map((c,i)=>`<div class="sl"><div class="top"><label for="${host.id}${i}">${c[0]}<span class="w">${c[1]}%</span></label><span class="val" id="${host.id}v${i}">${init[i]}</span></div><input type="range" min="0" max="5" step="1" value="${init[i]}" id="${host.id}${i}"><small>${c[2]}</small></div>`).join('');
+ list.forEach((c,i)=>$('#'+host.id+i).addEventListener('input',cb));cb();}
+const vals=(h,n)=>[...Array(n)].map((_,i)=>+$('#'+h+i).value);
+const OPP=[['Research relevance',25,'Connects to our existing work?'],['Timeliness',20,'Happening now?'],['Audience value',20,'Reaches the right people?'],['Unique contribution',15,'Can we add evidence others lack?'],['Strategic value',10,'Builds a relationship or a lead?'],['Engagement potential',10,'Real chance of a conversation?']];
+let wasHigh=false;
+function calcOpp(){const v=vals('oppSliders',6);v.forEach((x,i)=>$('#oppSlidersv'+i).textContent=x);const s=Math.round(v.reduce((a,x,i)=>a+x/5*OPP[i][1],0));
+ $('#oppNum').textContent=s;$('#oppRing').style.strokeDashoffset=477.5*(1-s/100);
+ let b,t,bg,c;if(s>=80){b=3;t='High priority: reply, post or thread';bg='#DDF4EC';c='#08795E'}else if(s>=60){b=2;t='Engage when we can add something useful';bg='#E4EDFF';c='#2F64D6'}else if(s>=40){b=1;t='Monitor, save or investigate further';bg='#FFF1DC';c='#A85A06'}else{b=0;t='Generally do not engage';bg='#FDE7EE';c='#B0264F'}
+ const vd=$('#oppVerdict');vd.textContent=t;vd.style.background=bg;vd.style.color=c;$('#oppRing').style.stroke=c;$('#oppNum').parentElement.style.color=c;$$('#oppBands div').forEach((d,i)=>d.classList.toggle('on',i===b));
+ if(s>=80&&!wasHigh&&window.__ready){const r=$('#oppRing').getBoundingClientRect();burst(r.left+r.width/2,r.top+r.height/2);}wasHigh=s>=80;}
+mkSliders($('#oppSliders'),OPP,[4,3,3,4,2,3],calcOpp);
+const PRE=[['⚡ Breaking story we investigated','5,5,4,5,4,4'],['🌫️ Loosely related thread','3,2,3,3,3,2'],['🙅 Off-topic viral post','1,1,2,0,1,1']];
+$('#oppPresets').innerHTML=PRE.map(p=>`<button class="tpill" data-p="${p[1]}">${p[0]}</button>`).join('');
+$$('#oppPresets .tpill').forEach(b=>b.onclick=()=>{$$('#oppPresets .tpill').forEach(x=>x.classList.toggle('on',x===b));b.dataset.p.split(',').forEach((x,i)=>$('#oppSliders'+i).value=x);calcOpp();});
+$('#scoreRules').innerHTML=[['🛡️','Accuracy first','Research quality and factual accuracy always outrank a high score.'],['🔁','Memory','If repeated approaches got no response, the priority of further unsolicited ones drops.'],['🎯','Fit over size','A smaller specialist account with a relevant audience can be worth more than a much bigger generic one.']].map(r=>card('#6E4FD8',`<div class="em">${r[0]}</div><h4>${r[1]}</h4><p>Tap to see the rule.</p>`,`<h5>${r[1]}</h5><div class="mean" style="margin-top:0">${r[2]}</div>`)).join('');
+
+/* fact-check guide */
+const FC=[['Identify the claim','Work out exactly what the post says. Separate facts, interpretations, questions and opinions.'],['Retrieve the research','Find the investigation, supporting documents, original sources and the passages that establish the finding.'],['Verify the evidence','Go to primary sources: corporate and nonprofit filings, financial and government records, court records, official statements.'],['Check later developments','Is it still current? Look for corrections, responses, disputes, new evidence or changed relationships.'],['Review the wording','Say only what the evidence shows. Association is not coordination. An allegation is not a fact.'],['Record and approve','Record sources, verification date, caveats and the final approved wording, in a searchable record.']];
+let fi=0;
+function renderFc(){$('#fcDots').innerHTML=FC.map((_,i)=>`<button type="button" class="gdot${i===fi?' on':''}${i<fi?' done':''}" data-i="${i}" aria-label="Step ${i+1}"></button>`).join('');
+ $('#fcCard').innerHTML=`<div class="step">Step ${fi+1} of ${FC.length}</div><div class="title">${FC[fi][0]}</div><div class="body">${FC[fi][1]}</div>`;
+ $$('#fcDots .gdot').forEach(d=>d.onclick=()=>{fi=+d.dataset.i;renderFc()});$('#fcNext').textContent=fi===FC.length-1?'✓ Approved. Restart':'Next →';}
+$('#fcPrev').onclick=()=>{fi=Math.max(0,fi-1);renderFc()};$('#fcNext').onclick=()=>{fi=fi===FC.length-1?0:fi+1;renderFc()};renderFc();
+$('#levels').innerHTML=[['#0C9A78','1','General commentary','Straightforward factual references.','Checked against reliable sources.'],['#D96C0A','2','Organizations, funding, relationships','Claims about organizations, funding and investigations.','Checked against the original research and supporting evidence.'],['#D93B70','3','Serious allegations','Claims involving individuals, criminality or sensitive relationships.','Full source verification plus human editorial approval.']].map(l=>card(l[0],`<div class="v">L${l[1]}</div><h4>${l[2]}</h4>`,`<h5>Level ${l[1]}</h5><div class="li">Covers<span></span></div><div class="mean" style="margin-top:4px">${l[3]}</div><div class="li" style="margin-top:8px">Check<span></span></div><div class="mean" style="margin-top:4px"><b>${l[4]}</b></div>`)).join('');
+tfacts($('#pairs'),[['Coordination?','Or only association? Say which the evidence shows.'],['Fact?','Or an allegation? Label it.'],['Evidence?','Or an inference? Keep them apart.'],['Current?','Or historical? Date it.'],['Establishes?','Or only suggests? Match the source.']]);
+
+/* monitoring */
+$('#monAreas').innerHTML=[['🗂️','Core topics','All five pillars'],['🧑‍💼','People','Journalists, researchers, policymakers'],['🏛️','Organizations','Investigated, or worth investigating'],['📰','Developments','News, reports, statements'],['🗣️','Conversations','Even with no mention of The Neuron']].map(m=>`<div class="st" style="--c:var(--teal)"><div class="e">${m[0]}</div><b>${m[1]}</b><span>${m[2]}</span></div>`).join('');
+const THEMES=['Foreign influence ops','CCP and United Front','Muslim Brotherhood infrastructure','Hamas financing networks','PFLP networks','Pro-Palestinian advocacy funding','Foreign funding of US universities','Qatar in education and media','Turkish influence ops','Foreign influence in UK parties','Anti-American movements','Nonprofit funding and fiscal sponsorship','Campaign financing and activist networks','Institutional and personnel overlaps','Antisemitism and anti-Israel activism','Wikipedia and information integrity','Legal campaigns against Israeli soldiers and officials','Foreign strategic investment','Campus activism and radicalization','Sanctions, designations and FARA'];
+$('#themeChips').innerHTML=THEMES.map(t=>`<span class="chip linkable">${t}</span>`).join('');
+function themeCount(){const n=$$('#themeChips .chip.lit').length;$('#themeCount').textContent=n===20?'✓ All 20 themes on the radar':`${n} of 20 on the radar`;}
+$$('#themeChips .chip').forEach(c=>c.onclick=()=>{c.classList.toggle('lit');themeCount();});themeCount();
+
+/* OUTREACH */
+const FMT=[['🧩','The Connection Others Are Missing','#3B6FE0','Shows how two developments, organizations or people connect, through documented research.','Two stories, one link others missed.'],['💸','Follow the Money','#0C9A78','Explains funding structures, financial relationships and institutional arrangements.','Where the money starts and where it lands.'],['🧭','The Missing Context','#D96C0A','Adds the history or past investigation a current discussion is missing.','What the conversation leaves out.'],['📂','Previously Investigated','#D93B70','Brings an older Neuron investigation into a relevant live conversation.','We looked into this already.'],['📑','The Research Behind the Headline','#6E4FD8','Highlights the documents, records, timelines and evidence behind an investigation.','The receipts.'],['✅','What We Know','#B87A00','A short, evidence-based explainer on a subject The Neuron has investigated.','The facts, in one place.']];
+$('#fmtCards').innerHTML=FMT.map((f,i)=>card(f[2],`<div class="em">${f[0]}</div><div class="lab" style="margin-top:8px">Format ${i+1}</div><h4>${f[1]}</h4><p>${f[4]}</p>`,`<h5>${f[1]}</h5><div class="mean" style="margin-top:0">${f[3]}</div><div class="li" style="margin-top:8px">Feeds<span>${i<3?'live conversations':'the archive and explainers'}</span></div>`,'sm')).join('');
+tfacts($('#archFeats'),[['📚 From The Archives','Revisits past research when it becomes relevant again, without just reposting a link.'],['🕸️ Follow the Network','Walks through the web of organizations and relationships behind a story.']]);
+const PH=[['📦 Before','Build the content package',['Central finding','Most interesting discoveries','Key supporting evidence','Headlines and openers','Images and graphics','Link and landing page','Relevant people and organizations','Accounts with genuine interest','Keywords to monitor']],['🚀 Launch day','Lead with the discovery',['Main post leads with the most compelling discovery','Says why the investigation matters','One clear link to the article']],['📣 Following days','A new angle each post',['The central discovery','A key person or organization','A funding relationship','A standout document or finding','A link to another investigation','Wider implications','Reach people with genuine interest']],['🗄️ Afterwards','Into the living archive',['Added to the research and monitoring database','Watched for related developments','Ready to resurface when it matters']]];
+$('#launchTrack').innerHTML=PH.map((p,i)=>`<button class="jstep" data-i="${i}">${p[0]}</button>`).join('<span class="chev">›</span>');
+let lT=null;function setPh(i){$$('#launchTrack .jstep').forEach((b,k)=>{b.classList.toggle('on',k===i);b.classList.toggle('done',k<i)});const p=PH[i];
+ $('#launchDetail').innerHTML=`<div class="lab">Phase ${i+1} of 4</div><h4 style="margin-top:4px">${p[0]}: ${p[1]}</h4><div class="statrow">${p[2].map(x=>`<div class="stat">${x}</div>`).join('')}</div>`;}
+$$('#launchTrack .jstep').forEach(b=>b.onclick=()=>{stopL();setPh(+b.dataset.i)});
+function stopL(){clearInterval(lT);lT=null;$('#launchPlay').textContent='▶ Play the campaign';}
+$('#launchPlay').onclick=()=>{if(lT){stopL();return}let i=0;setPh(0);$('#launchPlay').textContent='❚❚ Pause';lT=setInterval(()=>{i++;if(i>=PH.length){stopL();return}setPh(i)},2200);};setPh(0);
+tfacts($('#launchRules'),[['Daily quota?','None. Posting follows the website publication schedule, not an arbitrary daily target.'],['How many posts?','It depends on the investigation\'s importance and how much material is worth highlighting.'],['Manufactured content?','Never. No posts made just to keep up daily activity.']]);
+tfacts($('#modes'),[['⚡ Trigger-based','A news development appears. The archive is checked for related investigations and findings.'],['🗓️ Editorial','The weekly review finds discoveries that were not highlighted enough at launch.'],['🔁 Recurring features','From The Archives, The Missing Context, Previously Investigated, Follow the Network, What We Know.']]);
+const TRIG=[['🎓 University announces a Gulf partnership',[5,6],'Previously Investigated'],['🌊 A new flotilla sets sail',[4],'The Missing Context'],['📖 A row over a Wikipedia article',[7],'The Connection Others Are Missing'],['🇹🇷 Turkish lobbying story in Washington',[11],'What We Know'],['🏙️ New York activist hub in the news',[13,1],'Follow the Network'],['🗳️ UK election debate on party links',[10],'From The Archives']];
+$('#trigPills').innerHTML=TRIG.map((t,i)=>`<button class="tpill" data-i="${i}">${t[0]}</button>`).join('');
+const FLOWN=['Trigger','Archive check','Match found','Recheck later developments','Pick a format'];
+$('#trigFlow').innerHTML=FLOWN.map(n=>`<span class="tnode">${n}</span>`).join('<span class="tarr">→</span>');
+let trigTimers=[];
+$$('#trigPills .tpill').forEach(b=>b.onclick=()=>{trigTimers.forEach(clearTimeout);trigTimers=[];$$('#trigPills .tpill').forEach(x=>x.classList.toggle('on',x===b));const T=TRIG[+b.dataset.i];$('#trigOut').innerHTML='';
+ const ns=$$('#trigFlow .tnode');ns.forEach(n=>n.classList.remove('lit'));
+ ns.forEach((n,k)=>trigTimers.push(setTimeout(()=>{ns.forEach(x=>x.classList.remove('lit'));n.classList.add('lit');},k*(STILL?0:380))));
+ trigTimers.push(setTimeout(()=>{$('#trigOut').innerHTML=`<div class="jnote">${T[1].length} match${T[1].length>1?'es':''} in 14 investigations · suggested format: ${T[2]}</div>`+T[1].map(k=>`<div class="match"><a href="${INV[k].u}" target="_blank" rel="noopener">${INV[k].t}</a><div style="color:var(--mute);font-size:12.5px">Published ${INV[k].d} · recheck before reuse, then date it</div></div>`).join('');},FLOWN.length*(STILL?0:380)));});
 $('#utmInv').innerHTML=INV.map((v,i)=>`<option value="${i}">${v.t}</option>`).join('');
 function utm(){const v=INV[+$('#utmInv').value],t=$('#utmType').value;$('#utmOut').innerHTML=`${v.u}?<span class="k">utm_source</span>=<span class="v">x</span>&amp;<span class="k">utm_medium</span>=<span class="v">social</span>&amp;<span class="k">utm_campaign</span>=<span class="v">${v.s}</span>&amp;<span class="k">utm_content</span>=<span class="v">${t}</span>`;}
 $('#utmInv').onchange=utm;$('#utmType').onchange=utm;utm();
-$$('#lpRows .row').forEach(r=>r.onclick=()=>r.classList.toggle('on'));
+const LP=[['📰 Headline','A compelling, clear headline.'],['🖼️ Image','A strong thumbnail or featured image.'],['✍️ Summary','A concise explanation of why it matters.'],['🔑 Key findings','Two or three key findings, up front.'],['➡️ Full article','One clear link to the complete research.'],['🔗 Related','Links to related Neuron investigations.']];
+$('#lpChain').innerHTML=LP.map((x,i)=>`<span class="chip linkable" data-i="${i}">${x[0]}</span>`).join('<span class="chev">›</span>');
+$$('#lpChain .chip').forEach(c=>c.onclick=()=>{$$('#lpChain .chip').forEach(x=>x.classList.toggle('lit',x===c));$('#lpNote').textContent=LP[+c.dataset.i][1]+' Branded, fast, transparent, mobile-friendly.';});
+tfacts($('#linkWhen'),[['✓ Link when','The reply draws on an investigation, the article adds evidence or context, or someone asks about the subject.'],['✕ Skip the link when','Simply joining a conversation, the article is only loosely related, or it would feel like an advert.']]);
 
-const AUD=[['📰','Investigative journalists','Cover the networks we investigate'],['🎓','Researchers and academics','Deep subject expertise'],['🎙️','Political commentators','Carry findings to wider audiences'],['🏛️','Policymakers and staff','The research is part of their job'],['🧪','Think tanks and advocacy orgs','Work in adjacent areas'],['⭐','Engaged specialist accounts','Consistently discuss these subjects']];
-$('#aud').innerHTML=AUD.map(a=>`<div class="card ag"><div class="ic">${a[0]}</div><h4>${a[1]}</h4><p>${a[2]}</p></div>`).join('');
-$$('#aud .ag').forEach(a=>a.onclick=()=>a.classList.toggle('on'));
-const REL=[['Demonstrated interest',30,'Talks about Neuron subjects'],['Professional relevance',20,'Their job connects to the research'],['Frequency of discussion',20,'How often they raise these topics'],['Engages with investigations',15,'Reads and shares investigative work'],['Potential to amplify or use',15,'Can use or spread findings']];
+/* AUDIENCE */
+const AUD=[['📰','Investigative journalists','Cover the organizations, networks and issues The Neuron investigates.'],['🎓','Researchers and academics','Relevant subject expertise and an established interest.'],['🎙️','Political commentators','Regularly discuss these subjects and can carry findings to wider audiences.'],['🏛️','Policymakers and staff','Their professional responsibilities make the research relevant.'],['🧪','Think tanks and advocacy orgs','Working in adjacent research and policy areas.'],['⭐','Engaged specialist accounts','Consistently discuss these subjects and engage with investigative research.']];
+$('#audLeads').innerHTML=AUD.map(a=>`<div class="lead"><span class="e">${a[0]}</span><b>${a[1]}</b><span>tap to reveal</span><div class="mini">${a[2]}</div></div>`).join('');
+$$('#audLeads .lead').forEach(l=>l.onclick=()=>l.classList.toggle('on'));
+const REL=[['Demonstrated interest',30,'Talks about Neuron subjects'],['Professional relevance',20,'Their job connects to the research'],['Frequency of discussion',20,'How often they raise these topics'],['Engages with investigations',15,'Reads and shares investigative work'],['Potential to amplify or use',15,'Can use or spread the findings']];
 function calcRel(){const v=vals('relSliders',5);v.forEach((x,i)=>$('#relSlidersv'+i).textContent=x);const s=Math.round(v.reduce((a,x,i)=>a+x/5*REL[i][1],0));$('#relNum').textContent=s;$('#relRing').style.strokeDashoffset=477.5*(1-s/100);
- $('#relTxt').textContent=s>=75?'Priority contact. Genuinely interested.':s>=50?'Relevant. Worth knowing.':s>=25?'Light fit. Watch for interest.':'Not a fit right now.';}
+ $('#relVerdict').textContent=s>=75?'Priority contact. Genuinely interested.':s>=50?'Relevant. Worth knowing.':s>=25?'Light fit. Watch for interest.':'Not a fit right now.';}
 mkSliders($('#relSliders'),REL,[4,3,3,3,2],calcRel);
+tfacts($('#discover'),[['1 · Core subjects','People who regularly discuss The Neuron\'s core subjects.'],['2 · Organizations','People discussing organizations already investigated.'],['3 · Similar research','Who shares and engages with comparable investigative work.'],['4 · Conversations','Knowledgeable participants in relevant conversations.'],['5 · Past engagement','People who have shared, cited or engaged with The Neuron.']]);
+tfacts($('#audRules'),[['Tag big accounts for reach?','No. Never tag people just because they are prominent.'],['Send the same article again?','No. Repeated sends of one article are out.'],['Keep replying with no response?','No. No interest means stop.'],['Promotional DMs?','No unsolicited direct messages purely to promote articles.'],['Force a connection?','No. Only real links between their post and the research.'],['Mass or automated replies?','Never. Read what they said and respond to it.']]);
+$('#relChain').innerHTML=['Role and interests','Subjects they discuss','Past interactions','Articles they may find useful','Responded or not','Last contacted'].map(x=>`<span class="chip">${x}</span>`).join('<span class="chev">›</span>');
+let ci=0;setInterval(()=>{const c=$$('#relChain .chip');c.forEach((e,i)=>e.classList.toggle('lit',i===ci%c.length));ci++},800);
 
-$$('#cmp div').forEach(d=>d.onclick=()=>{$$('#cmp div').forEach(x=>x.classList.remove('win'));$('#cmp [data-w="1"]').classList.add('win');$('#cmpTxt').textContent=d.dataset.w==='1'?'✓ Right. Relevant interactions beat raw volume.':'Not quite. Post B wins: relevant interactions beat raw volume.';});
-const MS=[['📈','Audience Growth',['Follower growth','Profile visits','Relevant new followers']],['💬','Engagement Quality',['Replies from journalists and researchers','Quote posts from relevant accounts','Repeat engagement']],['🔗','Article Distribution',['Sessions from X','Link clicks','Top investigations and formats']],['🔭','Research Visibility',['Investigations promoted','Older work resurfaced','Under-promoted work','External citations']],['🤝','Relationship Development',['New relevant contacts','Two-way interactions','New research leads']]];
-$('#meas').innerHTML=MS.map(m=>`<div class="card ms"><div class="ic">${m[0]}</div><h4>${m[1]}</h4><div class="t">${m[2].length} signals &middot; tap</div><ul>${m[2].map(x=>`<li>${x}</li>`).join('')}</ul></div>`).join('');
-$$('#meas .ms').forEach(m=>m.onclick=()=>m.classList.toggle('on'));
+/* MEASUREMENT */
+$$('#cmp button').forEach(b=>b.onclick=()=>{$$('#cmp button').forEach(x=>{x.classList.toggle('win',x.dataset.w==='1');x.classList.toggle('lose',x.dataset.w!=='1')});$('#cmpNote').textContent=b.dataset.w==='1'?'✓ Right. Relevant interactions beat raw volume.':'Not quite. Post B wins: relevant interactions beat raw volume.';if(b.dataset.w==='1'){const r=b.getBoundingClientRect();burst(r.left+r.width/2,r.top)}});
+const MS=[['📈','Audience Growth','#3B6FE0',['Follower growth','Profile visits','New followers per launch campaign','Relevant new followers','Profile visits that become follows']],['💬','Engagement Quality','#D93B70',['Replies from journalists and researchers','Reposts and quotes from relevant accounts','Meaningful discussions','Repeat engagement','Engagement from accounts that can use the research']],['🔗','Article Distribution','#0C9A78',['Website sessions from X','Article link clicks','Landing-page engagement','Investigations with the most traffic','Posts with the most article visits','Strongest promotional formats']],['🔭','Research Visibility','#6E4FD8',['Investigations promoted','Investigations with follow-up posts','Older work resurfaced','Investigations getting too little attention','External references, citations and shares']],['🤝','Relationship Development','#D96C0A',['New relevant contacts','Meaningful two-way interactions','Journalists and researchers returning','People sharing or citing the research','New research leads']]];
+$('#measCards').innerHTML=MS.map(m=>card(m[2],`<div class="em">${m[0]}</div><div class="v"><span class="cu" data-to="${m[3].length}">0</span><small> signals</small></div><h4>${m[1]}</h4><p>Baseline set in month one.</p>`,`<h5>${m[1]}</h5>${m[3].map(x=>`<div class="li">${x}<span>M1</span></div>`).join('')}`)).join('')+
+ card('#B87A00',`<div class="em">📏</div><div class="v">M1</div><h4>Baseline first</h4><p>No numbers are invented.</p>`,`<h5>Month one</h5><div class="mean" style="margin-top:0">The first month sets baseline performance rather than arbitrary numerical targets. Its results then set realistic targets for the months after.</div><div class="li">Follower count alone<span>not enough</span></div><div class="li">Impressions alone<span>not enough</span></div>`);
+$('#records').innerHTML=[['📝','Post performance','#3B6FE0',['Publication date','Post type','Topic','Related investigation','Impressions','Engagements','Profile visits','Link clicks','Relevant interactions']],['🔬','Investigation performance','#0C9A78',['Launch campaign','Follow-up posts','Article traffic','Outside engagement','Times resurfaced']],['👥','Audience performance','#D93B70',['Relevant people','Their interests','Interactions','How relationships grow']]].map(r=>card(r[2],`<div class="em">${r[0]}</div><h4>${r[1]}</h4><p>${r[3].length} fields tracked</p>`,`<h5>${r[1]}</h5>${r[3].map(x=>`<div class="li">${x}<span>●</span></div>`).join('')}`)).join('');
+const CAD=[['🚀 After each campaign','Review that campaign\'s performance.'],['📅 Weekly','Review engagement opportunities and meaningful interactions.'],['🗓️ Monthly','Compare topics, formats, articles and audience growth.'],['🧭 Quarterly','Reassess the editorial strategy and audience priorities.']];
+$('#cadTrack').innerHTML=CAD.map((c,i)=>`<button class="jstep" data-i="${i}">${c[0]}</button>`).join('<span class="chev">›</span>');
+function setCad(i){$$('#cadTrack .jstep').forEach((b,k)=>{b.classList.toggle('on',k===i);b.classList.toggle('done',k<i)});$('#cadNote').textContent=CAD[i][1];}
+$$('#cadTrack .jstep').forEach(b=>b.onclick=()=>setCad(+b.dataset.i));setCad(0);
+onShow.m=()=>{const r=$('#baseRing');r.style.strokeDashoffset=477.5;setTimeout(()=>r.style.strokeDashoffset=477.5*(1-1/12),80);};
+$('#baseHero').addEventListener('click',e=>{if(e.target.closest('button'))return;burst(e.clientX,e.clientY)});
+
+/* confetti, same pattern as the Grokipedia dashboard */
+const cv=$('#confetti'),cx=cv.getContext('2d');let parts=[];
+function burst(x,y){if(STILL)return;const cols=['#FFD166','#2EE6B8','#7FB0FF','#FF6B9A','#FF9F43','#B69CFF'];for(let i=0;i<140;i++){const a=Math.random()*Math.PI*2,s=4+Math.random()*9;parts.push({x,y,vx:Math.cos(a)*s,vy:Math.sin(a)*s-6,r:4+Math.random()*5,c:cols[i%cols.length],rot:Math.random()*6,vr:(Math.random()-.5)*.4,life:120+Math.random()*60})}if(parts.length<=140)ctick()}
+function ctick(){cv.width=innerWidth;cv.height=innerHeight;cx.clearRect(0,0,cv.width,cv.height);parts.forEach(p=>{p.x+=p.vx;p.y+=p.vy;p.vy+=.25;p.vx*=.99;p.rot+=p.vr;p.life--;cx.save();cx.translate(p.x,p.y);cx.rotate(p.rot);cx.fillStyle=p.c;cx.fillRect(-p.r/2,-p.r/2,p.r,p.r*.6);cx.restore()});parts=parts.filter(p=>p.life>0&&p.y<cv.height+40);if(parts.length)requestAnimationFrame(ctick);else cx.clearRect(0,0,cv.width,cv.height)}
+
+/* start */
+countUp($('#stats'));
+const start=(location.hash||'#ov').slice(1);show(['ov','r','e','o','a','m'].includes(start)?start:'ov');
+window.__ready=true;window.__show=show;window.__setRView=setRView;
 })();
 </script>
 </body>
